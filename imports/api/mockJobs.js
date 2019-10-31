@@ -1,7 +1,6 @@
 export default [
   {
     _id: 1,
-    postedByUser: 2,
     categories: 1,
     title: "Morn my lawn",
     description: null,
@@ -13,7 +12,6 @@ export default [
   },
   {
     _id: 2,
-    postedByUser: 1,
     categories: 2,
     title: "Clean my Home",
     description: null,
@@ -25,7 +23,6 @@ export default [
   },
   {
     _id: 3,
-    postedByUser: 2,
     categories: 3,
     title: "Cook Needed",
     description: null,
@@ -37,7 +34,6 @@ export default [
   },
   {
     _id: 4,
-    postedByUser: 3,
     categories: 4,
     title: "Plumbing",
     description: null,
@@ -49,7 +45,6 @@ export default [
   },
   {
     _id: 5,
-    postedByUser: 4,
     categories: 5,
     title: "Laundry",
     description: null,
