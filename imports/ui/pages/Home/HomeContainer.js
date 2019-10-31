@@ -24,6 +24,9 @@ export default withTracker(() => {
     mockBid,
     mockRate,
     mockPostedJobs,
-    mockJobs
+    mockJobs,
+    mockCategories,
+    mockDirectMessages,
+    mockCompletedJobs
   };
 })(HomeContainer);
