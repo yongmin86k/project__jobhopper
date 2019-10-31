@@ -1,16 +1,20 @@
 import React, { Component } from "react";
 import Home from "./Home";
 
-import { mockUser } from "/imports/api";
+import { mockUser, mockBid } from "/imports/api";
 
 import { withTracker } from "meteor/react-meteor-data";
 
 class HomeContainer extends Component {
   render() {
+    console.log(this.props);
     return <Home />;
   }
 }
 
 export default withTracker(() => {
-  console.log(mockUser);
+  return {
+    mockUser,
+    mockBid
+  };
 })(HomeContainer);
