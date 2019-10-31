@@ -1,6 +1,4 @@
-import React from "react";
-
-const data = [
+export default [
   {
     _id: 1,
     userID: 1,
@@ -8,5 +6,3 @@ const data = [
     time: "STRING!"
   }
 ];
-
-export default data;
