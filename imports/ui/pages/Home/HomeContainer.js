@@ -15,6 +15,9 @@ class HomeContainer extends Component {
 export default withTracker(() => {
   return {
     mockUser,
-    mockBid
+    mockBid,
+    mockCategories,
+    mockDirectMessages,
+    mockCompletedJobs
   };
 })(HomeContainer);
