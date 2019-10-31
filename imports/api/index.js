@@ -1,7 +1,7 @@
-export { mockUser } from "./mockUser";
-export { mockBid } from "./mockBid";
-export { mockCats } from "./mockCats";
-export { mockCompletedJobs } from "./mockCompletedJobs";
-export { mockDirectMessages } from "./mockDirectMessages";
-export { mockJobs } from "./mockJobs";
-export { mockRate } from "./mockRate";
+export { default as mockUser } from "./mockUser";
+export { default as mockBid } from "./mockBid";
+export { default as mockCategories } from "./mockCategories";
+export { default as mockDirectMessages } from "./mockDirectMessages";
+export { default as mockCompletedJobs } from "./mockCompletedJobs";
+
+
