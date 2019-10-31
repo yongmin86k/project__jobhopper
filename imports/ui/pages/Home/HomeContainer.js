@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import Home from "./Home";
 
-import { mockUser, mockBid } from "/imports/api";
+import {
+  mockUser,
+  mockBid,
+  mockRate,
+  mockPostedJobs,
+  mockJobs
+} from "/imports/api";
 
 import { withTracker } from "meteor/react-meteor-data";
 
@@ -16,6 +22,9 @@ export default withTracker(() => {
   return {
     mockUser,
     mockBid,
+    mockRate,
+    mockPostedJobs,
+    mockJobs,
     mockCategories,
     mockDirectMessages,
     mockCompletedJobs
