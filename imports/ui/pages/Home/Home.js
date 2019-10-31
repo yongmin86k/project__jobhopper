@@ -1,8 +1,8 @@
 import React from "react";
-import { Page } from "@material-ui/core";
+import { Card } from "@material-ui/core";
 
 const Home = () => {
-  return <Page>Hello world</Page>;
+  return <Card>Hello world</Card>;
 };
 
 export default Home;
