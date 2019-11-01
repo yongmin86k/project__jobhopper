@@ -2,11 +2,13 @@ import React from "react";
 import { Card } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
 import { AccountsUIWrapper } from "../../components";
+// import AccountForm from "../../components/AccountForm";
+import AccountForm from "../../components/AccountForm";
 
 const Home = () => {
   return (
     <div className="login-wrapper">
-      <AccountsUIWrapper />
+      <AccountForm />
       {/* {props.currentUserId ? (
         <div className="Home-wrapper">
           <Card>Hello world</Card>

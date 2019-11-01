@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
+
 import { Home, Profile, Jobs, Search } from "/imports/ui/pages";
 
 import { Meteor } from "meteor/meteor";
