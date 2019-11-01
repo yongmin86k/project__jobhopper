@@ -6,7 +6,10 @@ import {
   mockBid,
   mockRate,
   mockPostedJobs,
-  mockJobs
+  mockCategories,
+  mockDirectMessages,
+  mockJobs,
+  mockCompletedJobs
 } from "/imports/api";
 
 import { withTracker } from "meteor/react-meteor-data";
@@ -24,9 +27,9 @@ export default withTracker(() => {
     mockBid,
     mockRate,
     mockPostedJobs,
-    mockJobs,
     mockCategories,
     mockDirectMessages,
+    mockJobs,
     mockCompletedJobs
   };
 })(HomeContainer);
