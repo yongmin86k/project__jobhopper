@@ -5,11 +5,16 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import Routes from "./src/Routes";
 
+import { MuiThemeProvider } from "@material-ui/core/styles";
+import theme from "./theme";
+
 Meteor.startup(() => {
   ReactDOM.render(
-    <Router>
-      <Routes />
-    </Router>,
+    <MuiThemeProvider theme={theme}>
+      <Router>
+        <Routes />
+      </Router>
+    </MuiThemeProvider>,
     document.getElementById("root")
   );
 });
