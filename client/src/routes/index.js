@@ -1,5 +1,5 @@
-import React, { Fragment } from "./node_modules/react";
-import { Redirect, Route, Switch } from "./node_modules/react-router-dom";
+import React, { Fragment } from "react";
+import { Redirect, Route, Switch } from "react-router-dom";
 
 import { Home, Profile, Jobs, Search } from "/imports/ui/pages";
 
