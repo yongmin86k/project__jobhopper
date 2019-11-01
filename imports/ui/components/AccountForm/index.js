@@ -68,6 +68,42 @@ export default class AccountForm extends Component {
             style={{ marginLeft: 10, borderWidth: "1px" }}
           />
         </form>
+
+        <h3>Sign In Form</h3>
+        <form
+          onSubmit={event => {
+            // event.preventDefault();
+            this.signIn(event);
+          }}
+        >
+          <label>
+            Email
+            <input
+              type="text"
+              name="email"
+              style={{ marginLeft: 10, borderWidth: "1px" }}
+            />
+          </label>
+          <br />
+          <br />
+          <label>
+            Password
+            <input
+              type="text"
+              name="password"
+              style={{ marginLeft: 10, borderWidth: "1px" }}
+            />
+          </label>
+          <br />
+          <br />
+          <input
+            type="submit"
+            value="Sign In"
+            style={{ marginLeft: 10, borderWidth: "1px" }}
+          />
+        </form>
+        <h3>Current User Status</h3>
+        {Meteor.userId() ? <h4>User Signed In</h4> : <h4>No User Signed In</h4>}
       </div>
     );
   }
