@@ -1,9 +1,12 @@
-import React, { Fragment } from "./node_modules/react";
-import { Redirect, Route, Switch } from "./node_modules/react-router-dom";
-
+import React, { Fragment } from "react";
+import { Redirect, Route, Switch } from "react-router-dom";
 import { Home, Profile, Jobs, Search } from "/imports/ui/pages";
 
-export default () => {
+import { Meteor } from "meteor/meteor";
+import { withTracker } from "meteor/react-meteor-data";
+
+const _routes = props => {
+  console.log(props);
   return (
     <Switch>
       <Route exact path="/" component={Home} />
@@ -14,3 +17,12 @@ export default () => {
     </Switch>
   );
 };
+
+export default withTracker(() => {
+  return {
+    currentUser: Meteor.user(),
+    currentUserId: Meteor.userId()
+  };
+})(_routes);
+
+//remember export these routes
