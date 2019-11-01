@@ -24,3 +24,5 @@ export default withTracker(() => {
     currentUserId: Meteor.userId()
   };
 })(_routes);
+
+//remember export these routes
