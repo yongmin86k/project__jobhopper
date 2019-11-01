@@ -1,7 +1,7 @@
 import React from "react";
 import { Card } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
-import AccountsUIWrapper from "../../components/AccountsWrapper";
+import { AccountsUIWrapper } from "../../components";
 
 const Home = () => {
   return (
