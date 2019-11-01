@@ -5,14 +5,18 @@ import { Home, Profile, Jobs, Search } from "/imports/ui/pages";
 import { Meteor } from "meteor/meteor";
 import { withTracker } from "meteor/react-meteor-data";
 
-const _routes = props => {
-  console.log(props);
-  return (
+const routes = props => {
+  console.log(props.currentUserId);
+  return props.currentUserId ? (
     <Switch>
-      <Route exact path="/" component={Home} />
       <Route exact path="/profile" component={Profile} />
       <Route exact path="/jobs" component={Jobs} />
       <Route exact path="/search" component={Search} />
+      <Redirect from="*" to="/" />
+    </Switch>
+  ) : (
+    <Switch>
+      <Route exact path="/" component={Home} />
       <Redirect from="*" to="/" />
     </Switch>
   );
@@ -23,6 +27,4 @@ export default withTracker(() => {
     currentUser: Meteor.user(),
     currentUserId: Meteor.userId()
   };
-})(_routes);
-
-//remember export these routes
+})(routes);
