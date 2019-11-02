@@ -2,6 +2,8 @@ import { Meteor } from "meteor/meteor";
 import React from "react";
 import ReactDOM from "react-dom";
 
+import ViewerProvider from "/imports/ui/contexts/ViewerProvider";
+
 import { BrowserRouter as Router } from "react-router-dom";
 import Routes from "./src/Routes";
 
@@ -12,11 +14,13 @@ import styles from "./styles.css";
 
 Meteor.startup(() => {
   ReactDOM.render(
-    <MuiThemeProvider theme={theme}>
-      <Router>
-        <Routes />
-      </Router>
-    </MuiThemeProvider>,
+    <ViewerProvider>
+      <MuiThemeProvider theme={theme}>
+        <Router>
+          <Routes />
+        </Router>
+      </MuiThemeProvider>
+    </ViewerProvider>,
     document.getElementById("root")
   );
 });
