@@ -11,7 +11,7 @@ const routes = props => {
   return props.currentUserId ? (
     <Switch>
       <Route exact path="/profile" component={Profile} />
-      {/* <Route exact path="/jobs" component={Jobs} /> */}
+      <Route exact path="/jobs" component={Jobs} />
       <Route exact path="/search" component={Search} />
       <Redirect from="*" to="/" />
     </Switch>
