@@ -1,14 +1,12 @@
 import React from "react";
-import { Card } from "@material-ui/core";
-import { NavLink } from "react-router-dom";
 
 import AccountForm from "../../components/AccountForm";
 
 const Home = () => {
   return (
-    <div className="login-wrapper">
+    <section className="section-with-menubar">
       <AccountForm />
-    </div>
+    </section>
   );
 };
 
