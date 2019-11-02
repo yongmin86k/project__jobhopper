@@ -36,7 +36,7 @@ class AccountForm extends Component {
           this.logIn(values);
         }}
         validate={values => {
-          console.log(values);
+          // console.log(values);
         }}
         render={({ handleSubmit, form, valid, submitSucceeded }) => {
           return (
