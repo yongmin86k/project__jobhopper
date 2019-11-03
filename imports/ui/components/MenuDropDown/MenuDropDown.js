@@ -29,7 +29,9 @@ const SimpleMenu = ({}) => {
 
   const logOut = () => {
     Meteor.logout(e => {
-      console.log(e.reason);
+      if (e) {
+        console.log(e);
+      }
     });
   };
 
