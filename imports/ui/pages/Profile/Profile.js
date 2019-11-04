@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styles from "./styles";
 import { withStyles } from "@material-ui/core";
 import { withTracker } from "meteor/react-meteor-data";
-// import Gravatar from "react-gravatar";
+import Gravatar from "react-gravatar";
 import Avatar from "@material-ui/core/Avatar";
 
 import Grid from "@material-ui/core/Grid";
