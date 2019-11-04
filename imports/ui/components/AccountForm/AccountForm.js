@@ -23,7 +23,11 @@ import {
   InputAdornment
 } from "@material-ui/core";
 
+import { withStyles } from "@material-ui/core";
+import styles from "./styles";
+
 import { Visibility, VisibilityOff } from "@material-ui/icons";
+import validate from "./helpers/validation";
 
 class AccountForm extends Component {
   constructor(props) {
@@ -63,21 +67,57 @@ class AccountForm extends Component {
     });
   };
 
-  render() {
-    // console.log(Meteor.settings.public.API.POSTCODE);
-    // console.log(this.props);
+  signUp = async ({ email, password, fullname, country = "us5", zipCode }) => {
+    const validZipCode = await fetch(
+      `https://zipcodedownload.com:5430/Filter?format=json&postalcode=${zipCode}&country=${country}&key=${Meteor.settings.public.API.POSTCODE}`
+    )
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Something went wrong ...");
+        }
+      })
+      .then(data => {
+        if (data.length === 1) {
+          return data[0];
+        } else if (data.length === 0) {
+          throw new Error("Not valid code. Please check again");
+        } else {
+          throw new Error("Specify the code.");
+        }
+      })
+      .catch(error => {
+        throw new Error(error);
+      });
 
+    await Accounts.createUser({
+      email,
+      password,
+      profile: {
+        fullname,
+        address: {
+          country,
+          zipCode,
+          ...validZipCode
+        }
+      }
+    });
+  };
+
+  render() {
+    // console.log(this.props);
+    const { classes } = this.props;
     const activateForm = this.state.formToggle;
 
     return (
       <Form
         onSubmit={values => {
           console.log("Submit");
-          // console.log(values);
-          this.logIn(values);
+          activateForm ? this.logIn(values) : this.signUp(values);
         }}
         validate={values => {
-          console.log(values);
+          return validate(values, activateForm);
         }}
         render={({ handleSubmit, form, valid, submitSucceeded }) => {
           return (
@@ -90,11 +130,12 @@ class AccountForm extends Component {
             >
               {!activateForm && (
                 <FormControl variant="filled" fullWidth>
-                  <InputLabel htmlFor="fullname">Fullname</InputLabel>
+                  <InputLabel htmlFor="fullname">Fullname *</InputLabel>
                   <Field
                     name="fullname"
                     render={({ input, meta }) => (
                       <FilledInput
+                        className={classes.input}
                         id="fullname"
                         inputProps={{
                           autoComplete: "off"
@@ -102,6 +143,7 @@ class AccountForm extends Component {
                         {...input}
                         type="text"
                         value={input.value}
+                        required
                       />
                     )}
                   />
@@ -109,11 +151,12 @@ class AccountForm extends Component {
               )}
               {/*  */}
               <FormControl variant="filled" fullWidth>
-                <InputLabel htmlFor="email">Email</InputLabel>
+                <InputLabel htmlFor="email">Email *</InputLabel>
                 <Field
                   name="email"
                   render={({ input, meta }) => (
                     <FilledInput
+                      className={classes.input}
                       id="email"
                       inputProps={{
                         autoComplete: "off"
@@ -121,22 +164,26 @@ class AccountForm extends Component {
                       {...input}
                       type="email"
                       value={input.value}
+                      required
+                      autoFocus
                     />
                   )}
                 />
               </FormControl>
               {/*  */}
               <FormControl variant="filled" fullWidth>
-                <InputLabel htmlFor="password">Password</InputLabel>
+                <InputLabel htmlFor="password">Password *</InputLabel>
                 <Field
                   name="password"
                   render={({ input, meta }) => (
                     <FilledInput
+                      className={classes.input}
                       id="password"
                       autoComplete="off"
                       {...input}
                       type={this.state.showPassword ? "text" : "password"}
                       value={input.value}
+                      required
                       endAdornment={
                         <InputAdornment position="end">
                           <IconButton
@@ -160,23 +207,26 @@ class AccountForm extends Component {
               {!activateForm ? (
                 <Fragment>
                   <FormControl fullWidth component="fieldset">
-                    <FormLabel component="legend">Select a country</FormLabel>
+                    {/* <FormLabel component="legend">Select a country *</FormLabel> */}
                     <RadioGroup
                       aria-label="country"
                       name="country"
                       value={this.state.defaultCountry}
                       onChange={this.handleChangeCountry}
+                      className={classes.input}
                     >
                       <Grid
                         container
                         direction="row"
                         justify="space-between"
                         alignItems="center"
+                        className={classes.btnWrap}
                       >
                         <Field name="country" type="radio" value="us5">
                           {({ input, meta }) => {
                             return (
                               <FormControlLabel
+                                className={classes.btnChild}
                                 {...input}
                                 control={
                                   <Radio
@@ -195,6 +245,7 @@ class AccountForm extends Component {
                           {({ input, meta }) => {
                             return (
                               <FormControlLabel
+                                className={classes.btnChild}
                                 {...input}
                                 control={
                                   <Radio
@@ -202,7 +253,7 @@ class AccountForm extends Component {
                                   />
                                 }
                                 value="ca"
-                                label="Canada States"
+                                label="Canada"
                               />
                             );
                           }}
@@ -214,11 +265,12 @@ class AccountForm extends Component {
                   <FormControl variant="filled" fullWidth>
                     {this.state.defaultCountry === "us5" ? (
                       <Fragment>
-                        <InputLabel htmlFor="zipCode">Zip code</InputLabel>
+                        <InputLabel htmlFor="zipCode">Zip code *</InputLabel>
                         <Field
                           name="zipCode"
                           render={({ input, meta }) => (
                             <FilledInput
+                              className={classes.input}
                               onKeyUp={event => {
                                 if (event.target.value.length > 5) {
                                   event.target.value = event.target.value.slice(
@@ -232,10 +284,12 @@ class AccountForm extends Component {
                               {...input}
                               type="number"
                               value={input.value}
+                              required
                               inputProps={{
                                 max: "99999",
                                 maxLength: "5",
-                                autoComplete: "off"
+                                autoComplete: "off",
+                                className: classes.postCode
                               }}
                             />
                           )}
@@ -243,18 +297,20 @@ class AccountForm extends Component {
                       </Fragment>
                     ) : (
                       <Fragment>
-                        <InputLabel htmlFor="zipCode">Postal code</InputLabel>
+                        <InputLabel htmlFor="zipCode">Postal code *</InputLabel>
                         <Field
                           name="zipCode"
                           render={({ input, meta }) => (
                             <FilledInput
+                              className={classes.input}
                               id="zipCode"
                               {...input}
                               type="text"
                               value={input.value}
                               inputProps={{
                                 maxLength: "6",
-                                autoComplete: "off"
+                                autoComplete: "off",
+                                className: classes.postCode
                               }}
                             />
                           )}
@@ -279,7 +335,7 @@ class AccountForm extends Component {
                         variant="contained"
                         size="large"
                         color="secondary"
-                        disabled={false}
+                        disabled={!valid}
                       >
                         Login
                       </Button>
@@ -300,7 +356,6 @@ class AccountForm extends Component {
                         variant="outlined"
                         size="large"
                         color="secondary"
-                        disabled={false}
                         onClick={this.changeForm}
                       >
                         Login
@@ -310,7 +365,7 @@ class AccountForm extends Component {
                         variant="contained"
                         size="large"
                         color="secondary"
-                        // disabled={true}
+                        disabled={!valid}
                       >
                         Signup
                       </Button>
@@ -327,4 +382,4 @@ class AccountForm extends Component {
   }
 }
 
-export default AccountForm;
+export default withStyles(styles)(AccountForm);

@@ -1,13 +1,21 @@
 import React from "react";
 
 import AccountForm from "../../components/AccountForm";
+import { Paper, Typography } from "@material-ui/core";
+import styles from "./styles";
+import { withStyles } from "@material-ui/core";
 
-const Home = () => {
+const Home = ({ classes }) => {
   return (
-    <section className="section-with-menubar">
-      <AccountForm />
+    <section className="sectionWithMenuBar">
+      <Typography className={classes.title} color="primary" component="p">
+        Find local professionals for pretty much anything.
+      </Typography>
+      <Paper className={classes.wrap}>
+        <AccountForm />
+      </Paper>
     </section>
   );
 };
 
-export default Home;
+export default withStyles(styles)(Home);
