@@ -35,21 +35,6 @@ const styles = theme => ({
       boxShadow: "none",
       backgroundColor: "unset"
     }
-  },
-
-  card: {
-    maxWidth: 300,
-    height: 300
-  },
-  media: {
-    height: 0,
-    paddingTop: "56.25%" // 16:9
-  },
-  avatar: {
-    margin: 10
-  },
-  cardMediaItemsBtn: {
-    padding: theme.spacing(2)
   }
 });
 
