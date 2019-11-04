@@ -12,7 +12,7 @@ const styles = theme => ({
     marginRight: theme.spacing(1),
     marginTop: theme.spacing(12),
     backgroundColor: "rgba(0, 0, 0, 0)",
-    flexGrow: "1",
+
     "&:hover": {
       boxShadow: "none",
       backgroundColor: "rgba(0, 0, 0, 0.08)"
@@ -26,7 +26,7 @@ const styles = theme => ({
     disableRipple: true,
     disabled: true,
 
-    flexGrow: "0",
+    flexGrow: "1",
     "&:hover": {
       boxShadow: "none",
       backgroundColor: "unset"
@@ -35,6 +35,21 @@ const styles = theme => ({
       boxShadow: "none",
       backgroundColor: "unset"
     }
+  },
+
+  card: {
+    maxWidth: 300,
+    height: 300
+  },
+  media: {
+    height: 0,
+    paddingTop: "56.25%" // 16:9
+  },
+  avatar: {
+    margin: 10
+  },
+  cardMediaItemsBtn: {
+    padding: theme.spacing(2)
   }
 });
 
