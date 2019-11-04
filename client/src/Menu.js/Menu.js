@@ -1,6 +1,18 @@
 import React from "react";
 import { Card, AppBar, Toolbar, IconButton, Fab } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  withStyles,
+  Menu,
+  MenuItem,
+  Link,
+  ListItemIcon,
+  Fab
+} from "@material-ui/core";
 
 const MenuBar = ({ classes }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
