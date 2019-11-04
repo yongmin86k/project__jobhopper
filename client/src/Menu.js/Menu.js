@@ -68,7 +68,7 @@ const MenuBar = ({ classes }) => {
               }
             }}
           >
-            {/* UNCOMMENT THIS WHEN READY TO MAKE SEARCH FUNCITONAL */}
+            {/* UNCOMMENT THIS WHEN/IF READY TO MAKE SEARCH FUNCITONAL */}
             {/* <TextField
               id="standard-search"
               label="Search field"
