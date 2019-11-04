@@ -147,7 +147,7 @@ class _PostJobForm extends Component {
                     5. Set Zipcode of the loaction
                   </Typography>
                   <FormControl variant="filled" fullWidth>
-                    <InputLabel htmlFor="zipCode">_ _ _ _ _</InputLabel>
+                    <InputLabel htmlFor="zipCode">Zip code</InputLabel>
                     <Field
                       name="zipCode"
                       render={({ input, meta }) => (
