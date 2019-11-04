@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { ViewerContext } from "/imports/ui/contexts/ViewerProvider";
 
-import styles from "./styles";
 import { NavLink, withRouter } from "react-router-dom";
 import {
   AppBar,
@@ -12,6 +11,7 @@ import {
 } from "@material-ui/core";
 
 import { withStyles } from "@material-ui/core";
+import styles from "./styles";
 import { MenuDropDown } from "/imports/ui/components";
 
 class MenuBar extends Component {
@@ -22,7 +22,7 @@ class MenuBar extends Component {
         {({ currentUserId }) =>
           currentUserId ? (
             <AppBar position="fixed">
-              <Toolbar>
+              <Toolbar className={classes.headerStyle}>
                 <IconButton
                   color="inherit"
                   aria-label="menu"
@@ -54,7 +54,7 @@ class MenuBar extends Component {
             </AppBar>
           ) : (
             <AppBar position="fixed">
-              <Toolbar>
+              <Toolbar className={classes.headerStyle}>
                 <IconButton
                   color="inherit"
                   aria-label="menu"

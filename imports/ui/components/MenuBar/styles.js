@@ -1,4 +1,11 @@
 const styles = theme => ({
+  headerStyle: {
+    [theme.breakpoints.up("md")]: {
+      paddingRight: theme.typography.pxToRem(80),
+      paddingLeft: theme.typography.pxToRem(80)
+    }
+  },
+
   menuButton: {
     marginRight: 0,
     width: theme.typography.pxToRem(48),
