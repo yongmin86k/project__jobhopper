@@ -1,6 +1,6 @@
 const styles = theme => ({
-  wrap: {
-    padding: theme.spacing(2)
+  row: {
+    marginBottom: theme.spacing(2)
   }
 });
 
