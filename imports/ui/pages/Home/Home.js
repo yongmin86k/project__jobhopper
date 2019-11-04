@@ -7,7 +7,7 @@ import { withStyles } from "@material-ui/core";
 
 const Home = ({ classes }) => {
   return (
-    <section className="sectionWithMenuBar">
+    <section className="sectionWithMenuBar home">
       <Typography className={classes.title} color="primary" component="p">
         Find local professionals for pretty much anything.
       </Typography>

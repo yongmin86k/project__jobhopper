@@ -1,6 +1,19 @@
 import React from "react";
 import { Card, AppBar, Toolbar, IconButton, Fab } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
+// import TextField from "@material-ui/core/TextField";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  withStyles,
+  Menu,
+  MenuItem,
+  Link,
+  ListItemIcon,
+  Fab
+} from "@material-ui/core";
 
 const MenuBar = ({ classes }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -55,6 +68,14 @@ const MenuBar = ({ classes }) => {
               }
             }}
           >
+            {/* UNCOMMENT THIS WHEN/IF READY TO MAKE SEARCH FUNCITONAL */}
+            {/* <TextField
+              id="standard-search"
+              label="Search field"
+              type="search"
+              margin="normal"
+            /> */}
+
             <Link component="button" variant="body2">
               <MenuItem onClick={handleClose}>
                 <NavLink to="/profile">
@@ -85,4 +106,7 @@ const MenuBar = ({ classes }) => {
   );
 };
 
-export default withStyles(styles)(MenuBar);
+// export default function UncontrolledTextField() {
+//   const classes = useStyles();
+
+export default withStyles(styles)(MenuBar, UncontrolledTextField);
