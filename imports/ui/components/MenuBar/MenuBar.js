@@ -42,7 +42,13 @@ class MenuBar extends Component {
                 </Typography>
 
                 <div className={classes.menuBar}>
-                  <Typography variant="h6" color="textSecondary" component="p">
+                  <Typography
+                    variant="h6"
+                    color="textSecondary"
+                    component="p"
+                    component={NavLink}
+                    to={"/post"}
+                  >
                     Post a job
                   </Typography>
                   <Typography variant="h6" color="textSecondary" component="p">
