@@ -21,7 +21,7 @@ class MenuBar extends Component {
       <ViewerContext.Consumer>
         {({ currentUserId }) =>
           currentUserId ? (
-            <AppBar position="fixed">
+            <AppBar position="fixed" color="secondary">
               <Toolbar className={classes.headerStyle}>
                 <IconButton
                   color="inherit"
@@ -59,7 +59,7 @@ class MenuBar extends Component {
               </Toolbar>
             </AppBar>
           ) : (
-            <AppBar position="fixed">
+            <AppBar position="fixed" color="secondary">
               <Toolbar className={classes.headerStyle}>
                 <IconButton
                   color="inherit"
@@ -75,7 +75,7 @@ class MenuBar extends Component {
                     />
                   </Icon>
                 </IconButton>
-                <Typography variant="h6" color="textPrimary" component="p">
+                <Typography variant="h6" color="textSecondary" component="p">
                   Job Hopper
                 </Typography>
               </Toolbar>
