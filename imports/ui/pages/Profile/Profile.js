@@ -42,4 +42,14 @@ const Profile = withTracker(() => {
   };
 })(_Profile);
 
+// export default function ImageAvatars() {
+//   const classes = useStyles();
+
+//   return (
+//     <Grid container justify="center" alignItems="center">
+//       <Avatar alt="" src="/public/images/" className={classes.avatar} />
+//     </Grid>
+//   );
+// }
+
 export default withStyles(styles)(Profile);

@@ -9,6 +9,9 @@
   height: 100vh;
   padding: 1rem;
   padding-top: 4.5rem;
+}
+
+.home {
   background: url("/images/img-bg-main@2x.jpg") no-repeat center;
   background-size: cover;
 }
@@ -17,6 +20,8 @@
   .sectionWithMenuBar {
     padding: 5rem;
     padding-top: 4.5rem;
+  }
+  .home {
     background: url("/images/img-bg-main@2x.jpg") no-repeat left top;
     background-size: cover;
   }

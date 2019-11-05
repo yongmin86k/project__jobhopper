@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Form, Field } from "react-final-form";
 
-import { Accounts } from "meteor/accounts-base"; // use it to create user
+import { Accounts } from "meteor/accounts-base";
 import { Meteor } from "meteor/meteor";
 
 import "../../../api/users";
@@ -10,11 +10,8 @@ import {
   Button,
   FormControl,
   Grid,
-  Input,
   InputLabel,
   Typography,
-  TextField,
-  FormLabel,
   FormControlLabel,
   RadioGroup,
   Radio,
@@ -33,7 +30,7 @@ class AccountForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      formToggle: false,
+      formToggle: true,
       showPassword: false,
       defaultCountry: "us5",
       error: null
