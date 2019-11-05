@@ -1,12 +1,11 @@
-import React from "react";
-import styles from './styles';
-import {withStyles} from '@material-ui/core';
+import React, { Component } from "react";
+import styles from "./styles";
+import { withStyles } from "@material-ui/core";
 import { withTracker } from "meteor/react-meteor-data";
-import Gravatar from 'react-gravatar'
-import Avatar from '@material-ui/core/Avatar';
+import Gravatar from "react-gravatar";
+import Avatar from "@material-ui/core/Avatar";
 
-import Grid from '@material-ui/core/Grid';
-
+import Grid from "@material-ui/core/Grid";
 
 class _Profile extends Component {
   constructor() {
@@ -27,23 +26,20 @@ class _Profile extends Component {
   }
 }
 
+// export default function ImageAvatars() {
+//   const classes = useStyles();
+
+return (
+  <Grid container justify="center" alignItems="center">
+    <Avatar alt="" src="/public/images/" className={classes.avatar} />
+  </Grid>
+);
+
 const Profile = withTracker(() => {
   return {
     currentUser: Meteor.user(),
     currentUserId: Meteor.userId()
   };
 })(_Profile);
-
-
-
-export default function ImageAvatars() {
-  const classes = useStyles();
-
-  return (
-    <Grid container justify="center" alignItems="center">
-      <Avatar alt="" src="/public/images/" className={classes.avatar} />
-    </Grid>
-  );
-}
 
 export default withStyles(styles)(Profile);
