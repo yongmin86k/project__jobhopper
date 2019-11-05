@@ -5,8 +5,10 @@ const styles = theme => ({
   },
   filterContainer: {
     display: "flex",
-    flexGrow: 1
+    flexGrow: 1,
+    justifyContent: "space-between"
   },
+
   filterBtn: {
     boxShadow: "none",
     marginRight: theme.spacing(1),
@@ -35,6 +37,9 @@ const styles = theme => ({
       boxShadow: "none",
       backgroundColor: "unset"
     }
+  },
+  locationbtn: {
+    marginTop: "6rem"
   }
 });
 
