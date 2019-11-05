@@ -4,6 +4,7 @@ import { JobsGrid } from "../../components";
 import { withStyles } from "@material-ui/core/styles";
 import styles from "./styles";
 import { Fab } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 
 const Jobs = ({ classes }) => {
   return (
@@ -15,54 +16,58 @@ const Jobs = ({ classes }) => {
       <div className={classes.Container}>
         <section id="filter-jobs" className="filterJobs">
           <div className={classes.filterContainer}>
-            <Fab
-              className={classes.filterBtn}
-              size="small"
-              variant="extended"
-              aria-label="like"
-              color="primary"
-            >
-              Category
-            </Fab>
+            <div className={classes.filter}>
+              <Fab
+                className={classes.filterBtn}
+                size="small"
+                variant="extended"
+                aria-label="like"
+                color="primary"
+              >
+                Category
+              </Fab>
 
-            <Fab
-              className={classes.filterBtn}
-              size="small"
-              variant="extended"
-              aria-label="like"
-              color="primary"
-            >
-              Dates
-            </Fab>
+              <Fab
+                className={classes.filterBtn}
+                size="small"
+                variant="extended"
+                aria-label="like"
+                color="primary"
+              >
+                Dates
+              </Fab>
 
-            <Fab
-              className={classes.filterBtn}
-              size="small"
-              variant="extended"
-              aria-label="like"
-              color="primary"
-            >
-              Price
-            </Fab>
+              <Fab
+                className={classes.filterBtn}
+                size="small"
+                variant="extended"
+                aria-label="like"
+                color="primary"
+              >
+                Price
+              </Fab>
 
-            <Fab
-              className={classes.filterBtn}
-              size="small"
-              variant="extended"
-              aria-label="like"
-              color="primary"
-            >
-              Distance
-            </Fab>
-            <Fab
-              className={classes.filtertxt}
-              size="small"
-              variant="extended"
-              aria-label="like"
-              color="primary"
-            >
-              Current location: V6L 3E2
-            </Fab>
+              <Fab
+                className={classes.filterBtn}
+                size="small"
+                variant="extended"
+                aria-label="like"
+                color="primary"
+              >
+                Distance
+              </Fab>
+            </div>
+            <div className={classes.location}>
+              <Typography
+                className={classes.locationbtn}
+                // aria-label={}
+                gutterBottom
+                variant="h6"
+                component="h6"
+              >
+                Current location: V6L 3E2
+              </Typography>
+            </div>
           </div>
         </section>
       </div>
