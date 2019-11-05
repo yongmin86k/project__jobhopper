@@ -12,9 +12,9 @@ import withDirection, {
   withDirectionPropTypes,
   DIRECTIONS
 } from "react-with-direction";
-// import DirectionProvider, { DIRECTIONS } from 'react-with-direction/dist/DirectionProvider';
+import { useSwipeable, Swipeable } from "react-swipeable";
 
-class _ProfileJobs extends Component {
+class ProfileJobs extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -53,21 +53,26 @@ class _ProfileJobs extends Component {
             <Tab label="Item Three" {...a11yProps(2)} /> */}
           </Tabs>
         </AppBar>
-        <SwipeableViews
+        {/* <SwipeableViews
           axis={direction === DIRECTIONS.RTL ? "x-reverse" : "x"}
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
+        > */}
+        <SwipeableViews
+          index={this.state.setValue}
+          onChangeIndex={this.handleChangeIndex}
         >
-          <TabPanel value={this.state.value} index={0} dir={direction}>
+          <TabPanel value={this.state.setValue} index={0} dir={direction}>
             Hopping
           </TabPanel>
-          <TabPanel value={this.state.value} index={1} dir={direction}>
+          <TabPanel value={this.state.setValue} index={1} dir={direction}>
             Completed
           </TabPanel>
-          <TabPanel value={this.state.value} index={2} dir={direction}>
+          <TabPanel value={this.state.setValue} index={2} dir={direction}>
             Posted
           </TabPanel>
         </SwipeableViews>
+        {/* </SwipeableViews> */}
       </div>
     );
   }
@@ -135,6 +140,4 @@ class _ProfileJobs extends Component {
 // );
 // }
 
-const ProfileJobs = withDirection(_ProfileJobs);
-
-export default withStyles(styles)(ProfileJobs);
+export default withDirection(withStyles(styles)(ProfileJobs));
