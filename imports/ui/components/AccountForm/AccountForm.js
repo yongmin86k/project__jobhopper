@@ -204,7 +204,6 @@ class AccountForm extends Component {
               {!activateForm ? (
                 <Fragment>
                   <FormControl fullWidth component="fieldset">
-                    {/* <FormLabel component="legend">Select a country *</FormLabel> */}
                     <RadioGroup
                       aria-label="country"
                       name="country"
@@ -227,6 +226,7 @@ class AccountForm extends Component {
                                 {...input}
                                 control={
                                   <Radio
+                                    color="primary"
                                     checked={
                                       this.state.defaultCountry === "us5"
                                     }
@@ -246,6 +246,7 @@ class AccountForm extends Component {
                                 {...input}
                                 control={
                                   <Radio
+                                    color="primary"
                                     checked={this.state.defaultCountry === "ca"}
                                   />
                                 }
@@ -331,7 +332,7 @@ class AccountForm extends Component {
                         type="submit"
                         variant="contained"
                         size="large"
-                        color="secondary"
+                        color="primary"
                         disabled={!valid}
                       >
                         Login
@@ -340,7 +341,7 @@ class AccountForm extends Component {
                         type="button"
                         variant="outlined"
                         size="large"
-                        color="secondary"
+                        color="primary"
                         onClick={this.changeForm}
                       >
                         Signup
@@ -352,7 +353,7 @@ class AccountForm extends Component {
                         type="button"
                         variant="outlined"
                         size="large"
-                        color="secondary"
+                        color="primary"
                         onClick={this.changeForm}
                       >
                         Login
@@ -361,7 +362,7 @@ class AccountForm extends Component {
                         type="submit"
                         variant="contained"
                         size="large"
-                        color="secondary"
+                        color="primary"
                         disabled={!valid}
                       >
                         Signup
