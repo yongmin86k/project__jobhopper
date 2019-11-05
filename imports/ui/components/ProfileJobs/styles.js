@@ -6,7 +6,7 @@ const styles = theme => ({
   },
   media: {
     height: 100,
-    paddingTop: "2%" // 16:9
+    paddingTop: "2%"
   },
   avatar: {
     margin: 10
@@ -17,4 +17,3 @@ const styles = theme => ({
 });
 
 export default styles;
- 

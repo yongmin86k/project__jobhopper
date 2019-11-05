@@ -5,3 +5,5 @@ export { default as PostJobForm } from "./PostJobForm";
 export { default as PrivateRoute } from "./PrivateRoute";
 export { default as JobCard } from "./JobCard";
 export { default as JobsGrid } from "./JobsGrid";
+export { default as TabPanel } from "./TabPanel";
+export { default as ProfileJobs } from "./ProfileJobs";

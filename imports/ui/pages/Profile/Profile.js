@@ -1,39 +1,52 @@
 import React, { Component } from "react";
 import styles from "./styles";
-import { withStyles } from "@material-ui/core";
+import {
+  withStyles,
+  Tabs,
+  Tab,
+  AppBar,
+  Box,
+  Typography
+} from "@material-ui/core";
 import { withTracker } from "meteor/react-meteor-data";
 import Gravatar from "react-gravatar";
 import Avatar from "@material-ui/core/Avatar";
+// CARD TAB
+import PropTypes from "prop-types";
+import SwipeableViews from "react-swipeable-views";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 
-import Grid from "@material-ui/core/Grid";
+import ProfileJobs from "/imports/ui/components/ProfileJobs";
 
 class _Profile extends Component {
-  constructor() {
-    super();
+  //   constructor() {
+  //     super();
 
-    this.state = {
-      profile: Profile,
-      lastId: 1
-    };
-  }
+  //     this.state = {
+  //       profile: Profile,
+  //       lastId: 1
+  //     };
+  //   }
   render() {
-    return (
-      <figure>
-        <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" />
-        <figcaption>John Smith</figcaption>
-      </figure>
-    );
+    /* 
+      import YOUR COMPONENT HERE 
+      pass some data as props to your component as well
+    */
+
+    // <figure>
+    //   <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" />
+    //   <figcaption>Yongmin</figcaption>
+    // </figure>
+
+    return <ProfileJobs />;
   }
 }
 
-// export default function ImageAvatars() {
-//   const classes = useStyles();
-
-return (
-  <Grid container justify="center" alignItems="center">
-    <Avatar alt="" src="/public/images/" className={classes.avatar} />
-  </Grid>
-);
+// return (
+//   <Grid container justify="center" alignItems="center">
+//     <Avatar alt="" src="/public/images/" />
+//   </Grid>
+// );
 
 const Profile = withTracker(() => {
   return {
@@ -41,15 +54,5 @@ const Profile = withTracker(() => {
     currentUserId: Meteor.userId()
   };
 })(_Profile);
-
-// export default function ImageAvatars() {
-//   const classes = useStyles();
-
-//   return (
-//     <Grid container justify="center" alignItems="center">
-//       <Avatar alt="" src="/public/images/" className={classes.avatar} />
-//     </Grid>
-//   );
-// }
 
 export default withStyles(styles)(Profile);

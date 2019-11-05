@@ -3,9 +3,11 @@ import Profile from "./Profile";
 
 class ProfileContainer extends Component {
   render() {
-    <section className="sectionWithMenuBar">
-      <Profile />
-    </section>;
+    return (
+      <section className="sectionWithMenuBar">
+        <Profile />;
+      </section>
+    );
   }
 }
 
