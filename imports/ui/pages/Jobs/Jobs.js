@@ -62,8 +62,8 @@ const Jobs = ({ classes }) => {
                 className={classes.locationbtn}
                 // aria-label={}
                 gutterBottom
-                variant="h6"
-                component="h6"
+                variant="p"
+                component="body1"
               >
                 Current location: V6L 3E2
               </Typography>

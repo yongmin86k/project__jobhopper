@@ -3,7 +3,7 @@ const styles = theme => ({
     marginTop: 50,
     maxWidth: 450,
     width: 400,
-    height: 650
+    height: 720
   },
   media: {
     height: 200,
@@ -20,8 +20,12 @@ const styles = theme => ({
   },
   margin: {
     margin: theme.spacing(1)
+  },
+  textField: {
+    // marginLeft: theme.spacing(1),
+    // marginRight: theme.spacing(1),
+    width: 200
   }
 });
 
 export default styles;
- 
