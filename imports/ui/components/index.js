@@ -7,3 +7,6 @@ export { default as JobCard } from "./JobCard";
 export { default as JobsGrid } from "./JobsGrid";
 export { default as TabPanel } from "./TabPanel";
 export { default as ProfileJobs } from "./ProfileJobs";
+export { default as ProfileUser } from "./ProfileUser";
+export { default as CompletedJobs } from "./CompletedJobs";
+export { default as PostedJobs } from "./PostedJobs";

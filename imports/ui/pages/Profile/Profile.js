@@ -1,25 +1,13 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import styles from "./styles";
-import {
-  withStyles,
-  Tabs,
-  Tab,
-  AppBar,
-  Box,
-  Grid,
-  Typography
-} from "@material-ui/core";
+import { Grid, withStyles } from "@material-ui/core";
 import { withTracker } from "meteor/react-meteor-data";
-import Gravatar from "react-gravatar";
-import Avatar from "@material-ui/core/Avatar";
 // CARD TAB
 import PropTypes from "prop-types";
-import SwipeableViews from "react-swipeable-views";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { ProfileUser, ProfileJobs } from "/imports/ui/components";
 
-import ProfileJobs from "/imports/ui/components/ProfileJobs";
-
-class _Profile extends Component {
+class Profile extends Component {
   //   constructor() {
   //     super();
 
@@ -43,7 +31,7 @@ class _Profile extends Component {
     return (
       <Grid container className={classes.wrap}>
         <Grid item xs={4}>
-          a
+          <ProfileUser />
         </Grid>
         <Grid item xs={4}>
           <ProfileJobs />
@@ -62,11 +50,4 @@ class _Profile extends Component {
 //   </Grid>
 // );
 
-const Profile = withTracker(() => {
-  return {
-    currentUser: Meteor.user(),
-    currentUserId: Meteor.userId()
-  };
-})(_Profile);
-
-export default withStyles(styles)(Profile);
+export default withRouter(withStyles(styles)(Profile));
