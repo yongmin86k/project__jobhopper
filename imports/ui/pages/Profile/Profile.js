@@ -1,20 +1,53 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import styles from "./styles";
-import { withStyles } from "@material-ui/core";
+import { Grid, withStyles } from "@material-ui/core";
 import { withTracker } from "meteor/react-meteor-data";
 // CARD TAB
 import PropTypes from "prop-types";
-import ProfileJobs from "/imports/ui/components/ProfileJobs";
+import { ProfileUser, ProfileJobs } from "/imports/ui/components";
 
-const _Profile = () => {
-  return <ProfileJobs />;
-};
+class Profile extends Component {
+  //   constructor() {
+  //     super();
 
-const Profile = withTracker(() => {
-  return {
-    currentUser: Meteor.user(),
-    currentUserId: Meteor.userId()
-  };
-})(_Profile);
+  //     this.state = {
+  //       profile: Profile,
+  //       lastId: 1
+  //     };
+  //   }
+  render() {
+    /* 
+      import YOUR COMPONENT HERE 
+      pass some data as props to your component as well
+    */
 
-export default withStyles(styles)(Profile);
+    // <figure>
+    //   <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" />
+    //   <figcaption>Yongmin</figcaption>
+    // </figure>
+    const { classes } = this.props;
+
+    return (
+      <Grid container className={classes.wrap}>
+        <Grid item xs={4}>
+          <ProfileUser />
+        </Grid>
+        <Grid item xs={4}>
+          <ProfileJobs />
+        </Grid>
+        <Grid item xs={4}>
+          a
+        </Grid>
+      </Grid>
+    );
+  }
+}
+
+// return (
+//   <Grid container justify="center" alignItems="center">
+//     <Avatar alt="" src="/public/images/" />
+//   </Grid>
+// );
+
+export default withRouter(withStyles(styles)(Profile));
