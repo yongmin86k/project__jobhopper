@@ -15,32 +15,26 @@ import Avatar from "@material-ui/core/Avatar";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-
 import ProfileJobs from "/imports/ui/components/ProfileJobs";
 
 class _Profile extends Component {
-  //   constructor() {
-  //     super();
-
-  //     this.state = {
-  //       profile: Profile,
-  //       lastId: 1
-  //     };
-  //   }
   render() {
-    /* 
-      import YOUR COMPONENT HERE 
-      pass some data as props to your component as well
-    */
-
-    // <figure>
-    //   <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" />
-    //   <figcaption>Yongmin</figcaption>
-    // </figure>
-
     return <ProfileJobs />;
   }
 }
+
+class _Hopping extends Component {
+  render() {
+    return <Hopper />;
+  }
+}
+
+class _CompletedJobs extends Component {
+  render() {
+    return <Hopper />;
+  }
+}
+
 
 // return (
 //   <Grid container justify="center" alignItems="center">
