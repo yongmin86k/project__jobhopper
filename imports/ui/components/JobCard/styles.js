@@ -3,7 +3,7 @@ const styles = theme => ({
     marginTop: 50,
     maxWidth: 450,
     width: 400,
-    height: 720
+    height: 800
   },
   media: {
     height: 200,

@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-// import { Fab } from "@material-ui/core";
+import { Meteor } from "meteor/meteor";
+import { withTracker } from "meteor/react-meteor-data";
+import { Categories } from "/imports/api/categories";
+
 import styles from "./styles";
 import {
   Avatar,
@@ -17,10 +20,7 @@ import {
 } from "@material-ui/core";
 
 import FavoriteIcon from "@material-ui/icons/Favorite";
-// import FormControl from "@material-ui/core/FormControl";
-// import InputLabel from "@material-ui/core/InputLabel";
-// import Input from "@material-ui/core/Input";
-// import InputAdornment from "@material-ui/core/InputAdornment";
+
 import TextField from "@material-ui/core/TextField";
 
 const DATA = [
@@ -28,7 +28,7 @@ const DATA = [
     userPosted: 1,
     userTaken: 2,
     completed: false,
-    category: 1,
+    category: "XycJ3Dqn37WTB3X29",
     title: "Clean Yard",
     description:
       "You will perform a range of general lawn maintenance duties including applying fertilizers, maintaining the landscape design, removing weeds and dead plants, and supervising repairs. ",
@@ -52,7 +52,7 @@ const DATA = [
     userPosted: 2,
     userTaken: 1,
     completed: false,
-    category: 1,
+    category: "f3rDL36EGujEZ2yb2",
     title: "Clean House",
     description:
       "House cleaners work in residential settings where they are expected to keep houses clean and well-organized. ... Their main work includes dusting, cleaning, doing laundry, mopping, making beds, and taking out the garbage. ",
@@ -72,7 +72,7 @@ const DATA = [
     userPosted: 3,
     userTaken: 2,
     completed: false,
-    category: 1,
+    category: "ruq6awbX68RsHixAy",
     title: "Clean Kitchen",
     description:
       "Work involves thorough cleaning of equipment and facilities to conform to proper sanitation standards. ... Washes pots, pans and traps; maintains neat appearance of working areas and cleaning equipment storage areas.",
@@ -90,6 +90,8 @@ const DATA = [
   }
 ];
 
+console.log(DATA[1].hopLog[0].price);
+
 const map1 = DATA[0].hopLog.map(value => value.userID);
 
 const uniqueSet = new Set(map1);
@@ -99,7 +101,17 @@ const backToArray = [...uniqueSet];
 const count = backToArray.length;
 // console.log(count);
 
-const JobCard = ({ classes }) => {
+const JobCard = ({ classes, categories }) => {
+  // console.log(categories);
+
+  // const result = categories
+  //   ? categories.find(({ _id }) => _id === "ruq6awbX68RsHixAy")
+  //   : null;
+
+  // if (result) {
+  //   console.log(result.title);
+  // }
+
   return (
     <Grid
       container
@@ -145,9 +157,7 @@ const JobCard = ({ classes }) => {
               </Typography>
               <Typography
                 // aria-label={}
-                variant="body1"
-                color="textPrimary"
-                component="p"
+                paragraph
               >
                 Applicants <br />
                 {count}
@@ -155,9 +165,7 @@ const JobCard = ({ classes }) => {
             </div>
             <Typography
               // aria-label={}
-              variant="body1"
-              color="textPrimary"
-              component="p"
+              paragraph
             >
               Current Price
             </Typography>
@@ -173,18 +181,21 @@ const JobCard = ({ classes }) => {
 
             <Typography
               // aria-label={}
-              variant="body1"
-              color="textPrimary"
-              component="p"
+              paragraph
             >
-              Category: {DATA[0].category}
+              Category:
+              {/* Category:{" "}
+              {
+                (result = categories
+                  ? categories.find(({ _id }) => _id === "ruq6awbX68RsHixAy")
+                  : null)
+              }
+              {result ? result.title : null} */}
             </Typography>
             <br />
             <Typography
               // aria-label={}
-              variant="body1"
-              color="textPrimary"
-              component="p"
+              paragraph
             >
               {DATA[0].description}
             </Typography>
@@ -202,7 +213,7 @@ const JobCard = ({ classes }) => {
                 type="button"
                 variant="contained"
                 size="large"
-                color="secondary"
+                color="primary"
                 fullWidth
                 disabled={false}
                 onClick={() => {
@@ -244,83 +255,35 @@ const JobCard = ({ classes }) => {
           </CardActionArea>
           <CardContent>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Typography
-                // aria-label={}
-                gutterBottom
-                variant="h5"
-                component="h2"
-              >
+              <Typography gutterBottom variant="h5" component="h2">
                 {DATA[1].title}
               </Typography>
-              <Typography
-                // aria-label={}
-                variant="body1"
-                color="textPrimary"
-                component="p"
-              >
+              <Typography paragraph>
                 Applicants <br />3
               </Typography>
             </div>
 
-            <Typography
-              // aria-label={}
-              variant="body1"
-              color="textPrimary"
-              component="p"
-            >
-              Current Price
-            </Typography>
+            <Typography paragraph>Current Price</Typography>
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Typography
-                // aria-label={}
-                gutterBottom
-                variant="h4"
-                component="h4"
-              >
+              <Typography gutterBottom variant="h4" component="h4">
                 ${DATA[1].priceMax}
               </Typography>
-              {/* <FormControl className={classes.margin}>
-                <InputLabel htmlFor="standard-adornment-amount">
-                  Hop Price
-                </InputLabel>
-                <Input
-                  id="standard-adornment-amount"
-                  // value={}
-                  // onChange={}
-                  startAdornment={
-                    <InputAdornment position="start">$</InputAdornment>
-                  }
-                />
-              </FormControl> */}
+
               <TextField
                 disabled
                 id="filled-disabled"
                 label="Your Hop Price"
-                defaultValue=""
+                defaultValue={DATA[1].hopLog[0].price}
                 className={classes.textField}
                 margin="normal"
                 variant="filled"
               />
             </div>
 
-            <Typography
-              // aria-label={}
-              variant="body1"
-              color="textPrimary"
-              component="p"
-            >
-              Category: {DATA[1].category}
-            </Typography>
+            <Typography paragraph>Category:</Typography>
             <br />
-            <Typography
-              // aria-label={}
-              variant="body1"
-              color="textPrimary"
-              component="p"
-            >
-              {DATA[1].description}
-            </Typography>
+            <Typography paragraph>{DATA[1].description}</Typography>
           </CardContent>
 
           <Grid
@@ -334,7 +297,7 @@ const JobCard = ({ classes }) => {
                 type="button"
                 variant="contained"
                 size="large"
-                color="primary"
+                color="secondary"
                 disabled={false}
                 onClick={() => {
                   console.log(111);
@@ -346,7 +309,7 @@ const JobCard = ({ classes }) => {
                 type="submit"
                 variant="contained"
                 size="large"
-                color="secondary"
+                color="primary"
                 disabled={false}
               >
                 Hop Again
@@ -384,56 +347,21 @@ const JobCard = ({ classes }) => {
           </CardActionArea>
           <CardContent>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Typography
-                // aria-label={}
-                gutterBottom
-                variant="h5"
-                component="h2"
-              >
+              <Typography gutterBottom variant="h5" component="h2">
                 {DATA[2].title}
               </Typography>
-              <Typography
-                // aria-label={}
-                variant="body1"
-                color="textPrimary"
-                component="p"
-              >
+              <Typography paragraph>
                 Applicants <br />3
               </Typography>
             </div>
 
-            <Typography
-              // aria-label={}
-              variant="body1"
-              color="textPrimary"
-              component="p"
-            >
-              Current Price
-            </Typography>
+            <Typography paragraph>Current Price</Typography>
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Typography
-                // aria-label={}
-                gutterBottom
-                variant="h4"
-                component="h4"
-              >
+              <Typography gutterBottom variant="h4" component="h4">
                 ${DATA[2].priceMax}
               </Typography>
-              {/* 
-              <FormControl className={classes.margin}>
-                <InputLabel htmlFor="standard-adornment-amount">
-                  Hop Price
-                </InputLabel>
-                <Input
-                  id="standard-adornment-amount"
-                  // value={}
-                  // onChange={}
-                  startAdornment={
-                    <InputAdornment position="start">$</InputAdornment>
-                  }
-                />
-              </FormControl> */}
+
               <TextField
                 disabled
                 id="filled-disabled"
@@ -445,23 +373,9 @@ const JobCard = ({ classes }) => {
               />
             </div>
 
-            <Typography
-              // aria-label={}
-              variant="body1"
-              color="textPrimary"
-              component="p"
-            >
-              Category: {DATA[2].category}
-            </Typography>
+            <Typography paragraph>Category:</Typography>
             <br />
-            <Typography
-              // aria-label={}
-              variant="body1"
-              color="textPrimary"
-              component="p"
-            >
-              {DATA[2].description}
-            </Typography>
+            <Typography paragraph>{DATA[2].description}</Typography>
           </CardContent>
 
           <Grid
@@ -475,7 +389,7 @@ const JobCard = ({ classes }) => {
                 type="button"
                 variant="contained"
                 size="large"
-                color="primary"
+                color="secondary"
                 disabled={false}
                 onClick={() => {
                   console.log(111);
@@ -487,7 +401,7 @@ const JobCard = ({ classes }) => {
                 type="submit"
                 variant="contained"
                 size="large"
-                color="primary"
+                color="secondary"
                 disabled={false}
               >
                 Hop Again
@@ -500,4 +414,9 @@ const JobCard = ({ classes }) => {
   );
 };
 
-export default withStyles(styles)(JobCard);
+export default withTracker(() => {
+  return {
+    currentUser: Meteor.user(),
+    categories: Categories.find({}).fetch()
+  };
+})(withStyles(styles)(JobCard));

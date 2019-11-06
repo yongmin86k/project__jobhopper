@@ -22,7 +22,7 @@ const Jobs = ({ classes }) => {
                 size="small"
                 variant="extended"
                 aria-label="like"
-                color="primary"
+                color="secondary"
               >
                 Category
               </Fab>
@@ -32,7 +32,7 @@ const Jobs = ({ classes }) => {
                 size="small"
                 variant="extended"
                 aria-label="like"
-                color="primary"
+                color="secondary"
               >
                 Dates
               </Fab>
@@ -42,7 +42,7 @@ const Jobs = ({ classes }) => {
                 size="small"
                 variant="extended"
                 aria-label="like"
-                color="primary"
+                color="secondary"
               >
                 Price
               </Fab>
@@ -52,19 +52,13 @@ const Jobs = ({ classes }) => {
                 size="small"
                 variant="extended"
                 aria-label="like"
-                color="primary"
+                color="secondary"
               >
                 Distance
               </Fab>
             </div>
             <div className={classes.location}>
-              <Typography
-                className={classes.locationbtn}
-                // aria-label={}
-                gutterBottom
-                variant="p"
-                component="body1"
-              >
+              <Typography className={classes.locationbtn} paragraph>
                 Current location: V6L 3E2
               </Typography>
             </div>
