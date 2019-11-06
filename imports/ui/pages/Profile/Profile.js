@@ -6,6 +6,7 @@ import {
   Tab,
   AppBar,
   Box,
+  Grid,
   Typography
 } from "@material-ui/core";
 import { withTracker } from "meteor/react-meteor-data";
@@ -38,7 +39,19 @@ class _Profile extends Component {
     //   <figcaption>Yongmin</figcaption>
     // </figure>
 
-    return <ProfileJobs />;
+    return (
+      <Grid container>
+        <Grid item xs={4}>
+          a
+        </Grid>
+        <Grid item xs={4}>
+          <ProfileJobs />
+        </Grid>
+        <Grid item xs={4}>
+          a
+        </Grid>
+      </Grid>
+    );
   }
 }
 

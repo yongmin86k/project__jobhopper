@@ -19,8 +19,6 @@ Meteor.methods({
       jobImages
     } = values;
 
-    console.log(user);
-
     Jobs.insert({
       userPosted: this.userId,
       category,

@@ -5,7 +5,7 @@ class ProfileContainer extends Component {
   render() {
     return (
       <section className="sectionWithMenuBar">
-        <Profile />;
+        <Profile />
       </section>
     );
   }
