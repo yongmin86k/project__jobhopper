@@ -45,7 +45,6 @@ class MenuBar extends Component {
                   <Typography
                     variant="h6"
                     color="textSecondary"
-                    component="p"
                     component={NavLink}
                     to={"/post"}
                   >
