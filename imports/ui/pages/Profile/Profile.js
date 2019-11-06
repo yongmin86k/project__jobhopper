@@ -38,9 +38,10 @@ class _Profile extends Component {
     //   <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" />
     //   <figcaption>Yongmin</figcaption>
     // </figure>
+    const { classes } = this.props;
 
     return (
-      <Grid container>
+      <Grid container className={classes.wrap}>
         <Grid item xs={4}>
           a
         </Grid>
