@@ -1,68 +1,147 @@
 import React, { Component, Fragment } from "react";
-import { Categories } from "/imports/api/categories";
+import { Meteor } from "meteor/meteor";
 import { withTracker } from "meteor/react-meteor-data";
+import { Categories } from "/imports/api/categories";
 import { Form, Field } from "react-final-form";
 import {
   Button,
-  FormControl,
   Grid,
   InputLabel,
+  InputAdornment,
   Typography,
-  FormControlLabel,
-  RadioGroup,
-  Radio,
-  IconButton,
+  TextField,
+  MenuItem,
+  FormControl,
   FilledInput,
-  InputAdornment
+  Select,
+  withStyles
 } from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
-import styles from "./styles";
-import { withStyles } from "@material-ui/core";
+import "date-fns";
 
-class _PostJobForm extends Component {
+import DateFnsUtils from "@date-io/date-fns";
+import { MuiPickersUtilsProvider, DateTimePicker } from "@material-ui/pickers";
+
+// import AddIcon from "@material-ui/icons/Add";
+import styles from "./styles";
+
+class PostJobForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      defaultCategory: "",
+      selectedDate: new Date(),
+      uploading: [],
+      progress: 0,
+      inProgress: false
+    };
+  }
+
+  categoryChange = event => {
+    this.setState({ defaultCategory: event.target.value });
+  };
+
+  handleDateChange = newDate => {
+    this.setState({ selectedDate: newDate });
+  };
+
+  postSingle = (values, user) => {
+    Meteor.call("jobs.postSingle", values, user);
+  };
+
   render() {
-    const { classes } = this.props;
-    // console.log(this.props);
+    const { classes, categories, currentUser } = this.props;
 
     return (
       <Form
         onSubmit={values => {
-          console.log("Submit");
+          this.postSingle(values, Meteor.user());
         }}
         validate={values => {
-          console.log("validate");
+          console.log("validate: ", values);
         }}
         render={({ handleSubmit, form, valid, submitSucceeded }) => {
           return (
             <form
               onSubmit={e => {
                 handleSubmit(e);
-                // form.reset();
+                form.reset();
               }}
               noValidate
             >
               {/*  */}
               <Grid container direction="row" className={classes.row}>
-                <Grid item>
-                  <Typography color="textPrimary" component="p" variant="body1">
+                <Grid item xs={12}>
+                  <Typography
+                    className={classes.label}
+                    color="textPrimary"
+                    component="p"
+                    variant="body1"
+                  >
                     1. Select an image
                   </Typography>
-                  <Button
-                    aria-label="Add Image"
-                    type="button"
-                    variant="contained"
-                    size="large"
-                    color="secondary"
-                  >
-                    <AddIcon />
-                    Add
-                  </Button>
+                  {/* upload btn */}
+                  {/* <Field
+                    name="jobImage"
+                    render={({ input, meta }) => (
+                      <Fragment>
+                        <input
+                          accept="image/*"
+                          className={(classes.input, classes.btnUpload)}
+                          id="jobImage"
+                          {...input}
+                          type="file"
+                        />
+                        <label htmlFor="jobImage">
+                          <Button
+                            color="primary"
+                            variant="contained"
+                            component="span"
+                            size="large"
+                          >
+                            Upload
+                          </Button>
+                        </label>
+                      </Fragment>
+                    )}
+                  /> */}
+                  {/*  */}
+                  <FormControl variant="filled" fullWidth>
+                    <InputLabel htmlFor="jobImage">Image url</InputLabel>
+                    <Field
+                      name="jobImage"
+                      render={({ input, meta }) => (
+                        <FilledInput
+                          fullWidth
+                          className={classes.input}
+                          id="jobImage"
+                          inputProps={{
+                            autoComplete: "off"
+                          }}
+                          {...input}
+                          type="text"
+                          value={input.value}
+                          required
+                        />
+                      )}
+                    />
+                  </FormControl>
+                  {/*  */}
                 </Grid>
               </Grid>
               {/*  */}
-              <Grid container direction="row" className={classes.row}>
-                <Grid item>
-                  <Typography color="textPrimary" component="p" variant="body1">
+              <Grid
+                container
+                direction="row"
+                className={classes.row}
+                spacing={2}
+              >
+                <Grid item xs={6}>
+                  <Typography
+                    className={classes.label}
+                    color="textPrimary"
+                    component="p"
+                    variant="body1"
+                  >
                     2. Fill the title of the job
                   </Typography>
                   <FormControl variant="filled" fullWidth>
@@ -85,53 +164,69 @@ class _PostJobForm extends Component {
                     />
                   </FormControl>
                 </Grid>
-                {/*  */}
-                <Grid item>
-                  <Typography color="textPrimary" component="p" variant="body1">
+                {/* SELECT with final-form && material-ui */}
+                <Grid item xs={6}>
+                  <Typography
+                    className={classes.label}
+                    color="textPrimary"
+                    component="p"
+                    variant="body1"
+                  >
                     3. Select a category
                   </Typography>
                   <FormControl variant="filled" fullWidth>
-                    <InputLabel htmlFor="title">Category</InputLabel>
-                    <Field
-                      name="category"
-                      render={({ input, meta }) => (
-                        <FilledInput
-                          className={classes.input}
-                          id="category"
-                          inputProps={{
-                            autoComplete: "off"
-                          }}
-                          {...input}
-                          type="text"
-                          value={input.value}
-                          required
-                        />
-                      )}
-                    />
+                    <InputLabel id="categories">Category</InputLabel>
+                    <Field name="category">
+                      {({ input, meta }) => {
+                        return (
+                          <Select
+                            className={classes.input}
+                            labelId="categories"
+                            id="category"
+                            onChange={this.categoryChange}
+                            value={this.state.defaultCategory}
+                            {...input}
+                            displayEmpty={false}
+                          >
+                            <MenuItem value="" disabled>
+                              Category
+                            </MenuItem>
+                            {categories.map(cat => (
+                              <MenuItem key={cat._id} value={cat._id}>
+                                {cat.title}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        );
+                      }}
+                    </Field>
                   </FormControl>
                 </Grid>
               </Grid>
               {/*  */}
               <Grid container direction="row" className={classes.row}>
-                <Grid item>
-                  <Typography color="textPrimary" component="p" variant="body1">
+                <Grid item xs={12}>
+                  <Typography
+                    className={classes.label}
+                    color="textPrimary"
+                    component="p"
+                    variant="body1"
+                  >
                     4. Describe the job
                   </Typography>
                   <FormControl variant="filled" fullWidth>
-                    <InputLabel htmlFor="description">
-                      Job description
-                    </InputLabel>
                     <Field
                       name="description"
                       render={({ input, meta }) => (
-                        <FilledInput
-                          className={classes.input}
+                        <TextField
                           id="description"
-                          inputProps={{
-                            autoComplete: "off"
-                          }}
+                          className={classes.input}
+                          label="Job description"
+                          multiline
+                          rows="4"
+                          margin="normal"
+                          variant="filled"
                           {...input}
-                          type="text"
                           value={input.value}
                           required
                         />
@@ -141,14 +236,53 @@ class _PostJobForm extends Component {
                 </Grid>
               </Grid>
               {/*  */}
-              <Grid container direction="row" className={classes.row}>
-                <Grid item>
-                  <Typography color="textPrimary" component="p" variant="body1">
-                    5. Set Zipcode of the loaction
+              <Grid
+                container
+                direction="row"
+                spacing={2}
+                className={classes.row}
+              >
+                <Grid item xs={6}>
+                  <Typography
+                    className={classes.label}
+                    color="textPrimary"
+                    component="p"
+                    variant="body1"
+                  >
+                    5. Set{" "}
+                    {currentUser &&
+                    currentUser.profile.address.country === "us5"
+                      ? "zip code"
+                      : "postal code"}{" "}
+                    of the loaction
                   </Typography>
                   <FormControl variant="filled" fullWidth>
-                    <InputLabel htmlFor="zipCode">Zip code</InputLabel>
-                    <Field
+                    <InputLabel htmlFor="zipCode">
+                      {currentUser &&
+                      currentUser.profile.address.country === "us5"
+                        ? "Zip code"
+                        : "Postal code"}
+                    </InputLabel>
+                    {/*  */}
+                    <FilledInput
+                      className={classes.input}
+                      id="zipCode"
+                      inputProps={{
+                        autoComplete: "off"
+                      }}
+                      type="text"
+                      value={
+                        currentUser
+                          ? currentUser.profile.address.zipCode
+                          : `Loading`
+                      }
+                      disabled
+                      inputProps={{
+                        className: classes.postCode
+                      }}
+                    />
+                    {/*  */}
+                    {/* <Field
                       name="zipCode"
                       render={({ input, meta }) => (
                         <FilledInput
@@ -159,20 +293,32 @@ class _PostJobForm extends Component {
                           }}
                           {...input}
                           type="text"
-                          value={input.value}
-                          required
+                          value={
+                            currentUser
+                              ? currentUser.profile.address.zipCode
+                              : `Loading`
+                          }
+                          disabled
+                          inputProps={{
+                            className: classes.postCode
+                          }}
                         />
                       )}
-                    />
+                    /> */}
                   </FormControl>
                 </Grid>
                 {/*  */}
-                <Grid item>
-                  <Typography color="textPrimary" component="p" variant="body1">
-                    6. Set the minmum and maximum prices
+                <Grid item xs={6}>
+                  <Typography
+                    className={classes.label}
+                    color="textPrimary"
+                    component="p"
+                    variant="body1"
+                  >
+                    6. Set the minimum and maximum prices
                   </Typography>
-                  <Grid container>
-                    <Grid item>
+                  <Grid container spacing={2}>
+                    <Grid item xs={6}>
                       <FormControl variant="filled" fullWidth>
                         <InputLabel htmlFor="priceMin">Min</InputLabel>
                         <Field
@@ -185,15 +331,23 @@ class _PostJobForm extends Component {
                                 autoComplete: "off"
                               }}
                               {...input}
-                              type="text"
+                              type="number"
                               value={input.value}
                               required
+                              startAdornment={
+                                <InputAdornment position="start">
+                                  $
+                                </InputAdornment>
+                              }
+                              inputProps={{
+                                className: classes.priceField
+                              }}
                             />
                           )}
                         />
                       </FormControl>
                     </Grid>
-                    <Grid item>
+                    <Grid item xs={6}>
                       <FormControl variant="filled" fullWidth>
                         <InputLabel htmlFor="priceMax">Max</InputLabel>
                         <Field
@@ -206,9 +360,17 @@ class _PostJobForm extends Component {
                                 autoComplete: "off"
                               }}
                               {...input}
-                              type="text"
+                              type="number"
                               value={input.value}
                               required
+                              startAdornment={
+                                <InputAdornment position="start">
+                                  $
+                                </InputAdornment>
+                              }
+                              inputProps={{
+                                className: classes.priceField
+                              }}
                             />
                           )}
                         />
@@ -218,54 +380,71 @@ class _PostJobForm extends Component {
                 </Grid>
               </Grid>
               {/*  */}
-              <Grid container direction="row" className={classes.row}>
-                <Grid item>
-                  <Typography color="textPrimary" component="p" variant="body1">
+              <Grid
+                container
+                direction="row"
+                spacing={2}
+                className={classes.row}
+              >
+                <Grid item xs={6}>
+                  <Typography
+                    className={classes.label}
+                    color="textPrimary"
+                    component="p"
+                    variant="body1"
+                  >
                     7. Set the expiry date
                   </Typography>
+                  {/*  */}
                   <FormControl variant="filled" fullWidth>
-                    <InputLabel htmlFor="dateExpire">Expiry date</InputLabel>
                     <Field
                       name="dateExpire"
                       render={({ input, meta }) => (
-                        <FilledInput
-                          className={classes.input}
-                          id="dateExpire"
-                          inputProps={{
-                            autoComplete: "off"
-                          }}
-                          {...input}
-                          type="text"
-                          value={input.value}
-                          required
-                        />
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                          <DateTimePicker
+                            id="dateExpire"
+                            className={classes.input}
+                            inputVariant="filled"
+                            margin="normal"
+                            label="Expiry date"
+                            animateYearScrolling={false}
+                            format="yyyy-MM-dd hh:mm a"
+                            onChange={this.handleDateChange}
+                            value={this.state.selectedDate}
+                            {...input}
+                          ></DateTimePicker>
+                        </MuiPickersUtilsProvider>
                       )}
                     />
                   </FormControl>
+                  {/*  */}
                 </Grid>
               </Grid>
               {/*  */}
-              <Button
-                type="button"
-                variant="outlined"
-                size="large"
-                color="secondary"
-                disabled={!valid}
-                onClick={() => {
-                  form.reset();
-                }}
-              >
-                Reset
-              </Button>
-              <Button
-                type="submit"
-                variant="contained"
-                size="large"
-                color="secondary"
-                disabled={!valid}
-              >
-                Submit
-              </Button>
+              <Grid container justify="space-between">
+                <Button
+                  className={classes.btn}
+                  type="button"
+                  variant="outlined"
+                  size="large"
+                  color="primary"
+                  onClick={() => {
+                    form.reset();
+                  }}
+                >
+                  Reset
+                </Button>
+                <Button
+                  className={classes.btn}
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  color="primary"
+                  disabled={!valid}
+                >
+                  Submit
+                </Button>
+              </Grid>
             </form>
           );
         }}
@@ -274,11 +453,9 @@ class _PostJobForm extends Component {
   }
 }
 
-const PostJobForm = withStyles(styles)(_PostJobForm);
-
 export default withTracker(() => {
   return {
     currentUser: Meteor.user(),
     categories: Categories.find({}).fetch()
   };
-})(PostJobForm);
+})(withStyles(styles)(PostJobForm));

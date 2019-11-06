@@ -6,6 +6,7 @@ import {
   Tab,
   AppBar,
   Box,
+  Grid,
   Typography
 } from "@material-ui/core";
 import { withTracker } from "meteor/react-meteor-data";
@@ -34,13 +35,6 @@ class _CompletedJobs extends Component {
     return <Hopper />;
   }
 }
-
-
-// return (
-//   <Grid container justify="center" alignItems="center">
-//     <Avatar alt="" src="/public/images/" />
-//   </Grid>
-// );
 
 const Profile = withTracker(() => {
   return {
