@@ -122,7 +122,7 @@ class Hopping extends Component {
                   type="button"
                   variant="contained"
                   size="large"
-                  color="secondary"
+                  color="green"
                   fullWidth
                   disabled={false}
                   onClick={() => {
