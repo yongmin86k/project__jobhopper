@@ -17,7 +17,7 @@ const styles = theme => ({
   },
   fullwidthBtn: {
     width: 350,
-    color: white
+    color: "white"
   },
   margin: {
     margin: theme.spacing(1)

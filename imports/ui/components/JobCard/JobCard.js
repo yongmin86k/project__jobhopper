@@ -33,29 +33,25 @@ const JobCard = ({ classes }) => {
     >
       <Grid item>
         <Card className={classes.card}>
-          <CardActionArea>
-            <CardHeader
-              avatar={
-                <Avatar aria-label="recipe" className={classes.avatar}>
-                  R
-                </Avatar>
-              }
-              action={
-                <IconButton aria-label="settings">
-                  <FavoriteIcon />
-                </IconButton>
-              }
-              title="Username"
-              subheader="Remain : 00:03:12"
-            />
-          </CardActionArea>
-          <CardActionArea>
-            <CardMedia
-              className={classes.media}
-              image="https://c6.staticflickr.com/9/8890/28897154101_a8f55be225_b.jpg"
-              title=""
-            />
-          </CardActionArea>
+          <CardHeader
+            avatar={
+              <Avatar aria-label="recipe" className={classes.avatar}>
+                R
+              </Avatar>
+            }
+            action={
+              <IconButton aria-label="settings">
+                <FavoriteIcon />
+              </IconButton>
+            }
+            title="Username"
+            subheader="Remain : 00:03:12"
+          />
+          <CardMedia
+            className={classes.media}
+            image="https://c6.staticflickr.com/9/8890/28897154101_a8f55be225_b.jpg"
+            title=""
+          />
           <CardContent>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <Typography
@@ -242,7 +238,7 @@ const JobCard = ({ classes }) => {
             justify="space-around"
             alignItems="center"
           >
-            <CardActions className={classes.cardMediaItemsBtn}>
+            <div className={classes.cardMediaItemsBtn}>
               <Button
                 type="button"
                 variant="contained"
@@ -264,7 +260,7 @@ const JobCard = ({ classes }) => {
               >
                 Hop Again
               </Button>
-            </CardActions>
+            </div>
           </Grid>
         </Card>
       </Grid>
@@ -272,29 +268,25 @@ const JobCard = ({ classes }) => {
       {/* New Card */}
       <Grid item>
         <Card className={classes.card}>
-          <CardActionArea>
-            <CardHeader
-              avatar={
-                <Avatar aria-label="recipe" className={classes.avatar}>
-                  R
-                </Avatar>
-              }
-              action={
-                <IconButton aria-label="settings">
-                  <FavoriteIcon />
-                </IconButton>
-              }
-              title="Username"
-              subheader="Remain : 00:03:12"
-            />
-          </CardActionArea>
-          <CardActionArea>
-            <CardMedia
-              className={classes.media}
-              image="https://c6.staticflickr.com/9/8890/28897154101_a8f55be225_b.jpg"
-              title=""
-            />
-          </CardActionArea>
+          <CardHeader
+            avatar={
+              <Avatar aria-label="recipe" className={classes.avatar}>
+                R
+              </Avatar>
+            }
+            action={
+              <IconButton aria-label="settings">
+                <FavoriteIcon />
+              </IconButton>
+            }
+            title="Username"
+            subheader="Remain : 00:03:12"
+          />
+          <CardMedia
+            className={classes.media}
+            image="https://c6.staticflickr.com/9/8890/28897154101_a8f55be225_b.jpg"
+            title=""
+          />
           <CardContent>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <Typography
@@ -374,7 +366,7 @@ const JobCard = ({ classes }) => {
             justify="space-around"
             alignItems="center"
           >
-            <CardActions className={classes.cardMediaItemsBtn}>
+            <div className={classes.cardMediaItemsBtn}>
               <Button
                 type="button"
                 variant="contained"
@@ -396,7 +388,7 @@ const JobCard = ({ classes }) => {
               >
                 Hop Again
               </Button>
-            </CardActions>
+            </div>
           </Grid>
         </Card>
       </Grid>
