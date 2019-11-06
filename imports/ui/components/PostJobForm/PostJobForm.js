@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Meteor } from "meteor/meteor";
-import { Categories } from "/imports/api/categories";
 import { withTracker } from "meteor/react-meteor-data";
+import { Categories } from "/imports/api/categories";
 import { Form, Field } from "react-final-form";
 import {
   Button,
