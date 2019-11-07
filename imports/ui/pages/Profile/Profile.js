@@ -5,7 +5,7 @@ import { Grid, withStyles } from "@material-ui/core";
 import { withTracker } from "meteor/react-meteor-data";
 // CARD TAB
 import PropTypes from "prop-types";
-import { ProfileUser, ProfileJobs } from "/imports/ui/components";
+import { ProfileUser, ProfileJobs, Reviews } from "/imports/ui/components";
 
 class Profile extends Component {
   //   constructor() {
@@ -33,11 +33,13 @@ class Profile extends Component {
         <Grid item xs={4}>
           <ProfileUser />
         </Grid>
+
         <Grid item xs={4}>
           <ProfileJobs />
         </Grid>
+
         <Grid item xs={4}>
-          a
+          <Reviews />
         </Grid>
       </Grid>
     );
