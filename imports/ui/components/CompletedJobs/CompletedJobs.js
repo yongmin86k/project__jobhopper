@@ -60,7 +60,7 @@ class CompletedJobs extends Component {
                 }}
               >
                 <Typography gutterBottom>Current Price $123.00</Typography>
-                Your Hop Price
+                Your Bid Price
                 <FilledInput
                   className="hopPrice"
                   id="bidPrice"

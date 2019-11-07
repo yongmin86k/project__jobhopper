@@ -14,7 +14,7 @@ import {
 import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
 
-class Hopping extends Component {
+class Reviews extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,6 +34,7 @@ class Hopping extends Component {
         alignItems="center"
         spacing={0}
       >
+        {/* test */}
         <Grid item>
           <Card className={classes.card}>
             <CardActionArea>
@@ -46,7 +47,12 @@ class Hopping extends Component {
 
                 <CardHeader
                   className={classes.profileTitle}
-                  title="Build my app!"
+                  action={
+                    <IconButton aria-label="settings">
+                      {/* <FavoriteIcon /> */}
+                    </IconButton>
+                  }
+                  title="Username"
                   subheader="Create a web based app using React"
                 />
               </Grid>
@@ -59,7 +65,9 @@ class Hopping extends Component {
                   justifyContent: "space-between"
                 }}
               >
-                <Typography gutterBottom>Current Price $123.00</Typography>
+                <Typography gutterBottom variant="roboto" fontSize="14px">
+                  Current Price $123.00
+                </Typography>
                 Your Bid Price
                 <FilledInput
                   className="hopPrice"
@@ -73,20 +81,6 @@ class Hopping extends Component {
                   disabled
                 />
               </div>
-              <Typography variant="body1" color="textPrimary" component="p">
-                Time Remaining
-              </Typography>
-
-              <Typography gutterBottom variant="h4" component="h4">
-                1 Day 23:08:09
-              </Typography>
-
-              {/* <Typography variant="body1" color="textPrimary" component="p">
-                Time Remaining
-              </Typography>
-              <Typography variant="body1" color="textPrimary" component="p">
-                Input countdown clock here
-              </Typography> */}
             </CardContent>
 
             <Grid
@@ -94,34 +88,7 @@ class Hopping extends Component {
               direction="row"
               justify="space-around"
               alignItems="center"
-            >
-              <Button
-                className={classes.profileBtn}
-                variant="contained"
-                size="large"
-                color="secondary"
-                fullWidth
-                disabled={false}
-                onClick={() => {
-                  console.log(111);
-                }}
-              >
-                Drop
-              </Button>
-              <Button
-                className={classes.profileBtn}
-                variant="contained"
-                size="large"
-                color="secondary"
-                fullWidth
-                disabled={false}
-                onClick={() => {
-                  console.log(111);
-                }}
-              >
-                Hop In
-              </Button>
-            </Grid>
+            ></Grid>
           </Card>
         </Grid>
       </Grid>
@@ -129,4 +96,4 @@ class Hopping extends Component {
   }
 }
 
-export default withStyles(styles)(Hopping);
+export default withStyles(styles)(Reviews);

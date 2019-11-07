@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styles from "./styles";
 import { Grid, Typography, withStyles } from "@material-ui/core";
 import PropTypes from "prop-types";
-import { ProfileUser, ProfileJobs } from "/imports/ui/components";
+import { ProfileUser, ProfileJobs, Reviews } from "/imports/ui/components";
 
 class Profile extends Component {
   constructor(props) {
@@ -26,11 +26,13 @@ class Profile extends Component {
           </Typography>
           <ProfileUser userInfo={userInfo} />
         </Grid>
+
         <Grid item xs={4}>
           <ProfileJobs />
         </Grid>
+
         <Grid item xs={4}>
-          a
+          <Reviews />
         </Grid>
       </Grid>
     );
