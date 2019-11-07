@@ -47,11 +47,6 @@ class Reviews extends Component {
 
                 <CardHeader
                   className={classes.profileTitle}
-                  action={
-                    <IconButton aria-label="settings">
-                      {/* <FavoriteIcon /> */}
-                    </IconButton>
-                  }
                   title="Username"
                   subheader="Create a web based app using React"
                 />
@@ -65,9 +60,7 @@ class Reviews extends Component {
                   justifyContent: "space-between"
                 }}
               >
-                <Typography gutterBottom variant="roboto" fontSize="14px">
-                  Current Price $123.00
-                </Typography>
+                <Typography gutterBottom>Current Price $123.00</Typography>
                 Your Bid Price
                 <FilledInput
                   className="hopPrice"
