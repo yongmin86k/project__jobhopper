@@ -39,11 +39,6 @@ const JobCard = ({ classes }) => {
                 R
               </Avatar>
             }
-            action={
-              <IconButton aria-label="settings">
-                <FavoriteIcon />
-              </IconButton>
-            }
             title="Username"
             subheader="Remain : 00:03:12"
           />
@@ -143,11 +138,6 @@ const JobCard = ({ classes }) => {
                 <Avatar aria-label="recipe" className={classes.avatar}>
                   R
                 </Avatar>
-              }
-              action={
-                <IconButton aria-label="settings">
-                  <FavoriteIcon />
-                </IconButton>
               }
               title="Username"
               subheader="Remain : 00:03:12"
@@ -273,11 +263,6 @@ const JobCard = ({ classes }) => {
               <Avatar aria-label="recipe" className={classes.avatar}>
                 R
               </Avatar>
-            }
-            action={
-              <IconButton aria-label="settings">
-                <FavoriteIcon />
-              </IconButton>
             }
             title="Username"
             subheader="Remain : 00:03:12"

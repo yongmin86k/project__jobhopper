@@ -454,6 +454,7 @@ class PostJobForm extends Component {
 }
 
 export default withTracker(() => {
+  Meteor.subscribe("allCategories");
   return {
     currentUser: Meteor.user(),
     categories: Categories.find({}).fetch()

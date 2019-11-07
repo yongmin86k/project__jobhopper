@@ -33,7 +33,7 @@ const routes = ({ currentUserId }) => (
           currentUserId={currentUserId}
         />
         <PrivateRoute
-          path="/profile:fullname"
+          path="/profile/:fullname"
           component={Profile}
           currentUserId={currentUserId}
         />
