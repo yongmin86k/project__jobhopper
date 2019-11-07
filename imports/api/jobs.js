@@ -20,6 +20,7 @@ Meteor.methods({
     } = values;
 
     Jobs.insert({
+      completed: false,
       userPosted: this.userId,
       category,
       title,
