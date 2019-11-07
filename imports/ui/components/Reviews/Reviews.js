@@ -14,7 +14,7 @@ import {
 import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
 
-class CompletedJobs extends Component {
+class Reviews extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,6 +34,7 @@ class CompletedJobs extends Component {
         alignItems="center"
         spacing={0}
       >
+        {/* test */}
         <Grid item>
           <Card className={classes.card}>
             <CardActionArea>
@@ -51,7 +52,7 @@ class CompletedJobs extends Component {
                       {/* <FavoriteIcon /> */}
                     </IconButton>
                   }
-                  title="Build my app!"
+                  title="Username"
                   subheader="Create a web based app using React"
                 />
               </Grid>
@@ -80,20 +81,6 @@ class CompletedJobs extends Component {
                   disabled
                 />
               </div>
-              <Typography variant="body1" color="textPrimary" component="p">
-                Time Remaining
-              </Typography>
-
-              <Typography gutterBottom variant="h4" component="h4">
-                1 Day 23:08:09
-              </Typography>
-
-              {/* <Typography variant="body1" color="textPrimary" component="p">
-                Time Remaining
-              </Typography>
-              <Typography variant="body1" color="textPrimary" component="p">
-                Input countdown clock here
-              </Typography> */}
             </CardContent>
 
             <Grid
@@ -101,22 +88,7 @@ class CompletedJobs extends Component {
               direction="row"
               justify="space-around"
               alignItems="center"
-            >
-              <CardActions className={classes.cardMediaItemsBtn}>
-                <Button
-                  className={classes.profileBtn}
-                  type="button"
-                  variant="contained"
-                  size="large"
-                  color="secondary"
-                  fullWidth
-                  disabled={false}
-                  onClick={() => {}}
-                >
-                  View
-                </Button>
-              </CardActions>
-            </Grid>
+            ></Grid>
           </Card>
         </Grid>
       </Grid>
@@ -124,4 +96,4 @@ class CompletedJobs extends Component {
   }
 }
 
-export default withStyles(styles)(CompletedJobs);
+export default withStyles(styles)(Reviews);

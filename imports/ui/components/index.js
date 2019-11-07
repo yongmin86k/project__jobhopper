@@ -10,3 +10,4 @@ export { default as ProfileJobs } from "./ProfileJobs";
 export { default as ProfileUser } from "./ProfileUser";
 export { default as CompletedJobs } from "./CompletedJobs";
 export { default as PostedJobs } from "./PostedJobs";
+export { default as Reviews } from "./Reviews";

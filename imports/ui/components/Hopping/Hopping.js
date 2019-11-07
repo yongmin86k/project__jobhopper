@@ -67,7 +67,7 @@ class Hopping extends Component {
                 <Typography gutterBottom variant="roboto" fontSize="14px">
                   Current Price $123.00
                 </Typography>
-                Your Hop Price
+                Your Bid Price
                 <FilledInput
                   className="hopPrice"
                   id="bidPrice"
