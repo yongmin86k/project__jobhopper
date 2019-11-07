@@ -16,7 +16,7 @@ Meteor.methods({
       dateExpire,
       priceMax,
       priceMin,
-      jobImages
+      jobImage
     } = values;
 
     Jobs.insert({
@@ -31,7 +31,7 @@ Meteor.methods({
       },
       priceMax,
       priceMin,
-      jobImages
+      jobImage
     });
   }
 });
