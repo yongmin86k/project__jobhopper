@@ -30,6 +30,9 @@ const styles = theme => ({
   extendedIcon: {
     marginRight: theme.spacing(1)
   }
+  // menuBar: {
+  //   textDecoration: "none"
+  // }
 });
 
 export default styles;

@@ -4,6 +4,7 @@ import { NavLink, withRouter } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
+  Fab,
   Typography,
   IconButton,
   Icon
@@ -38,17 +39,17 @@ class MenuBar extends Component {
           </Typography>
 
           <div className={classes.menuBar}>
-            <Typography
-              variant="h6"
-              color="textSecondary"
+            <Fab
+              className={classes.btnShare}
+              variant="extended"
+              color="secondary"
+              aria-label="post"
               component={NavLink}
               to={"/post"}
             >
               Post a job
-            </Typography>
-            <Typography variant="h6" color="textSecondary" component="p">
-              Find a Job
-            </Typography>
+            </Fab>
+
             <MenuDropDown />
           </div>
         </Toolbar>
