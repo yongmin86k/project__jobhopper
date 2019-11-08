@@ -59,8 +59,10 @@ class CompletedJobs extends Component {
                   justifyContent: "space-between"
                 }}
               >
-                <Typography gutterBottom>Current Price $123.00</Typography>
-                Your Bid Price
+                <Typography gutterBottom variant="roboto" fontSize="14px">
+                  Current Price $123.00
+                </Typography>
+                Winning Bid:
                 <FilledInput
                   className="hopPrice"
                   id="bidPrice"
@@ -78,7 +80,7 @@ class CompletedJobs extends Component {
               </Typography>
 
               <Typography gutterBottom variant="h4" component="h4">
-                1 Day 23:08:09
+                COMPLETED
               </Typography>
 
               {/* <Typography variant="body1" color="textPrimary" component="p">

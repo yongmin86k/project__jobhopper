@@ -76,32 +76,7 @@ class PostJobForm extends Component {
                   >
                     1. Select an image
                   </Typography>
-                  {/* upload btn */}
-                  {/* <Field
-                    name="jobImage"
-                    render={({ input, meta }) => (
-                      <Fragment>
-                        <input
-                          accept="image/*"
-                          className={(classes.input, classes.btnUpload)}
-                          id="jobImage"
-                          {...input}
-                          type="file"
-                        />
-                        <label htmlFor="jobImage">
-                          <Button
-                            color="primary"
-                            variant="contained"
-                            component="span"
-                            size="large"
-                          >
-                            Upload
-                          </Button>
-                        </label>
-                      </Fragment>
-                    )}
-                  /> */}
-                  {/*  */}
+
                   <FormControl variant="filled" fullWidth>
                     <InputLabel htmlFor="jobImage">Image url</InputLabel>
                     <Field
