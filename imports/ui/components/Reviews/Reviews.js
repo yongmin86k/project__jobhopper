@@ -10,10 +10,12 @@ import {
   Typography,
   IconButton,
   FilledInput,
-  FavoriteIcon
+  FavoriteIcon,
+  Avatar
 } from "@material-ui/core";
 import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 class Reviews extends Component {
   constructor(props) {
@@ -36,11 +38,20 @@ class Reviews extends Component {
         spacing={0}
       >
         {/* test */}
+
         <Grid item>
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            component="p"
+            gutterBottom
+          >
+            Reviews
+          </Typography>
           <Card className={classes.card}>
             <CardActionArea>
               <Grid container>
-                <img
+                {/* <img
                   className={classes.profileMedia}
                   src="https://c6.staticflickr.com/9/8890/28897154101_a8f55be225_b.jpg"
                   title=""
@@ -50,18 +61,28 @@ class Reviews extends Component {
                   className={classes.profileTitle}
                   title="Username"
                   subheader="Create a web based app using React"
+                /> */}
+
+                <CardHeader
+                  avatar={
+                    <Avatar aria-label="reviews" className={classes.avatar}>
+                      R
+                    </Avatar>
+                  }
+                  title="Username"
+                  subheader="October 1, 2019"
                 />
               </Grid>
             </CardActionArea>
             <CardActionArea></CardActionArea>
             <CardContent>
-              <div
+              {/* <div
                 style={{
                   display: "flex",
                   justifyContent: "space-between"
                 }}
-              >
-                <Typography gutterBottom>Current Price $123.00</Typography>
+              > */}
+              {/* <Typography gutterBottom>Current Price $123.00</Typography>
                 Your Bid Price
                 <FilledInput
                   className="hopPrice"
@@ -72,9 +93,25 @@ class Reviews extends Component {
                   type="text"
                   value={"Lorem ipsum dolor sit ametc"}
                   required
-                  disabled
-                />
-              </div>
+                  disabled */}
+
+              {/* /> */}
+              {/* </div> */}
+              <Typography
+                // aria-label={}
+                paragraph
+              >
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s, when an unknown printer took a galley
+                of type and scrambled it to make a type specimen book. It has
+                survived not only five centuries, but also the leap into
+                electronic typesetting, remaining essentially unchanged. It was
+                popularised in the 1960s with the release of Letraset sheets
+                containing Lorem Ipsum passages, and more recently with desktop
+                publishing software like Aldus PageMaker including versions of
+                Lorem Ipsum.
+              </Typography>
             </CardContent>
 
             <Grid
