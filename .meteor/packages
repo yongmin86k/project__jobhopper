@@ -21,3 +21,4 @@ react-meteor-data
 accounts-ui-unstyled
 accounts-password
 ostrio:files
+momentjs:moment

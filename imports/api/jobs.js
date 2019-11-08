@@ -1,6 +1,12 @@
 import { Mongo } from "meteor/mongo";
 export const Jobs = new Mongo.Collection("jobs");
 
+if (Meteor.isServer) {
+  Meteor.publish("allJobs", () => {
+    return Jobs.find();
+  });
+}
+
 Meteor.methods({
   "jobs.postSingle"(values, user) {
     if (!this.userId) {
