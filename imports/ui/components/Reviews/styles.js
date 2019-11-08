@@ -1,11 +1,45 @@
 const styles = theme => ({
+  reviews: {
+    marginLeft: "1.4rem"
+  },
+  sectionHeading: {
+    height: 50,
+    width: 400,
+    marginRight: "16px",
+    marginLeft: "16px",
+    textTransform: "Uppercase"
+  },
+  cardHeading: {
+    fontSize: "0.9rem"
+  },
+  cardReviewsGiven: {
+    marginTop: "10px",
+    marginRight: "16px",
+    marginLeft: "16px",
+    width: 400,
+    height: 190
+  },
+  reviewsRecieved: {
+    fontColor: "#EEEEEE"
+  },
+  cardBackgroundColor: {
+    backgroundColor: "#EEEEEE",
+    height: 135
+  },
+  reviewsTypography: {
+    textAlign: "center",
+    paddingTop: "40px"
+  },
+  headingReviewsGiven: {
+    textTransform: "Uppercase"
+  },
   card: {
-    marginTop: "16px",
+    marginTop: "10px",
     marginRight: "16px",
     marginLeft: "16px",
     maxWidth: 450,
     width: 400,
-    height: 350
+    height: 210
   },
   profileMedia: {
     height: 100,
