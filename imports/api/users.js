@@ -16,3 +16,6 @@ Meteor.methods({
 
 // THIS IS A DEPRECIATED CODE, DONT USE IT
 */
+
+import { Mongo } from "meteor/mongo";
+import { Meteor } from "meteor/meteor";
