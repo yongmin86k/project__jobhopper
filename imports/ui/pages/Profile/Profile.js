@@ -5,11 +5,6 @@ import PropTypes from "prop-types";
 import { ProfileUser, ProfileJobs, Reviews } from "/imports/ui/components";
 
 class Profile extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
     const { classes, userInfo } = this.props;
 

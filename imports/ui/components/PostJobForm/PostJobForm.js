@@ -29,10 +29,7 @@ class PostJobForm extends Component {
     super(props);
     this.state = {
       defaultCategory: "",
-      selectedDate: new Date(),
-      uploading: [],
-      progress: 0,
-      inProgress: false
+      selectedDate: new Date()
     };
   }
 
@@ -54,7 +51,7 @@ class PostJobForm extends Component {
     return (
       <Form
         onSubmit={values => {
-          this.postSingle(values, Meteor.user());
+          this.postSingle(values, currentUser);
         }}
         validate={values => {
           console.log("validate: ", values);
