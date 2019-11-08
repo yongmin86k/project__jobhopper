@@ -1,4 +1,7 @@
 const styles = theme => ({
+  appbar: {
+    marginTop: "1.2rem"
+  },
   card: {
     maxWidth: 450,
     width: 400,

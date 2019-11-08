@@ -23,6 +23,15 @@ class Profile extends Component {
         </Grid>
 
         <Grid item xs={4}>
+          <Typography
+            className={classes.jobs}
+            variant="body2"
+            color="textSecondary"
+            component="p"
+            gutterBottom
+          >
+            Jobs
+          </Typography>
           <ProfileJobs />
         </Grid>
 
