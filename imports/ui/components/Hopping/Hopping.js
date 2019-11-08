@@ -47,11 +47,6 @@ class Hopping extends Component {
 
                 <CardHeader
                   className={classes.profileTitle}
-                  action={
-                    <IconButton aria-label="settings">
-                      {/* <FavoriteIcon /> */}
-                    </IconButton>
-                  }
                   title="Build my app!"
                   subheader="Create a web based app using React"
                 />
@@ -65,9 +60,7 @@ class Hopping extends Component {
                   justifyContent: "space-between"
                 }}
               >
-                <Typography gutterBottom variant="roboto" fontSize="14px">
-                  Current Price $123.00
-                </Typography>
+                <Typography gutterBottom>Current Price $123.00</Typography>
                 Your Bid Price
                 <FilledInput
                   className="hopPrice"
@@ -103,36 +96,32 @@ class Hopping extends Component {
               justify="space-around"
               alignItems="center"
             >
-              <CardActions className={classes.cardMediaItemsBtn}>
-                <Button
-                  className={classes.profileBtn}
-                  type="button"
-                  variant="contained"
-                  size="large"
-                  color="secondary"
-                  fullWidth
-                  disabled={false}
-                  onClick={() => {
-                    console.log(111);
-                  }}
-                >
-                  Drop
-                </Button>
-                <Button
-                  className={classes.profileBtn}
-                  type="button"
-                  variant="contained"
-                  size="large"
-                  color="green"
-                  fullWidth
-                  disabled={false}
-                  onClick={() => {
-                    console.log(111);
-                  }}
-                >
-                  Hop In
-                </Button>
-              </CardActions>
+              <Button
+                className={classes.profileBtn}
+                variant="contained"
+                size="large"
+                color="secondary"
+                fullWidth
+                disabled={false}
+                onClick={() => {
+                  console.log(111);
+                }}
+              >
+                Drop
+              </Button>
+              <Button
+                className={classes.profileBtn}
+                variant="contained"
+                size="large"
+                color="secondary"
+                fullWidth
+                disabled={false}
+                onClick={() => {
+                  console.log(111);
+                }}
+              >
+                Hop In
+              </Button>
             </Grid>
           </Card>
         </Grid>

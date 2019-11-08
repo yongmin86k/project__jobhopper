@@ -1,28 +1,25 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
 import styles from "./styles";
-import { Grid, withStyles } from "@material-ui/core";
-import { withTracker } from "meteor/react-meteor-data";
-// CARD TAB
+import { Grid, Typography, withStyles } from "@material-ui/core";
 import PropTypes from "prop-types";
 import { ProfileUser, ProfileJobs, Reviews } from "/imports/ui/components";
 
 class Profile extends Component {
   render() {
-    /* 
-      Gravatar here
-    */
-
-    // <figure>
-    //   <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" />
-    //   <figcaption>Yongmin</figcaption>
-    // </figure>
-    const { classes } = this.props;
+    const { classes, userInfo } = this.props;
 
     return (
-      <Grid container className={classes.wrap}>
+      <Grid container spacing={3} className={classes.wrap}>
         <Grid item xs={4}>
-          <ProfileUser />
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            component="p"
+            gutterBottom
+          >
+            Profile Info
+          </Typography>
+          <ProfileUser userInfo={userInfo} />
         </Grid>
 
         <Grid item xs={4}>
@@ -37,10 +34,4 @@ class Profile extends Component {
   }
 }
 
-// return (
-//   <Grid container justify="center" alignItems="center">
-//     <Avatar alt="" src="/public/images/" />
-//   </Grid>
-// );
-
-export default withRouter(withStyles(styles)(Profile));
+export default withStyles(styles)(Profile);
