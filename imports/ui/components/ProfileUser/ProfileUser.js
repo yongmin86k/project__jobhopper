@@ -24,7 +24,7 @@ class ProfileUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      enableEdit: true,
+      enableEdit: false,
       selectedCountry: null
     };
   }
