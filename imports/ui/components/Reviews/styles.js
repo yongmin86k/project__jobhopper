@@ -8,9 +8,9 @@ const styles = theme => ({
     height: 350
   },
   profileMedia: {
-    height: 80,
-    width: 100,
-    paddingTop: "16px",
+    height: 100,
+    paddingTop: "2%",
+    width: 80,
     borderRadius: "25px",
     marginLeft: "16px"
   },
@@ -18,7 +18,8 @@ const styles = theme => ({
     flex: 1
   },
   hopPrice: {
-    height: "56px"
+    height: "56px",
+    width: "100px"
   },
   avatar: {
     margin: 10

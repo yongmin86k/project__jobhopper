@@ -9,7 +9,8 @@ import {
   Grid,
   Typography,
   IconButton,
-  FilledInput
+  FilledInput,
+  FavoriteIcon
 } from "@material-ui/core";
 import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
@@ -52,8 +53,8 @@ class Reviews extends Component {
                       {/* <FavoriteIcon /> */}
                     </IconButton>
                   }
-                  title="Username"
-                  subheader="Create a web based app using React"
+                  title="Possibly Removed"
+                  subheader=""
                 />
               </Grid>
             </CardActionArea>
@@ -65,10 +66,11 @@ class Reviews extends Component {
                   justifyContent: "space-between"
                 }}
               >
-                <Typography gutterBottom variant="roboto" fontSize="14px">
-                  Current Price $123.00
-                </Typography>
-                Your Bid Price
+                <Typography
+                  gutterBottom
+                  variant="roboto"
+                  fontSize="14px"
+                ></Typography>
                 <FilledInput
                   className="hopPrice"
                   id="bidPrice"
@@ -76,7 +78,7 @@ class Reviews extends Component {
                     autoComplete: "off"
                   }}
                   type="text"
-                  value={123}
+                  value={"Lorem ipsum dolor sit ametc"}
                   required
                   disabled
                 />

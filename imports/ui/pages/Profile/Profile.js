@@ -8,18 +8,9 @@ import PropTypes from "prop-types";
 import { ProfileUser, ProfileJobs, Reviews } from "/imports/ui/components";
 
 class Profile extends Component {
-  //   constructor() {
-  //     super();
-
-  //     this.state = {
-  //       profile: Profile,
-  //       lastId: 1
-  //     };
-  //   }
   render() {
     /* 
-      import YOUR COMPONENT HERE 
-      pass some data as props to your component as well
+      Gravatar here
     */
 
     // <figure>
