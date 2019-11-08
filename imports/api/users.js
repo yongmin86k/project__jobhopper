@@ -1,18 +1,31 @@
-/*
-// import { Mongo } from "meteor/mongo";
-import { Meteor } from "meteor/meteor";
-
-////////HERE IS THE TRICK//////
-//You dont have to make new collection in mongodb with the name users as it is already added when you installed user accounts package in meteor.
-// export const Users = new Mongo.Collection("users");
-//So we can directly get the object of that collection from Meteor rather than going into Mongo.
+import { Mongo } from "meteor/mongo";
 export const Users = Meteor.users;
 
+if (Meteor.isServer) {
+  Meteor.publish("allUsers", () => {
+    return Users.find({}, { profile: 1, services: 0 });
+  });
+}
+
 Meteor.methods({
-  "users.updateName"(userId, name) {
-    Users.update(userId, { $set: { name: name } });
+  "user.updateInfo"({ fullname, country, zipCode, bio }, userID) {
+    if (!this.userId) {
+      throw new Meteor.Error(
+        "user.updateInfo.not-authorized",
+        "You need to login."
+      );
+    }
+
+    Users.update(
+      { _id: userID },
+      {
+        $set: {
+          "profile.fullname": fullname,
+          "profile.address.country": country,
+          "profile.address.zipCode": zipCode,
+          "profile.bio": bio
+        }
+      }
+    );
   }
 });
-
-// THIS IS A DEPRECIATED CODE, DONT USE IT
-*/

@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Meteor } from "meteor/meteor";
-import { Categories } from "/imports/api/categories";
 import { withTracker } from "meteor/react-meteor-data";
+import { Categories } from "/imports/api/categories";
 import { Form, Field } from "react-final-form";
 import {
   Button,
@@ -21,7 +21,7 @@ import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
 import { MuiPickersUtilsProvider, DateTimePicker } from "@material-ui/pickers";
 
-import AddIcon from "@material-ui/icons/Add";
+// import AddIcon from "@material-ui/icons/Add";
 import styles from "./styles";
 
 class PostJobForm extends Component {
@@ -41,29 +41,33 @@ class PostJobForm extends Component {
     this.setState({ selectedDate: newDate });
   };
 
+  postSingle = (values, user) => {
+    Meteor.call("jobs.postSingle", values, user);
+  };
+
   render() {
     const { classes, categories, currentUser } = this.props;
 
     return (
       <Form
         onSubmit={values => {
-          // console.log("Submit");
+          this.postSingle(values, currentUser);
         }}
         validate={values => {
-          console.log(values);
+          console.log("validate: ", values);
         }}
         render={({ handleSubmit, form, valid, submitSucceeded }) => {
           return (
             <form
               onSubmit={e => {
                 handleSubmit(e);
-                // form.reset();
+                form.reset();
               }}
               noValidate
             >
               {/*  */}
               <Grid container direction="row" className={classes.row}>
-                <Grid item>
+                <Grid item xs={12}>
                   <Typography
                     className={classes.label}
                     color="textPrimary"
@@ -72,16 +76,53 @@ class PostJobForm extends Component {
                   >
                     1. Select an image
                   </Typography>
-                  <Button
-                    aria-label="Add Image"
-                    type="button"
-                    variant="contained"
-                    size="large"
-                    color="primary"
-                  >
-                    <AddIcon className={classes.addIcon} />
-                    Add
-                  </Button>
+                  {/* upload btn */}
+                  {/* <Field
+                    name="jobImage"
+                    render={({ input, meta }) => (
+                      <Fragment>
+                        <input
+                          accept="image/*"
+                          className={(classes.input, classes.btnUpload)}
+                          id="jobImage"
+                          {...input}
+                          type="file"
+                        />
+                        <label htmlFor="jobImage">
+                          <Button
+                            color="primary"
+                            variant="contained"
+                            component="span"
+                            size="large"
+                          >
+                            Upload
+                          </Button>
+                        </label>
+                      </Fragment>
+                    )}
+                  /> */}
+                  {/*  */}
+                  <FormControl variant="filled" fullWidth>
+                    <InputLabel htmlFor="jobImage">Image url</InputLabel>
+                    <Field
+                      name="jobImage"
+                      render={({ input, meta }) => (
+                        <FilledInput
+                          fullWidth
+                          className={classes.input}
+                          id="jobImage"
+                          inputProps={{
+                            autoComplete: "off"
+                          }}
+                          {...input}
+                          type="text"
+                          value={input.value}
+                          required
+                        />
+                      )}
+                    />
+                  </FormControl>
+                  {/*  */}
                 </Grid>
               </Grid>
               {/*  */}
@@ -219,7 +260,26 @@ class PostJobForm extends Component {
                         ? "Zip code"
                         : "Postal code"}
                     </InputLabel>
-                    <Field
+                    {/*  */}
+                    <FilledInput
+                      className={classes.input}
+                      id="zipCode"
+                      inputProps={{
+                        autoComplete: "off"
+                      }}
+                      type="text"
+                      value={
+                        currentUser
+                          ? currentUser.profile.address.zipCode
+                          : `Loading`
+                      }
+                      disabled
+                      inputProps={{
+                        className: classes.postCode
+                      }}
+                    />
+                    {/*  */}
+                    {/* <Field
                       name="zipCode"
                       render={({ input, meta }) => (
                         <FilledInput
@@ -241,7 +301,7 @@ class PostJobForm extends Component {
                           }}
                         />
                       )}
-                    />
+                    /> */}
                   </FormControl>
                 </Grid>
                 {/*  */}
@@ -365,7 +425,6 @@ class PostJobForm extends Component {
                   variant="outlined"
                   size="large"
                   color="primary"
-                  disabled={!valid}
                   onClick={() => {
                     form.reset();
                   }}
@@ -392,6 +451,7 @@ class PostJobForm extends Component {
 }
 
 export default withTracker(() => {
+  Meteor.subscribe("allCategories");
   return {
     currentUser: Meteor.user(),
     categories: Categories.find({}).fetch()
