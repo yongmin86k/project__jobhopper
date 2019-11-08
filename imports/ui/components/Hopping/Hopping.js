@@ -68,7 +68,7 @@ class Hopping extends Component {
                 <Typography gutterBottom variant="roboto" fontSize="14px">
                   Current Price $123.00
                 </Typography>
-                Your Bid Price
+                Your Bid:
                 <FilledInput
                   className="hopPrice"
                   id="bidPrice"
@@ -113,7 +113,14 @@ class Hopping extends Component {
                   fullWidth
                   disabled={false}
                   onClick={() => {
-                    console.log(111);
+                    toggleComplete(profileJobs) {
+                    
+                      profileJobs.delete(profileJobs._id, {
+                        $eq: { delete: profileJobs.delete },
+                      });
+                      Meteor.call('profileJobs.toggleDelete', todo); 
+                    }
+                  
                   }}
                 >
                   Drop

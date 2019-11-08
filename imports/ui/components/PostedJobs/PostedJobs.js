@@ -65,9 +65,9 @@ class PostedJobs extends Component {
                 }}
               >
                 <Typography gutterBottom variant="roboto" fontSize="14px">
-                  Current Price $123.00
+                  Your Posted Price: $123.00
                 </Typography>
-                Your Bid Price
+                {/* Your Bid Price
                 <FilledInput
                   className="hopPrice"
                   id="bidPrice"
@@ -78,7 +78,7 @@ class PostedJobs extends Component {
                   value={"$213"}
                   required
                   disabled
-                />
+                /> */}
               </div>
               <Typography variant="body1" color="textPrimary" component="p">
                 Time Remaining

@@ -5,6 +5,9 @@ meteor.methods({
     if (!this.jobId) {
       throw new Meteor.Error("Cannot drop job!");
     }
+    profileJobs.delete(profileJobs._id, {
+      $eq: { drop: !profileJobs.drop }
+    });
     {
       Jobs({
         userPosted: this.userId,
