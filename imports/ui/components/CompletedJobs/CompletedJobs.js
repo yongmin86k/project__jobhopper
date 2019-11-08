@@ -46,11 +46,6 @@ class CompletedJobs extends Component {
 
                 <CardHeader
                   className={classes.profileTitle}
-                  action={
-                    <IconButton aria-label="settings">
-                      {/* <FavoriteIcon /> */}
-                    </IconButton>
-                  }
                   title="Build my app!"
                   subheader="Create a web based app using React"
                 />
@@ -102,20 +97,19 @@ class CompletedJobs extends Component {
               justify="space-around"
               alignItems="center"
             >
-              <CardActions className={classes.cardMediaItemsBtn}>
-                <Button
-                  className={classes.profileBtn}
-                  type="button"
-                  variant="contained"
-                  size="large"
-                  color="secondary"
-                  fullWidth
-                  disabled={false}
-                  onClick={() => {}}
-                >
-                  View
-                </Button>
-              </CardActions>
+              <Button
+                className={classes.profileBtn}
+                variant="contained"
+                size="large"
+                color="secondary"
+                fullWidth
+                disabled={false}
+                onClick={() => {
+                  console.log(111);
+                }}
+              >
+                View
+              </Button>
             </Grid>
           </Card>
         </Grid>

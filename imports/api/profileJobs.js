@@ -1,12 +1,12 @@
 import { Mongo } from "meteor/mongo";
 
 meteor.methods({
-  profileJobs(values, user) {
+  hopLog(values, user) {
     if (!this.jobId) {
       throw new Meteor.Error("Cannot drop job!");
     }
-    profileJobs.delete(profileJobs._id, {
-      $eq: { drop: !profileJobs.drop }
+    hopLog.delete(hopLog._id, {
+      $elemMatch: { delete: (userId = currentUserID) }
     });
     {
       Jobs({

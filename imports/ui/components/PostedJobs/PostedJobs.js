@@ -46,11 +46,6 @@ class PostedJobs extends Component {
 
                 <CardHeader
                   className={classes.profileTitle}
-                  action={
-                    <IconButton aria-label="settings">
-                      {/* <FavoriteIcon /> */}
-                    </IconButton>
-                  }
                   title="Build my app!"
                   subheader="Create a web based app using React"
                 />
@@ -68,6 +63,8 @@ class PostedJobs extends Component {
                   Your Posted Price: $123.00
                 </Typography>
                 {/* Your Bid Price
+                <Typography gutterBottom>Current Price $123.00</Typography>
+                Your Bid Price
                 <FilledInput
                   className="hopPrice"
                   id="bidPrice"
@@ -102,22 +99,19 @@ class PostedJobs extends Component {
               justify="space-around"
               alignItems="center"
             >
-              <CardActions className={classes.cardMediaItemsBtn}>
-                <Button
-                  className={classes.profileBtn}
-                  type="button"
-                  variant="contained"
-                  size="large"
-                  color="secondary"
-                  fullWidth
-                  disabled={false}
-                  onClick={() => {
-                    console.log(111);
-                  }}
-                >
-                  Drop
-                </Button>
-              </CardActions>
+              <Button
+                className={classes.profileBtn}
+                variant="contained"
+                size="large"
+                color="secondary"
+                fullWidth
+                disabled={false}
+                onClick={() => {
+                  console.log(111);
+                }}
+              >
+                Drop
+              </Button>
             </Grid>
           </Card>
         </Grid>

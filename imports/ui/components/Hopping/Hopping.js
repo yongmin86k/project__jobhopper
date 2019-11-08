@@ -112,16 +112,16 @@ class Hopping extends Component {
                   color="secondary"
                   fullWidth
                   disabled={false}
-                  onClick={() => {
-                    toggleComplete(profileJobs) {
-                    
-                      profileJobs.delete(profileJobs._id, {
-                        $eq: { delete: profileJobs.delete },
-                      });
-                      Meteor.call('profileJobs.toggleDelete', todo); 
-                    }
-                  
-                  }}
+                  // onClick={() => {
+                  //   removeCompleted={hopLog} {
+                  //     hopLog.remove(profileJobs._id, {
+                  //     //   $delete: { complete: !todo.complete },
+                  //     });
+                  //     Meteor.call('todos.toggleComplete', todo);
+                  //   }
+                  //   }
+
+                  // }
                 >
                   Drop
                 </Button>
