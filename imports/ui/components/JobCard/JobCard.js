@@ -104,6 +104,7 @@ const DATA = [
       dateCompleted: null
     },
     hopLog: [
+      { userID: 3, time: "13:02", price: 50 },
       { userID: 1, time: "13:04", price: 48 },
       { userID: 2, time: "13:06", price: 46 },
       { userID: 2, time: "13:08", price: 44 },
@@ -253,6 +254,8 @@ const JobCard = ({ classes, categories }) => {
                   </Fragment>
                 ) : currentPrice[0] === latestUserBidPrice ? (
                   <Fragment>
+                    {console.log(currentPrice[0])}
+                    {console.log(latestUserBidPrice)}
                     <CardActionArea>
                       <CardHeader
                         avatar={
@@ -350,13 +353,13 @@ const JobCard = ({ classes, categories }) => {
                             color="secondary"
                             disabled={false}
                           >
-                            Hop Again
+                            Can't Hop
                           </Button>
                         </Fragment>
                       </CardActions>
                     </Grid>
                   </Fragment>
-                ) : currentPrice[0] < yourHopPrice && yourHopPrice.price ? (
+                ) : (
                   <Fragment>
                     <CardActionArea>
                       <CardHeader
@@ -460,7 +463,7 @@ const JobCard = ({ classes, categories }) => {
                       </CardActions>
                     </Grid>
                   </Fragment>
-                ) : null}
+                )}
               </Card>
             );
           })
