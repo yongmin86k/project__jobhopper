@@ -24,7 +24,7 @@ class CompletedJobs extends Component {
   }
 
   render() {
-    const { classes, direction } = this.props;
+    const { classes, direction, job } = this.props;
 
     return (
       <Grid
@@ -68,7 +68,7 @@ class CompletedJobs extends Component {
                     autoComplete: "off"
                   }}
                   type="text"
-                  value={123}
+                  value={"$123"}
                   required
                   disabled
                 />

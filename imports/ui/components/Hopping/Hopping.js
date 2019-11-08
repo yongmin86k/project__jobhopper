@@ -24,7 +24,8 @@ class Hopping extends Component {
   }
 
   render() {
-    const { classes, direction } = this.props;
+    const { classes, direction, job } = this.props;
+    //  this.props.job
 
     return (
       <Grid
@@ -68,7 +69,7 @@ class Hopping extends Component {
                     autoComplete: "off"
                   }}
                   type="text"
-                  value={123}
+                  value={"$321"}
                   required
                   disabled
                 />

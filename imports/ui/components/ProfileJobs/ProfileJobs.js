@@ -37,7 +37,40 @@ class ProfileJobs extends Component {
   };
 
   render() {
+    const mockData = [
+      {
+        jobID: 0,
+        title: "cleaning",
+        userPosted: 1,
+        userTaken: 2,
+        completed: false,
+        category: "Landscaping",
+        description: "cleaning leaves in yard"
+      },
+      {
+        jobID: 1,
+        title: "make a website",
+        userPosted: 3,
+        userTaken: 1,
+        completed: true,
+        category: "Electrical/Computers",
+        description: "make a new website"
+      },
+      {
+        jobID: 2,
+        title: "fix sink",
+        userPosted: 5,
+        userTaken: 6,
+        completed: null,
+        category: "Plumbing",
+        description: "sink is broken"
+      }
+    ];
     const { classes, direction } = this.props;
+    const hoppingData = mockData.filter(data => {
+      data.userTaken === data.jobId && data.completed === false;
+    });
+
     return (
       <div className={classes.root}>
         <AppBar position="static" color="default">
@@ -59,13 +92,13 @@ class ProfileJobs extends Component {
           onChangeIndex={this.handleChangeIndex}
         >
           <TabPanel value={this.state.setValue} index={0} dir={direction}>
-            <Hopping />
+            <Hopping job={mockData[0]} />
           </TabPanel>
           <TabPanel value={this.state.setValue} index={1} dir={direction}>
-            <CompletedJobs />
+            <CompletedJobs job={mockData[1]} />
           </TabPanel>
           <TabPanel value={this.state.setValue} index={2} dir={direction}>
-            <PostedJobs />
+            <PostedJobs job={mockData[2]} />
           </TabPanel>
         </SwipeableViews>
       </div>

@@ -9,7 +9,8 @@ import {
   Grid,
   Typography,
   IconButton,
-  FilledInput
+  FilledInput,
+  FavoriteIcon
 } from "@material-ui/core";
 import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
@@ -69,7 +70,7 @@ class Reviews extends Component {
                     autoComplete: "off"
                   }}
                   type="text"
-                  value={123}
+                  value={"Lorem ipsum dolor sit ametc"}
                   required
                   disabled
                 />
