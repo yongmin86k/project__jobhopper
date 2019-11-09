@@ -37,6 +37,6 @@ You will also see any lint errors in the console.
 
 ![Jobs Page](_snapshots/Jobs-Page.png)
 
-![Post A Job Page](_snapshots/Post-A-Job.png)
+![Post A Job Page](_snapshots/post-job.png)
 
 ![ProfilePage](_snapshots/profile.png)
