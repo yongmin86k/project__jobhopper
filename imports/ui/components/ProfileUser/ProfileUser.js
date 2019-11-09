@@ -37,7 +37,7 @@ class ProfileUser extends Component {
 
   render() {
     const { classes, userInfo, currentUserID } = this.props;
-
+    console.log(userInfo);
     return (
       <Card className={classes.card}>
         {!userInfo ? (
@@ -153,22 +153,25 @@ class ProfileUser extends Component {
                 disabled
               />
             </Grid>
-
-            <Grid container alignItems="center">
-              <Button
-                className={classes.profileBtn}
-                variant="outlined"
-                size="large"
-                color="primary"
-                fullWidth
-                disabled={this.state.enableEdit}
-                onClick={() => {
-                  this.setState({ enableEdit: true });
-                }}
-              >
-                Edit
-              </Button>
-            </Grid>
+            {userInfo && userInfo._id === currentUserID ? (
+              <Grid container alignItems="center">
+                <Button
+                  className={classes.profileBtn}
+                  variant="outlined"
+                  size="large"
+                  color="primary"
+                  fullWidth
+                  disabled={this.state.enableEdit}
+                  onClick={() => {
+                    userInfo && userInfo._id === currentUserID
+                      ? this.setState({ enableEdit: true })
+                      : this.setState({ enableEdit: false });
+                  }}
+                >
+                  Edit
+                </Button>
+              </Grid>
+            ) : null}
           </Fragment>
         ) : (
           <Fragment>

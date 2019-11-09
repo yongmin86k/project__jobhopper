@@ -3,12 +3,14 @@ import { Meteor } from "meteor/meteor";
 import { Users } from "/imports/api/users";
 import { Categories } from "/imports/api/categories";
 import { withTracker } from "meteor/react-meteor-data";
+import { Link } from "react-router-dom";
 
-import { Form, Field } from "react-final-form";
+import { Form } from "react-final-form";
 import { withStyles } from "@material-ui/core/styles";
 import styles from "./styles";
 import {
   Card,
+  CardActionArea,
   CardContent,
   CardHeader,
   CardMedia,
@@ -173,17 +175,37 @@ class JobCard extends Component {
               }}
             >
               <Card>
-                <CardHeader
-                  avatar={
-                    <Gravatar
-                      email={clientInfo.emails[0].address}
-                      size={40}
-                      className={classes.avatar}
+                {!previewValue ? (
+                  <CardActionArea
+                    component={Link}
+                    to={`/profile/${clientInfo.profile.fullname}`}
+                  >
+                    <CardHeader
+                      avatar={
+                        <Gravatar
+                          email={clientInfo.emails[0].address}
+                          size={40}
+                          className={classes.avatar}
+                        />
+                      }
+                      title={clientInfo.profile.fullname}
+                      subheader={`Remain : ${this.state.timeLeft}`}
                     />
-                  }
-                  title={clientInfo.profile.fullname}
-                  subheader={`Remain : ${this.state.timeLeft}`}
-                />
+                  </CardActionArea>
+                ) : (
+                  <CardHeader
+                    avatar={
+                      <Gravatar
+                        email={clientInfo.emails[0].address}
+                        size={40}
+                        className={classes.avatar}
+                      />
+                    }
+                    title={clientInfo.profile.fullname}
+                    subheader={`Remain : ${this.state.timeLeft}`}
+                  />
+                )}
+
                 <CardMedia
                   className={classes.media}
                   image={
