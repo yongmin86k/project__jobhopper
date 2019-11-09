@@ -1,23 +1,27 @@
 const styles = theme => ({
-  card: {
-    marginTop: 50,
-    maxWidth: 450,
-    width: 400,
-    height: 650
-  },
   media: {
     height: 200,
     paddingTop: "2%" // 16:9
   },
   avatar: {
-    margin: 10
+    borderRadius: "50%"
   },
-  cardMediaItemsBtn: {
+  grid: {
+    marginBottom: theme.spacing(2)
+  },
+  applicants: {
+    width: "initial"
+  },
+  fieldPrice: {
+    paddingTop: 0,
+    paddingBottom: 4
+  },
+  category: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(1)
+  },
+  default: {
     padding: theme.spacing(2)
-  },
-  fullwidthBtn: {
-    width: 350,
-    color: "white"
   },
   margin: {
     margin: theme.spacing(1)
