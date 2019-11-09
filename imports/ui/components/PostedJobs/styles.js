@@ -5,7 +5,7 @@ const styles = theme => ({
     marginLeft: "16px",
     maxWidth: 450,
     width: 400,
-    height: 350
+    height: 400
   },
   profileMedia: {
     height: 100,
@@ -27,7 +27,8 @@ const styles = theme => ({
     padding: theme.spacing(2)
   },
   profileBtn: {
-    width: 150
+    width: 150,
+    marginTop: "3rem"
   },
   margin: {
     margin: theme.spacing(1)

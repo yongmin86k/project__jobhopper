@@ -18,8 +18,6 @@ import styles from "./styles";
 import Gravatar from "react-gravatar";
 import { Form, Field } from "react-final-form";
 
-// class ProfileContainer extends Component {
-
 class ProfileUser extends Component {
   constructor(props) {
     super(props);
@@ -34,7 +32,6 @@ class ProfileUser extends Component {
   };
 
   updateChange = (values, userID) => {
-    console.log(values, userID);
     Meteor.call("user.updateInfo", values, userID);
   };
 
@@ -184,11 +181,12 @@ class ProfileUser extends Component {
               validate={values => {
                 console.log("VALIDATE: ", values);
               }}
-              render={({ handleSubmit, form, valid }) => {
+              render={({ handleSubmit, valid }) => {
                 return (
                   <form
-                    onSubmit={e => {
-                      handleSubmit(e);
+                    onSubmit={async e => {
+                      await handleSubmit(e);
+                      await this.setState({ enableEdit: false });
                     }}
                     noValidate
                   >

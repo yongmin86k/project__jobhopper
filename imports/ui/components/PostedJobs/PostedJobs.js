@@ -60,7 +60,8 @@ class PostedJobs extends Component {
                 }}
               >
                 <Typography gutterBottom variant="roboto" fontSize="14px">
-                  Your Posted Price: $123.00
+                  Your Posted Price: <br />
+                  $123.00
                 </Typography>
                 {/* Your Bid Price
                 <Typography gutterBottom>Current Price $123.00</Typography>
@@ -77,6 +78,7 @@ class PostedJobs extends Component {
                   disabled
                 /> */}
               </div>
+              <br />
               <Typography variant="body1" color="textPrimary" component="p">
                 Time Remaining
               </Typography>
@@ -103,7 +105,7 @@ class PostedJobs extends Component {
                 className={classes.profileBtn}
                 variant="contained"
                 size="large"
-                color="secondary"
+                color="primary"
                 fullWidth
                 disabled={false}
                 onClick={() => {

@@ -1,45 +1,23 @@
 const styles = theme => ({
-  container: {
-    background: theme.palette.secondary.main,
-    minHeight: "100vh"
-  },
-  filterContainer: {
-    display: "flex",
-    flexGrow: 1,
-    justifyContent: "space-between"
-  },
-
-  filterBtn: {
-    boxShadow: "none",
-    marginRight: theme.spacing(1),
-    marginTop: theme.spacing(12),
-    backgroundColor: "rgba(0, 0, 0, 0)",
-
-    "&:hover": {
+  wrapHeader: { marginTop: 40, marginBottom: 40 },
+  filter: {
+    flex: 1,
+    width: "initial",
+    "& > * ": {
+      marginRight: theme.spacing(1),
+      minWidth: "120px !important",
       boxShadow: "none",
-      backgroundColor: "rgba(0, 0, 0, 0.08)"
+      backgroundColor: "#ffffff",
+      border: "solid 1px rgba(0, 0, 0, 0.12)",
+      "&:hover": {
+        boxShadow: "none",
+        backgroundColor: "rgba(0, 0, 0, 0.08)"
+      }
     }
   },
-  filtertxt: {
-    boxShadow: "none",
-    marginRight: theme.spacing(2),
-    marginTop: theme.spacing(12),
-    backgroundColor: "unset",
-    disableRipple: true,
-    disabled: true,
-
-    flexGrow: "1",
-    "&:hover": {
-      boxShadow: "none",
-      backgroundColor: "unset"
-    },
-    "&:focus": {
-      boxShadow: "none",
-      backgroundColor: "unset"
-    }
-  },
-  locationbtn: {
-    marginTop: "6rem"
+  loc: {
+    flex: "none",
+    width: "initial"
   }
 });
 
