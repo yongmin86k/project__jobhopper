@@ -59,6 +59,11 @@ class PostedJobs extends Component {
                   justifyContent: "space-between"
                 }}
               >
+                <Typography gutterBottom variant="roboto" fontSize="14px">
+                  Your Posted Price: <br />
+                  $123.00
+                </Typography>
+                {/* Your Bid Price
                 <Typography gutterBottom>Current Price $123.00</Typography>
                 Your Bid Price
                 <FilledInput
@@ -71,8 +76,9 @@ class PostedJobs extends Component {
                   value={"$213"}
                   required
                   disabled
-                />
+                /> */}
               </div>
+              <br />
               <Typography variant="body1" color="textPrimary" component="p">
                 Time Remaining
               </Typography>
@@ -99,7 +105,7 @@ class PostedJobs extends Component {
                 className={classes.profileBtn}
                 variant="contained"
                 size="large"
-                color="secondary"
+                color="primary"
                 fullWidth
                 disabled={false}
                 onClick={() => {

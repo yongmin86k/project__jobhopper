@@ -59,6 +59,9 @@ const SimpleMenu = ({}) => {
           exact
           onClick={handleClose}
         >
+          <ListItemIcon>
+            <FingerprintIcon fontSize="default" />
+          </ListItemIcon>
           <Typography variant="inherit" noWrap>
             Your Profile
           </Typography>
@@ -70,6 +73,9 @@ const SimpleMenu = ({}) => {
             logOut();
           }}
         >
+          <ListItemIcon>
+            <PowerSettingsNewIcon fontSize="default" />
+          </ListItemIcon>
           <Typography variant="inherit" noWrap>
             Sign Out
           </Typography>

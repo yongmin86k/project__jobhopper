@@ -25,10 +25,6 @@ import {
 import Gravatar from "react-gravatar";
 
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import Input from "@material-ui/core/Input";
-import InputAdornment from "@material-ui/core/InputAdornment";
 
 class JobCard extends Component {
   constructor(props) {

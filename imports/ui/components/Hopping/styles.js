@@ -5,7 +5,7 @@ const styles = theme => ({
     marginLeft: "16px",
     maxWidth: 450,
     width: 400,
-    height: 350
+    height: 400
   },
   profileMedia: {
     height: 100,
@@ -30,7 +30,7 @@ const styles = theme => ({
     width: 150
   },
   margin: {
-    margin: theme.spacing(1) 
+    margin: theme.spacing(1)
   }
 });
 

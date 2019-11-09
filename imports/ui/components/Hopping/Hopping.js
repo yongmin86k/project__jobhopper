@@ -47,6 +47,11 @@ class Hopping extends Component {
 
                 <CardHeader
                   className={classes.profileTitle}
+                  action={
+                    <IconButton aria-label="settings">
+                      {/* <FavoriteIcon /> */}
+                    </IconButton>
+                  }
                   title="Build my app!"
                   subheader="Create a web based app using React"
                 />
@@ -60,19 +65,23 @@ class Hopping extends Component {
                   justifyContent: "space-between"
                 }}
               >
-                <Typography gutterBottom>Current Price $123.00</Typography>
-                Your Bid Price
-                <FilledInput
-                  className="hopPrice"
-                  id="bidPrice"
-                  inputProps={{
-                    autoComplete: "off"
-                  }}
-                  type="text"
-                  value={"$321"}
-                  required
-                  disabled
-                />
+                <Typography gutterBottom variant="roboto" fontSize="14px">
+                  Current Price <br /> $123.00
+                </Typography>
+                <div>
+                  <Typography paragraph>Your Bid:</Typography>
+                  <FilledInput
+                    className="hopPrice"
+                    id="bidPrice"
+                    inputProps={{
+                      autoComplete: "off"
+                    }}
+                    type="text"
+                    value={"$321"}
+                    required
+                    disabled
+                  />
+                </div>
               </div>
               <Typography variant="body1" color="textPrimary" component="p">
                 Time Remaining
@@ -96,32 +105,43 @@ class Hopping extends Component {
               justify="space-around"
               alignItems="center"
             >
-              <Button
-                className={classes.profileBtn}
-                variant="contained"
-                size="large"
-                color="secondary"
-                fullWidth
-                disabled={false}
-                onClick={() => {
-                  console.log(111);
-                }}
-              >
-                Drop
-              </Button>
-              <Button
-                className={classes.profileBtn}
-                variant="contained"
-                size="large"
-                color="secondary"
-                fullWidth
-                disabled={false}
-                onClick={() => {
-                  console.log(111);
-                }}
-              >
-                Hop In
-              </Button>
+              <CardActions className={classes.cardMediaItemsBtn}>
+                <Button
+                  className={classes.profileBtn}
+                  type="button"
+                  variant="contained"
+                  size="large"
+                  color="secondary"
+                  fullWidth
+                  disabled={false}
+                  // onClick={() => {
+                  //   removeCompleted={hopLog} {
+                  //     hopLog.remove(profileJobs._id, {
+                  //     //   $delete: { complete: !todo.complete },
+                  //     });
+                  //     Meteor.call('todos.toggleComplete', todo);
+                  //   }
+                  //   }
+
+                  // }
+                >
+                  Drop
+                </Button>
+                <Button
+                  className={classes.profileBtn}
+                  type="button"
+                  variant="contained"
+                  size="large"
+                  color="primary"
+                  fullWidth
+                  disabled={false}
+                  onClick={() => {
+                    console.log(111);
+                  }}
+                >
+                  Hop In
+                </Button>
+              </CardActions>
             </Grid>
           </Card>
         </Grid>

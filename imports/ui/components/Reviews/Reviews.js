@@ -10,10 +10,12 @@ import {
   Typography,
   IconButton,
   FilledInput,
-  FavoriteIcon
+  FavoriteIcon,
+  Avatar
 } from "@material-ui/core";
 import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 class Reviews extends Component {
   constructor(props) {
@@ -35,46 +37,43 @@ class Reviews extends Component {
         alignItems="center"
         spacing={0}
       >
-        {/* test */}
         <Grid item>
+          <Typography
+            className={classes.reviews}
+            variant="body2"
+            color="textSecondary"
+            component="p"
+            gutterBottom
+          >
+            Reviews
+          </Typography>
+          <Card className={classes.sectionHeading}>
+            <CardHeader
+              className={classes.cardHeading}
+              subheader="Reviews Recieved"
+            />
+          </Card>
           <Card className={classes.card}>
             <CardActionArea>
               <Grid container>
-                <img
-                  className={classes.profileMedia}
-                  src="https://c6.staticflickr.com/9/8890/28897154101_a8f55be225_b.jpg"
-                  title=""
-                />
-
                 <CardHeader
-                  className={classes.profileTitle}
+                  avatar={
+                    <Avatar aria-label="reviews" className={classes.avatar}>
+                      R
+                    </Avatar>
+                  }
                   title="Username"
-                  subheader="Create a web based app using React"
+                  subheader="October 1, 2019"
                 />
               </Grid>
             </CardActionArea>
             <CardActionArea></CardActionArea>
             <CardContent>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between"
-                }}
-              >
-                <Typography gutterBottom>Current Price $123.00</Typography>
-                Your Bid Price
-                <FilledInput
-                  className="hopPrice"
-                  id="bidPrice"
-                  inputProps={{
-                    autoComplete: "off"
-                  }}
-                  type="text"
-                  value={"Lorem ipsum dolor sit ametc"}
-                  required
-                  disabled
-                />
-              </div>
+              <Typography className={classes.reviewsRecieved} paragraph>
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s.
+              </Typography>
             </CardContent>
 
             <Grid
@@ -83,6 +82,54 @@ class Reviews extends Component {
               justify="space-around"
               alignItems="center"
             ></Grid>
+          </Card>
+
+          <Card className={classes.card}>
+            <CardActionArea>
+              <Grid container>
+                <CardHeader
+                  avatar={
+                    <Avatar aria-label="reviews" className={classes.avatar}>
+                      R
+                    </Avatar>
+                  }
+                  title="Username"
+                  subheader="October 1, 2019"
+                />
+              </Grid>
+            </CardActionArea>
+            <CardActionArea></CardActionArea>
+            <CardContent>
+              <Typography className={classes.reviewsRecieved} paragraph>
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s.
+              </Typography>
+            </CardContent>
+
+            <Grid
+              container
+              direction="row"
+              justify="space-around"
+              alignItems="center"
+            ></Grid>
+          </Card>
+
+          <Card className={classes.cardReviewsGiven}>
+            <CardActionArea>
+              <Grid container>
+                <CardHeader
+                  className={classes.headingReviewsGiven}
+                  subheader="Reviews Given"
+                />
+              </Grid>
+            </CardActionArea>
+
+            <CardContent className={classes.cardBackgroundColor}>
+              <Typography className={classes.reviewsTypography} paragraph>
+                No reviews given yet.
+              </Typography>
+            </CardContent>
           </Card>
         </Grid>
       </Grid>
