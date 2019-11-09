@@ -60,20 +60,25 @@ class CompletedJobs extends Component {
                 }}
               >
                 <Typography gutterBottom variant="roboto" fontSize="14px">
-                  Current Price $123.00
+                  Current Price <br />
+                  $123.00
                 </Typography>
-                Winning Bid:
-                <FilledInput
-                  className="hopPrice"
-                  id="bidPrice"
-                  inputProps={{
-                    autoComplete: "off"
-                  }}
-                  type="text"
-                  value={"$123"}
-                  required
-                  disabled
-                />
+
+                <div>
+                  <Typography paragraph>Winning Bid:</Typography>
+
+                  <FilledInput
+                    className="hopPrice"
+                    id="bidPrice"
+                    inputProps={{
+                      autoComplete: "off"
+                    }}
+                    type="text"
+                    value={"$123"}
+                    required
+                    disabled
+                  />
+                </div>
               </div>
               <Typography variant="body1" color="textPrimary" component="p">
                 Time Remaining
@@ -101,7 +106,7 @@ class CompletedJobs extends Component {
                 className={classes.profileBtn}
                 variant="contained"
                 size="large"
-                color="secondary"
+                color="primary"
                 fullWidth
                 disabled={false}
                 onClick={() => {

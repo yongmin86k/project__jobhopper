@@ -66,20 +66,22 @@ class Hopping extends Component {
                 }}
               >
                 <Typography gutterBottom variant="roboto" fontSize="14px">
-                  Current Price $123.00
+                  Current Price <br /> $123.00
                 </Typography>
-                Your Bid:
-                <FilledInput
-                  className="hopPrice"
-                  id="bidPrice"
-                  inputProps={{
-                    autoComplete: "off"
-                  }}
-                  type="text"
-                  value={"$321"}
-                  required
-                  disabled
-                />
+                <div>
+                  <Typography paragraph>Your Bid:</Typography>
+                  <FilledInput
+                    className="hopPrice"
+                    id="bidPrice"
+                    inputProps={{
+                      autoComplete: "off"
+                    }}
+                    type="text"
+                    value={"$321"}
+                    required
+                    disabled
+                  />
+                </div>
               </div>
               <Typography variant="body1" color="textPrimary" component="p">
                 Time Remaining
@@ -130,7 +132,7 @@ class Hopping extends Component {
                   type="button"
                   variant="contained"
                   size="large"
-                  color="green"
+                  color="primary"
                   fullWidth
                   disabled={false}
                   onClick={() => {
