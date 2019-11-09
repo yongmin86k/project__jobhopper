@@ -192,7 +192,7 @@ class PostJobForm extends Component {
                   >
                     4. Describe the job
                   </Typography>
-                  <FormControl variant="filled" fullWidth>
+                  <FormControl variant="outlined" fullWidth>
                     <Field
                       name="description"
                       render={({ input, meta }) => (
@@ -203,7 +203,7 @@ class PostJobForm extends Component {
                           multiline
                           rows="4"
                           margin="normal"
-                          variant="filled"
+                          variant="outlined"
                           {...input}
                           value={input.value}
                           required
