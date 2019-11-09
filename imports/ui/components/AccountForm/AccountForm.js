@@ -1,11 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { Form, Field } from "react-final-form";
-
 import { Accounts } from "meteor/accounts-base";
 import { Meteor } from "meteor/meteor";
-
 import "../../../api/users";
-
 import {
   Button,
   FormControl,
@@ -19,10 +16,8 @@ import {
   FilledInput,
   InputAdornment
 } from "@material-ui/core";
-
 import { withStyles } from "@material-ui/core";
 import styles from "./styles";
-
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import validate from "./helpers/validation";
 
@@ -64,6 +59,10 @@ class AccountForm extends Component {
         console.log(e);
       }
     });
+  };
+
+  loginError = ({ email }) => {
+    print("invalid email");
   };
 
   signUp = async ({ email, password, fullname, country = "us5", zipCode }) => {
@@ -123,7 +122,6 @@ class AccountForm extends Component {
             <form
               onSubmit={e => {
                 handleSubmit(e);
-                // form.reset();
               }}
               noValidate
             >
@@ -339,6 +337,7 @@ class AccountForm extends Component {
                       >
                         Login
                       </Button>
+
                       <Button
                         type="button"
                         variant="outlined"
@@ -348,6 +347,7 @@ class AccountForm extends Component {
                       >
                         Signup
                       </Button>
+                      {email ? email.loginError : "invalid email"}
                     </Fragment>
                   ) : (
                     <Fragment>
