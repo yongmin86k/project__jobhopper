@@ -82,19 +82,18 @@ const ProfileJobs = props => {
   };
 
   return (
-    <Box className={classes.root}>
-      <AppBar position="static" color="default" className={classes.appbar}>
+    <Box>
+      <AppBar position="static" color="default">
         <Tabs
           value={value}
           onChange={handleChange}
           indicatorColor="primary"
           textColor="primary"
           variant="fullWidth"
-          aria-label="full width tabs example"
         >
-          <Tab label="Hopping" />
-          <Tab label="Completed" />
-          <Tab label="Posted" />
+          <Tab label="Hopping" style={{ minWidth: "initial" }} />
+          <Tab label="Completed" style={{ minWidth: "initial" }} />
+          <Tab label="Posted" style={{ minWidth: "initial" }} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
@@ -110,4 +109,4 @@ const ProfileJobs = props => {
   );
 };
 
-export default ProfileJobs;
+export default withStyles(styles)(ProfileJobs);
