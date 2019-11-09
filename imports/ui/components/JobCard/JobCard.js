@@ -8,54 +8,62 @@ import { Form, Field } from "react-final-form";
 import { withStyles } from "@material-ui/core/styles";
 import styles from "./styles";
 import {
-  Avatar,
   Card,
-  CardActionArea,
-  CardActions,
   CardContent,
   CardHeader,
   CardMedia,
   Button,
   Grid,
   Typography,
-  TextField,
-  IconButton
+  TextField
 } from "@material-ui/core";
 
 import Gravatar from "react-gravatar";
-
-import FavoriteIcon from "@material-ui/icons/Favorite";
 
 class JobCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      timeLeft: ""
+      timeLeft: "",
+      defaultValue: {
+        category: "category",
+        title: "Title",
+        date: {
+          datePosted: moment(),
+          dateExpire: moment().days(8)
+        },
+        description: "Please fill a description",
+        priceMax: 0,
+        priceMin: 0,
+        jobImage: "https://via.placeholder.com/300"
+      }
     };
   }
 
   countdownTime = dateExpire => {
-    let currentTime = moment(),
-      day = dateExpire.diff(currentTime, "days"),
-      hour = dateExpire.diff(currentTime, "hours") % 24,
-      min =
-        dateExpire.diff(currentTime, "minutes") % 60 < 10
-          ? "0" + (dateExpire.diff(currentTime, "minutes") % 60)
-          : dateExpire.diff(currentTime, "minutes") % 60,
-      sec =
-        dateExpire.diff(currentTime, "seconds") % 60 < 10
-          ? "0" + (dateExpire.diff(currentTime, "seconds") % 60)
-          : dateExpire.diff(currentTime, "seconds") % 60,
-      remainTime =
-        day > 1
-          ? `${day} Days ${hour}:${min}:${sec}`
-          : day === 1
-          ? `${day} Day ${hour}:${min}:${sec}`
-          : `${hour}:${min}:${sec}`;
+    if (dateExpire) {
+      let currentTime = moment(),
+        day = dateExpire.diff(currentTime, "days"),
+        hour = dateExpire.diff(currentTime, "hours") % 24,
+        min =
+          dateExpire.diff(currentTime, "minutes") % 60 < 10
+            ? "0" + (dateExpire.diff(currentTime, "minutes") % 60)
+            : dateExpire.diff(currentTime, "minutes") % 60,
+        sec =
+          dateExpire.diff(currentTime, "seconds") % 60 < 10
+            ? "0" + (dateExpire.diff(currentTime, "seconds") % 60)
+            : dateExpire.diff(currentTime, "seconds") % 60,
+        remainTime =
+          day > 1
+            ? `${day} Days ${hour}:${min}:${sec}`
+            : day === 1
+            ? `${day} Day ${hour}:${min}:${sec}`
+            : `${hour}:${min}:${sec}`;
 
-    setTimeout(() => {
-      this.setState({ timeLeft: remainTime });
-    }, 1000);
+      setTimeout(() => {
+        this.setState({ timeLeft: remainTime });
+      }, 1000);
+    }
   };
 
   hopIn = (jobID, userID, currentPrice, isJobLogs) => {
@@ -77,25 +85,40 @@ class JobCard extends Component {
       jobInfo,
       userLists,
       categoryLists,
-      currentUserID
+      currentUser,
+      currentUserID,
+      previewValue
     } = this.props;
 
+    const isData = jobInfo && jobInfo._id ? true : false;
+
     // VAR :: ID of user who posted the job
-    const clientInfo = userLists.filter(
-      user => user._id === jobInfo.userPosted
-    )[0];
+    const clientInfo = isData
+      ? userLists.filter(user => user._id === jobInfo.userPosted)[0]
+      : currentUser;
 
     // VAR :: category of the job
-    const categoryTitle = categoryLists.filter(list => {
-      return list._id === jobInfo.category;
-    })[0];
+    const categoryTitle = jobInfo
+      ? categoryLists.filter(list => {
+          return list._id === jobInfo.category;
+        })[0]
+      : previewValue && previewValue.category
+      ? categoryLists.filter(list => {
+          return list._id === previewValue.category;
+        })[0]
+      : null;
 
     // Fn :: count down
-    const dateExpire = moment(jobInfo.date.dateExpire);
+    const dateExpire = isData
+      ? moment(jobInfo.date.dateExpire)
+      : previewValue && previewValue.dateExpire
+      ? moment(previewValue.dateExpire)
+      : this.state.defaultValue.date.dateExpire;
+
     this.countdownTime(dateExpire);
 
     // CONDITIONS :: existence of the job logs
-    const isJobLogs = jobInfo.hopLogs && jobInfo.hopLogs.length > 0;
+    const isJobLogs = jobInfo && jobInfo.hopLogs && jobInfo.hopLogs.length > 0;
 
     // CONDITIONS :: currentUserID existence of the job logs
     const isHoppingIn = !isJobLogs
@@ -119,7 +142,13 @@ class JobCard extends Component {
       : null;
 
     // VAR :: current price
-    const currentPrice = !isJobLogs ? jobInfo.priceMax : latestBidData.price;
+    const currentPrice = isData
+      ? !isJobLogs
+        ? jobInfo.priceMax
+        : latestBidData.price
+      : previewValue && previewValue.priceMax
+      ? parseInt(previewValue.priceMax)
+      : this.state.defaultValue.priceMax;
 
     // VAR :: number of applicants
     const applicants = isJobLogs
@@ -157,8 +186,20 @@ class JobCard extends Component {
                 />
                 <CardMedia
                   className={classes.media}
-                  image={jobInfo.jobImage}
-                  title=""
+                  image={
+                    isData
+                      ? jobInfo.jobImage
+                      : previewValue && previewValue.jobImage
+                      ? previewValue.jobImage
+                      : this.state.defaultValue.jobImage
+                  }
+                  title={
+                    isData
+                      ? jobInfo.title
+                      : previewValue && previewValue.title
+                      ? previewValue.title
+                      : this.state.defaultValue.title
+                  }
                 />
                 <CardContent>
                   <Grid
@@ -169,7 +210,11 @@ class JobCard extends Component {
                     wrap="nowrap"
                   >
                     <Typography variant="h4" component="h2" noWrap={true}>
-                      {jobInfo.title}
+                      {isData
+                        ? jobInfo.title
+                        : previewValue && previewValue.title
+                        ? previewValue.title
+                        : this.state.defaultValue.title}
                     </Typography>
 
                     {isJobLogs ? (
@@ -250,14 +295,20 @@ class JobCard extends Component {
                     component="p"
                     className={classes.category}
                   >
-                    {categoryTitle ? categoryTitle.title : null}
+                    {categoryTitle
+                      ? categoryTitle.title
+                      : this.state.defaultValue.category}
                   </Typography>
                   <Typography
                     variant="body1"
                     color="textSecondary"
                     component="p"
                   >
-                    {jobInfo.description}
+                    {isData
+                      ? jobInfo.description
+                      : previewValue && previewValue.description
+                      ? previewValue.description
+                      : this.state.defaultValue.description}
                   </Typography>
                 </CardContent>
 
@@ -306,6 +357,7 @@ class JobCard extends Component {
                         size="large"
                         color="primary"
                         fullWidth
+                        disabled={!isData ? true : false}
                       >
                         Hop In
                       </Button>
@@ -329,6 +381,7 @@ export default withTracker(() => {
   const categoryLists = Categories.find().fetch();
   return {
     currentUserID: Meteor.userId(),
+    currentUser: Meteor.user(),
     userLists,
     categoryLists
   };

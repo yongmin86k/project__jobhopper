@@ -1,7 +1,12 @@
 const styles = theme => ({
+  grid: {
+    marginTop: theme.spacing(9)
+  },
+  preview: {
+    width: 420
+  },
   wrap: {
-    padding: theme.spacing(2),
-    marginTop: "2rem"
+    padding: theme.spacing(2)
   }
 });
 

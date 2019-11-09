@@ -13,6 +13,7 @@ import {
   MenuItem,
   FormControl,
   FilledInput,
+  OutlinedInput,
   Select,
   withStyles
 } from "@material-ui/core";
@@ -46,7 +47,7 @@ class PostJobForm extends Component {
   };
 
   render() {
-    const { classes, categories, currentUser } = this.props;
+    const { classes, categories, currentUser, updatePreview } = this.props;
 
     return (
       <Form
@@ -54,7 +55,7 @@ class PostJobForm extends Component {
           this.postSingle(values, currentUser);
         }}
         validate={values => {
-          console.log("validate: ", values);
+          updatePreview(values);
         }}
         render={({ handleSubmit, form, valid, submitSucceeded }) => {
           return (
@@ -77,12 +78,14 @@ class PostJobForm extends Component {
                     1. Select an image
                   </Typography>
 
-                  <FormControl variant="filled" fullWidth>
-                    <InputLabel htmlFor="jobImage">Image url</InputLabel>
+                  <FormControl fullWidth>
                     <Field
                       name="jobImage"
                       render={({ input, meta }) => (
-                        <FilledInput
+                        <TextField
+                          variant="outlined"
+                          label="Image url"
+                          autoFocus
                           fullWidth
                           className={classes.input}
                           id="jobImage"
@@ -116,12 +119,13 @@ class PostJobForm extends Component {
                   >
                     2. Fill the title of the job
                   </Typography>
-                  <FormControl variant="filled" fullWidth>
-                    <InputLabel htmlFor="title">Job title</InputLabel>
+                  <FormControl fullWidth>
                     <Field
                       name="title"
                       render={({ input, meta }) => (
-                        <FilledInput
+                        <TextField
+                          variant="outlined"
+                          label="Job title"
                           className={classes.input}
                           id="title"
                           inputProps={{
@@ -146,19 +150,22 @@ class PostJobForm extends Component {
                   >
                     3. Select a category
                   </Typography>
-                  <FormControl variant="filled" fullWidth>
-                    <InputLabel id="categories">Category</InputLabel>
+                  <FormControl variant="outlined" fullWidth>
+                    <InputLabel id="categories">Category *</InputLabel>
                     <Field name="category">
                       {({ input, meta }) => {
                         return (
                           <Select
+                            variant="outlined"
                             className={classes.input}
                             labelId="categories"
+                            labelWidth={80}
                             id="category"
                             onChange={this.categoryChange}
                             value={this.state.defaultCategory}
                             {...input}
                             displayEmpty={false}
+                            required
                           >
                             <MenuItem value="" disabled>
                               Category
@@ -186,7 +193,7 @@ class PostJobForm extends Component {
                   >
                     4. Describe the job
                   </Typography>
-                  <FormControl variant="filled" fullWidth>
+                  <FormControl variant="outlined" fullWidth>
                     <Field
                       name="description"
                       render={({ input, meta }) => (
@@ -197,7 +204,7 @@ class PostJobForm extends Component {
                           multiline
                           rows="4"
                           margin="normal"
-                          variant="filled"
+                          variant="outlined"
                           {...input}
                           value={input.value}
                           required
@@ -253,30 +260,6 @@ class PostJobForm extends Component {
                         className: classes.postCode
                       }}
                     />
-                    {/*  */}
-                    {/* <Field
-                      name="zipCode"
-                      render={({ input, meta }) => (
-                        <FilledInput
-                          className={classes.input}
-                          id="zipCode"
-                          inputProps={{
-                            autoComplete: "off"
-                          }}
-                          {...input}
-                          type="text"
-                          value={
-                            currentUser
-                              ? currentUser.profile.address.zipCode
-                              : `Loading`
-                          }
-                          disabled
-                          inputProps={{
-                            className: classes.postCode
-                          }}
-                        />
-                      )}
-                    /> */}
                   </FormControl>
                 </Grid>
                 {/*  */}
@@ -291,13 +274,14 @@ class PostJobForm extends Component {
                   </Typography>
                   <Grid container spacing={2}>
                     <Grid item xs={6}>
-                      <FormControl variant="filled" fullWidth>
+                      <FormControl variant="outlined" fullWidth>
                         <InputLabel htmlFor="priceMin">Min</InputLabel>
                         <Field
                           name="priceMin"
                           render={({ input, meta }) => (
-                            <FilledInput
+                            <OutlinedInput
                               className={classes.input}
+                              labelWidth={32}
                               id="priceMin"
                               inputProps={{
                                 autoComplete: "off"
@@ -320,13 +304,14 @@ class PostJobForm extends Component {
                       </FormControl>
                     </Grid>
                     <Grid item xs={6}>
-                      <FormControl variant="filled" fullWidth>
+                      <FormControl variant="outlined" fullWidth>
                         <InputLabel htmlFor="priceMax">Max</InputLabel>
                         <Field
                           name="priceMax"
                           render={({ input, meta }) => (
-                            <FilledInput
+                            <OutlinedInput
                               className={classes.input}
+                              labelWidth={32}
                               id="priceMax"
                               inputProps={{
                                 autoComplete: "off"
@@ -368,7 +353,7 @@ class PostJobForm extends Component {
                     7. Set the expiry date
                   </Typography>
                   {/*  */}
-                  <FormControl variant="filled" fullWidth>
+                  <FormControl variant="outlined" fullWidth>
                     <Field
                       name="dateExpire"
                       render={({ input, meta }) => (
@@ -376,7 +361,7 @@ class PostJobForm extends Component {
                           <DateTimePicker
                             id="dateExpire"
                             className={classes.input}
-                            inputVariant="filled"
+                            inputVariant="outlined"
                             margin="normal"
                             label="Expiry date"
                             animateYearScrolling={false}
