@@ -12,11 +12,11 @@ class JobsGrid extends Component {
 
     return (
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={6} md={4}>
-          {jobLists.map(jobInfo => (
-            <JobCard key={jobInfo._id} jobInfo={jobInfo} />
-          ))}
-        </Grid>
+        {jobLists.map(jobInfo => (
+          <Grid key={jobInfo._id} item xs={12} sm={6} md={4}>
+            <JobCard jobInfo={jobInfo} />
+          </Grid>
+        ))}
       </Grid>
     );
   }
@@ -24,7 +24,9 @@ class JobsGrid extends Component {
 
 export default withTracker(() => {
   Meteor.subscribe("allJobs");
-  const jobLists = Jobs.find().fetch();
+  const jobLists = Jobs.find()
+    .fetch()
+    .filter(list => list.userPosted !== Meteor.userId());
 
   return {
     jobLists

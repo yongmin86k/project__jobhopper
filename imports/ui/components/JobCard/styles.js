@@ -6,12 +6,22 @@ const styles = theme => ({
   avatar: {
     borderRadius: "50%"
   },
-  cardMediaItemsBtn: {
-    padding: theme.spacing(2)
+  grid: {
+    marginBottom: theme.spacing(2)
   },
-  fullwidthBtn: {
-    width: 350,
-    color: "white"
+  applicants: {
+    width: "initial"
+  },
+  fieldPrice: {
+    paddingTop: 0,
+    paddingBottom: 4
+  },
+  category: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(1)
+  },
+  default: {
+    padding: theme.spacing(2)
   },
   margin: {
     margin: theme.spacing(1)

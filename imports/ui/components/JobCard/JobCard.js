@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Meteor } from "meteor/meteor";
 import { Users } from "/imports/api/users";
 import { Categories } from "/imports/api/categories";
 import { withTracker } from "meteor/react-meteor-data";
 
+import { Form, Field } from "react-final-form";
 import { withStyles } from "@material-ui/core/styles";
-import { Fab } from "@material-ui/core";
 import styles from "./styles";
 import {
   Avatar,
@@ -18,6 +18,7 @@ import {
   Button,
   Grid,
   Typography,
+  TextField,
   IconButton
 } from "@material-ui/core";
 
@@ -61,119 +62,265 @@ class JobCard extends Component {
     }, 1000);
   };
 
-  render() {
-    const { classes, jobInfo, userLists, categoryLists } = this.props;
+  hopIn = (jobID, userID, currentPrice, isJobLogs) => {
+    const hopLog = {
+      userID,
+      time: new Date(),
+      price: isJobLogs ? parseInt(currentPrice) - 2 : parseInt(currentPrice)
+    };
+    Meteor.call("jobs.hopIn", jobID, hopLog);
+  };
 
-    const userInfo = userLists.filter(
+  drop = (jobID, userID) => {
+    Meteor.call("jobs.drop", jobID, userID);
+  };
+
+  render() {
+    const {
+      classes,
+      jobInfo,
+      userLists,
+      categoryLists,
+      currentUserID
+    } = this.props;
+
+    // VAR :: ID of user who posted the job
+    const clientInfo = userLists.filter(
       user => user._id === jobInfo.userPosted
     )[0];
+
+    // VAR :: category of the job
+    const categoryTitle = categoryLists.filter(list => {
+      return list._id === jobInfo.category;
+    })[0];
+
+    // Fn :: count down
     const dateExpire = moment(jobInfo.date.dateExpire);
     this.countdownTime(dateExpire);
-    // const datePosted = moment(jobInfo.date.datePosted);
 
-    // console.log(this.state.timeLeft);
+    // CONDITIONS :: existence of the job logs
+    const isJobLogs = jobInfo.hopLogs && jobInfo.hopLogs.length > 0;
 
-    // console.log(moment(dateExpire).toNow());
-    // console.log(jobInfo);
+    // CONDITIONS :: currentUserID existence of the job logs
+    const isHoppingIn = !isJobLogs
+      ? false
+      : jobInfo.hopLogs.some(log => log.userID === currentUserID);
 
-    return (
-      <Card>
-        <CardHeader
-          avatar={
-            <Gravatar
-              email={userInfo.emails[0].address}
-              size={40}
-              className={classes.avatar}
-            />
-          }
-          title={userInfo.profile.fullname}
-          subheader={`Remain : ${this.state.timeLeft}`}
-        />
-        <CardMedia
-          className={classes.media}
-          image="https://c6.staticflickr.com/9/8890/28897154101_a8f55be225_b.jpg"
-          title=""
-        />
-        <CardContent>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography
-              // aria-label={}
-              gutterBottom
-              variant="h5"
-              component="h2"
-            >
-              Job Title
-            </Typography>
-            <Typography
-              // aria-label={}
-              variant="body1"
-              color="textPrimary"
-              component="p"
-            >
-              Applicants <br />3
-            </Typography>
-          </div>
-          <Typography
-            // aria-label={}
-            variant="body1"
-            color="textPrimary"
-            component="p"
-          >
-            Current Price
-          </Typography>
+    // VAR :: Latest bid data
+    const latestBidData = isJobLogs
+      ? jobInfo.hopLogs.sort((a, b) => {
+          return b.time - a.time;
+        })[0]
+      : null;
 
-          <Typography
-            // aria-label={}
-            gutterBottom
-            variant="h4"
-            component="h4"
-          >
-            $123.10
-          </Typography>
+    // VAR :: User's latest bid data
+    const userBidDate = isHoppingIn
+      ? jobInfo.hopLogs
+          .filter(log => log.userID === currentUserID)
+          .sort((a, b) => {
+            return b.time - a.time;
+          })
+      : null;
 
-          <Typography
-            // aria-label={}
-            variant="body1"
-            color="textPrimary"
-            component="p"
-          >
-            Category
-          </Typography>
-          <Typography
-            // aria-label={}
-            variant="body1"
-            color="textPrimary"
-            component="p"
-          >
-            Job Description Job Description Job Description Job Description Job
-            Description Job Description Job Description Job Description
-          </Typography>
-        </CardContent>
+    // VAR :: current price
+    const currentPrice = !isJobLogs ? jobInfo.priceMax : latestBidData.price;
 
-        <Grid
-          container
-          direction="row"
-          justify="space-around"
-          alignItems="center"
-        >
-          <CardActions className={classes.cardMediaItemsBtn}>
-            <Button
-              className={classes.fullwidthBtn}
-              type="button"
-              variant="contained"
-              size="large"
-              color="secondary"
-              fullWidth
-              disabled={false}
-              onClick={() => {
-                console.log(111);
+    // VAR :: number of applicants
+    const applicants = isJobLogs
+      ? jobInfo.hopLogs
+          .map(log => log.userID)
+          .reduce((acc, cur) => (acc.includes(cur) ? acc : [...acc, cur]), [])
+          .length
+      : null;
+
+    return !clientInfo ? (
+      "Loading"
+    ) : (
+      <Form
+        onSubmit={values => {
+          this.hopIn(jobInfo._id, currentUserID, currentPrice, isJobLogs);
+        }}
+        render={({ handleSubmit }) => {
+          return (
+            <form
+              onSubmit={e => {
+                handleSubmit(e);
               }}
             >
-              Hop In
-            </Button>
-          </CardActions>
-        </Grid>
-      </Card>
+              <Card>
+                <CardHeader
+                  avatar={
+                    <Gravatar
+                      email={clientInfo.emails[0].address}
+                      size={40}
+                      className={classes.avatar}
+                    />
+                  }
+                  title={clientInfo.profile.fullname}
+                  subheader={`Remain : ${this.state.timeLeft}`}
+                />
+                <CardMedia
+                  className={classes.media}
+                  image={jobInfo.jobImage}
+                  title=""
+                />
+                <CardContent>
+                  <Grid
+                    container
+                    justify="space-between"
+                    alignItems="flex-start"
+                    className={classes.grid}
+                    wrap="nowrap"
+                  >
+                    <Typography variant="h4" component="h2" noWrap={true}>
+                      {jobInfo.title}
+                    </Typography>
+
+                    {isJobLogs ? (
+                      <Grid
+                        item
+                        container
+                        direction="column"
+                        className={classes.applicants}
+                      >
+                        <Typography
+                          variant="body1"
+                          color="textSecondary"
+                          component="p"
+                        >
+                          Applicants
+                        </Typography>
+                        <Typography
+                          variant="body1"
+                          color="textPrimary"
+                          component="p"
+                          style={{ textAlign: "right" }}
+                        >
+                          {applicants}
+                        </Typography>
+                      </Grid>
+                    ) : null}
+                  </Grid>
+
+                  <Grid container spacing={2} justify="space-between">
+                    <Grid item xs={userBidDate ? 6 : 12}>
+                      <Typography
+                        variant="body1"
+                        color="textPrimary"
+                        component="p"
+                        className={classes.fieldPrice}
+                      >
+                        Current Price
+                      </Typography>
+                    </Grid>
+                    {userBidDate ? (
+                      <Grid item xs={6}>
+                        <Typography
+                          variant="body1"
+                          color="textPrimary"
+                          component="p"
+                        >
+                          Your Hop price
+                        </Typography>
+                      </Grid>
+                    ) : null}
+                  </Grid>
+                  <Grid
+                    container
+                    spacing={2}
+                    justify="space-between"
+                    alignItems="center"
+                  >
+                    <Grid item xs={userBidDate ? 6 : 12}>
+                      <Typography gutterBottom variant="h4" component="p">
+                        ${currentPrice.toFixed(2)}
+                      </Typography>
+                    </Grid>
+                    {userBidDate ? (
+                      <Grid item xs={6}>
+                        <TextField
+                          fullWidth
+                          label={`$${userBidDate[0].price.toFixed(2)}`}
+                          variant="filled"
+                          disabled
+                        />
+                      </Grid>
+                    ) : null}
+                  </Grid>
+
+                  <Typography
+                    variant="body1"
+                    color="textPrimary"
+                    component="p"
+                    className={classes.category}
+                  >
+                    {categoryTitle ? categoryTitle.title : null}
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    color="textSecondary"
+                    component="p"
+                  >
+                    {jobInfo.description}
+                  </Typography>
+                </CardContent>
+
+                <Grid
+                  container
+                  className={classes.default}
+                  direction="row"
+                  justify={isHoppingIn ? "space-around" : "flex-start"}
+                  spacing={isHoppingIn ? 2 : 0}
+                >
+                  {isHoppingIn ? (
+                    <Fragment>
+                      <Grid item xs={6}>
+                        <Button
+                          type="button"
+                          variant="outlined"
+                          size="large"
+                          color="primary"
+                          fullWidth
+                          disabled={false}
+                          onClick={() => {
+                            this.drop(jobInfo._id, currentUserID);
+                          }}
+                        >
+                          Drop
+                        </Button>
+                      </Grid>
+                      <Grid item xs={6}>
+                        <Button
+                          type="submit"
+                          variant="contained"
+                          size="large"
+                          color="primary"
+                          fullWidth
+                          disabled={userBidDate[0].price === currentPrice}
+                        >
+                          Hop In
+                        </Button>
+                      </Grid>
+                    </Fragment>
+                  ) : (
+                    <Grid item xs={12}>
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        size="large"
+                        color="primary"
+                        fullWidth
+                      >
+                        Hop In
+                      </Button>
+                    </Grid>
+                  )}
+                </Grid>
+              </Card>
+            </form>
+          );
+        }}
+      />
     );
   }
 }
@@ -185,364 +332,8 @@ export default withTracker(() => {
   const userLists = Users.find({}, { profile: 1, services: 0 }).fetch();
   const categoryLists = Categories.find().fetch();
   return {
+    currentUserID: Meteor.userId(),
     userLists,
     categoryLists
   };
 })(withStyles(styles)(JobCard));
-
-{
-  /* <Grid
-      container
-      direction="row"
-      justify="center"
-      alignItems="center"
-      spacing={3}
-    >
-      <Grid item>
-        <Card className={classes.card}>
-          <CardHeader
-            avatar={
-              <Avatar aria-label="recipe" className={classes.avatar}>
-                R
-              </Avatar>
-            }
-            title="Username"
-            subheader="Remain : 00:03:12"
-          />
-          <CardMedia
-            className={classes.media}
-            image="https://c6.staticflickr.com/9/8890/28897154101_a8f55be225_b.jpg"
-            title=""
-          />
-          <CardContent>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Typography
-                // aria-label={}
-                gutterBottom
-                variant="h5"
-                component="h2"
-              >
-                Job Title
-              </Typography>
-              <Typography
-                // aria-label={}
-                variant="body1"
-                color="textPrimary"
-                component="p"
-              >
-                Applicants <br />3
-              </Typography>
-            </div>
-            <Typography
-              // aria-label={}
-              variant="body1"
-              color="textPrimary"
-              component="p"
-            >
-              Current Price
-            </Typography>
-
-            <Typography
-              // aria-label={}
-              gutterBottom
-              variant="h4"
-              component="h4"
-            >
-              $123.10
-            </Typography>
-
-            <Typography
-              // aria-label={}
-              variant="body1"
-              color="textPrimary"
-              component="p"
-            >
-              Category
-            </Typography>
-            <Typography
-              // aria-label={}
-              variant="body1"
-              color="textPrimary"
-              component="p"
-            >
-              Job Description Job Description Job Description Job Description
-              Job Description Job Description Job Description Job Description
-            </Typography>
-          </CardContent>
-
-          <Grid
-            container
-            direction="row"
-            justify="space-around"
-            alignItems="center"
-          >
-            <CardActions className={classes.cardMediaItemsBtn}>
-              <Button
-                className={classes.fullwidthBtn}
-                type="button"
-                variant="contained"
-                size="large"
-                color="secondary"
-                fullWidth
-                disabled={false}
-                onClick={() => {
-                  console.log(111);
-                }}
-              >
-                Hop In
-              </Button>
-            </CardActions>
-          </Grid>
-        </Card>
-      </Grid>
-
-      
-      <Grid item>
-        <Card className={classes.card}>
-          <CardActionArea>
-            <CardHeader
-              avatar={
-                <Avatar aria-label="recipe" className={classes.avatar}>
-                  R
-                </Avatar>
-              }
-              title="Username"
-              subheader="Remain : 00:03:12"
-            />
-          </CardActionArea>
-          <CardActionArea>
-            <CardMedia
-              className={classes.media}
-              image="https://c6.staticflickr.com/9/8890/28897154101_a8f55be225_b.jpg"
-              title=""
-            />
-          </CardActionArea>
-          <CardContent>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Typography
-                // aria-label={}
-                gutterBottom
-                variant="h5"
-                component="h2"
-              >
-                Job Title
-              </Typography>
-              <Typography
-                // aria-label={}
-                variant="body1"
-                color="textPrimary"
-                component="p"
-              >
-                Applicants <br />3
-              </Typography>
-            </div>
-
-            <Typography
-              // aria-label={}
-              variant="body1"
-              color="textPrimary"
-              component="p"
-            >
-              Current Price
-            </Typography>
-
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Typography
-                // aria-label={}
-                gutterBottom
-                variant="h4"
-                component="h4"
-              >
-                $123.10
-              </Typography>
-              <FormControl className={classes.margin}>
-                <InputLabel htmlFor="standard-adornment-amount">
-                  Hop Price
-                </InputLabel>
-                <Input
-                  id="standard-adornment-amount"
-                  // value={}
-                  // onChange={}
-                  startAdornment={
-                    <InputAdornment position="start">$</InputAdornment>
-                  }
-                />
-              </FormControl>
-            </div>
-
-            <Typography
-              // aria-label={}
-              variant="body1"
-              color="textPrimary"
-              component="p"
-            >
-              Category
-            </Typography>
-            <Typography
-              // aria-label={}
-              variant="body1"
-              color="textPrimary"
-              component="p"
-            >
-              Job Description Job Description Job Description Job Description
-              Job Description Job Description Job Description Job Description
-            </Typography>
-          </CardContent>
-
-          <Grid
-            container
-            direction="row"
-            justify="space-around"
-            alignItems="center"
-          >
-            <div className={classes.cardMediaItemsBtn}>
-              <Button
-                type="button"
-                variant="contained"
-                size="large"
-                color="primary"
-                disabled={false}
-                onClick={() => {
-                  console.log(111);
-                }}
-              >
-                Drop
-              </Button>
-              <Button
-                type="submit"
-                variant="contained"
-                size="large"
-                color="secondary"
-                disabled={false}
-              >
-                Hop Again
-              </Button>
-            </div>
-          </Grid>
-        </Card>
-      </Grid>
-
-    
-      <Grid item>
-        <Card className={classes.card}>
-          <CardHeader
-            avatar={
-              <Avatar aria-label="recipe" className={classes.avatar}>
-                R
-              </Avatar>
-            }
-            title="Username"
-            subheader="Remain : 00:03:12"
-          />
-          <CardMedia
-            className={classes.media}
-            image="https://c6.staticflickr.com/9/8890/28897154101_a8f55be225_b.jpg"
-            title=""
-          />
-          <CardContent>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Typography
-                // aria-label={}
-                gutterBottom
-                variant="h5"
-                component="h2"
-              >
-                Job Title
-              </Typography>
-              <Typography
-                // aria-label={}
-                variant="body1"
-                color="textPrimary"
-                component="p"
-              >
-                Applicants <br />3
-              </Typography>
-            </div>
-
-            <Typography
-              // aria-label={}
-              variant="body1"
-              color="textPrimary"
-              component="p"
-            >
-              Current Price
-            </Typography>
-
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Typography
-                // aria-label={}
-                gutterBottom
-                variant="h4"
-                component="h4"
-              >
-                $123.10
-              </Typography>
-
-              <FormControl className={classes.margin}>
-                <InputLabel htmlFor="standard-adornment-amount">
-                  Hop Price
-                </InputLabel>
-                <Input
-                  id="standard-adornment-amount"
-                  // value={}
-                  // onChange={}
-                  startAdornment={
-                    <InputAdornment position="start">$</InputAdornment>
-                  }
-                />
-              </FormControl>
-            </div>
-
-            <Typography
-              // aria-label={}
-              variant="body1"
-              color="textPrimary"
-              component="p"
-            >
-              Category
-            </Typography>
-            <Typography
-              // aria-label={}
-              variant="body1"
-              color="textPrimary"
-              component="p"
-            >
-              Job Description Job Description Job Description Job Description
-              Job Description Job Description Job Description Job Description
-            </Typography>
-          </CardContent>
-
-          <Grid
-            container
-            direction="row"
-            justify="space-around"
-            alignItems="center"
-          >
-            <div className={classes.cardMediaItemsBtn}>
-              <Button
-                type="button"
-                variant="contained"
-                size="large"
-                color="primary"
-                disabled={false}
-                onClick={() => {
-                  console.log(111);
-                }}
-              >
-                Drop
-              </Button>
-              <Button
-                type="submit"
-                variant="contained"
-                size="large"
-                color="primary"
-                disabled={false}
-              >
-                Hop Again
-              </Button>
-            </div>
-          </Grid>
-        </Card>
-      </Grid>
-    </Grid> */
-}

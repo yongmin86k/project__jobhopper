@@ -57,9 +57,11 @@ class AccountForm extends Component {
   logIn = ({ email, password }) => {
     Meteor.loginWithPassword(email, password, e => {
       if (Meteor.user()) {
+        // Login :: success
         console.log(JSON.stringify(Meteor.user(), null, 2));
       } else {
-        console.log(e.reason);
+        // Login :: error
+        console.log(e);
       }
     });
   };

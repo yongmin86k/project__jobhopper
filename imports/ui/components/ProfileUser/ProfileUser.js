@@ -18,8 +18,6 @@ import styles from "./styles";
 import Gravatar from "react-gravatar";
 import { Form, Field } from "react-final-form";
 
-// class ProfileContainer extends Component {
-
 class ProfileUser extends Component {
   constructor(props) {
     super(props);
