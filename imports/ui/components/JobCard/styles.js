@@ -20,6 +20,14 @@ const styles = theme => ({
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(1)
   },
+  description: {
+    color: "rgba(0, 0, 0, 0.54)",
+    fontSize: "1rem",
+    fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`,
+    fontWeight: 400,
+    lineHeight: 1.5,
+    letterSpacing: "0.00938em"
+  },
   default: {
     padding: theme.spacing(2)
   },

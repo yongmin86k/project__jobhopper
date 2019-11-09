@@ -327,9 +327,30 @@ class JobCard extends Component {
                     component="p"
                   >
                     {isData
-                      ? jobInfo.description
+                      ? jobInfo.description.split(`\n`).map((p, key) => {
+                          return (
+                            <Fragment key={key}>
+                              {p}
+                              {key !==
+                              jobInfo.description.split(`\n`).length - 1 ? (
+                                <br />
+                              ) : null}
+                            </Fragment>
+                          );
+                        })
                       : previewValue && previewValue.description
-                      ? previewValue.description
+                      ? previewValue.description.split(`\n`).map((p, key) => {
+                          return (
+                            <Fragment key={key}>
+                              {p}
+                              {key !==
+                              previewValue.description.split(`\n`).length -
+                                1 ? (
+                                <br />
+                              ) : null}
+                            </Fragment>
+                          );
+                        })
                       : this.state.defaultValue.description}
                   </Typography>
                 </CardContent>
