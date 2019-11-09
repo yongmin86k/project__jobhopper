@@ -47,7 +47,7 @@ class PostJobForm extends Component {
   };
 
   render() {
-    const { classes, categories, currentUser } = this.props;
+    const { classes, categories, currentUser, updatePreview } = this.props;
 
     return (
       <Form
@@ -55,7 +55,7 @@ class PostJobForm extends Component {
           this.postSingle(values, currentUser);
         }}
         validate={values => {
-          console.log("validate: ", values);
+          updatePreview(values);
         }}
         render={({ handleSubmit, form, valid, submitSucceeded }) => {
           return (
@@ -159,6 +159,7 @@ class PostJobForm extends Component {
                             variant="outlined"
                             className={classes.input}
                             labelId="categories"
+                            labelWidth={80}
                             id="category"
                             onChange={this.categoryChange}
                             value={this.state.defaultCategory}

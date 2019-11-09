@@ -1,7 +1,8 @@
 import React from "react";
+import { JobCard } from "/imports/ui/components";
 
-const PostJobPreview = () => {
-  return "post job preview";
+const PostJobPreview = ({ previewValue }) => {
+  return <JobCard previewValue={previewValue} />;
 };
 
 export default PostJobPreview;
