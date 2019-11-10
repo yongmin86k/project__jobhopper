@@ -18,15 +18,60 @@ class Hopping extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 0,
-      setValue: 0
+      timeLeft: "",
+      defaultValue: {
+        category: "category",
+        title: "Title",
+        date: {
+          datePosted: moment(),
+          dateExpire: moment().days(7)
+        },
+        description: "Please enter a description",
+        priceMax: 0,
+        priceMin: 0,
+        jobImage: "https://via.placeholder.com/300"
+      }
     };
   }
 
-  render() {
-    const { classes, direction, job } = this.props;
-    //  this.props.job
+  countdownTime = dateExpire => {
+    if (dateExpire) {
+      let currentTime = moment(),
+        day = dateExpire.diff(currentTime, "days"),
+        hour = dateExpire.diff(currentTime, "hours") % 24,
+        min =
+          dateExpire.diff(currentTime, "minutes") % 60 < 10
+            ? "0" + (dateExpire.diff(currentTime, "minutes") % 60)
+            : dateExpire.diff(currentTime, "minutes") % 60,
+        sec =
+          dateExpire.diff(currentTime, "seconds") % 60 < 10
+            ? "0" + (dateExpire.diff(currentTime, "seconds") % 60)
+            : dateExpire.diff(currentTime, "seconds") % 60,
+        remainTime =
+          day > 1
+            ? `${day} Days ${hour}:${min}:${sec}`
+            : day === 1
+            ? `${day} Day ${hour}:${min}:${sec}`
+            : `${hour}:${min}:${sec}`;
 
+      setTimeout(() => {
+        this.setState({ timeLeft: remainTime });
+      }, 1000);
+    }
+  };
+
+  render() {
+    const { classes, direction, jobInfo, previewValue, job } = this.props;
+
+    const isData = jobInfo && jobInfo._id ? true : false;
+
+    const dateExpire = isData
+      ? moment(jobInfo.date.dateExpire)
+      : previewValue && previewValue.dateExpire
+      ? moment(previewValue.dateExpire)
+      : this.state.defaultValue.date.dateExpire;
+
+    this.countdownTime(dateExpire);
     return (
       <Grid
         container
@@ -68,6 +113,7 @@ class Hopping extends Component {
                 <Typography gutterBottom variant="roboto" fontSize="14px">
                   Current Price <br /> $123.00
                 </Typography>
+
                 <div>
                   <Typography paragraph>Your Bid:</Typography>
                   <FilledInput
@@ -88,7 +134,7 @@ class Hopping extends Component {
               </Typography>
 
               <Typography gutterBottom variant="h4" component="h4">
-                1 Day 23:08:09
+                {` ${this.state.timeLeft}`}{" "}
               </Typography>
 
               {/* <Typography variant="body1" color="textPrimary" component="p">

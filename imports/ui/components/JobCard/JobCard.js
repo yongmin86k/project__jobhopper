@@ -32,7 +32,7 @@ class JobCard extends Component {
           datePosted: moment(),
           dateExpire: moment().days(8)
         },
-        description: "Please fill a description",
+        description: "Please enter a description",
         priceMax: 0,
         priceMin: 0,
         jobImage: "https://via.placeholder.com/300"
