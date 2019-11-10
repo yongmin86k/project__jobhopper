@@ -347,7 +347,7 @@ class AccountForm extends Component {
                       >
                         Signup
                       </Button>
-                      {email ? email.loginError : "invalid email"}
+                      {/* {email ? email.loginError : "invalid email"} */}
                     </Fragment>
                   ) : (
                     <Fragment>
