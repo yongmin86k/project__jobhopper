@@ -1,11 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { Form, Field } from "react-final-form";
-
 import { Accounts } from "meteor/accounts-base";
 import { Meteor } from "meteor/meteor";
-
 import "../../../api/users";
-
 import {
   Button,
   FormControl,
@@ -19,10 +16,8 @@ import {
   FilledInput,
   InputAdornment
 } from "@material-ui/core";
-
 import { withStyles } from "@material-ui/core";
 import styles from "./styles";
-
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import validate from "./helpers/validation";
 
@@ -30,15 +25,15 @@ class AccountForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      formToggle: true,
+      formToggle: false, // true: logIn form || false: signUp form
       showPassword: false,
-      defaultCountry: "us5",
+      defaultCountry: "ca",
       error: null
     };
   }
 
   changeForm = () => {
-    console.log("Change");
+    this.setState({ error: null });
     this.setState({ formToggle: !this.state.formToggle });
   };
 
@@ -59,9 +54,9 @@ class AccountForm extends Component {
       if (Meteor.user()) {
         // Login :: success
         console.log(JSON.stringify(Meteor.user(), null, 2));
-      } else {
+      } else if (e) {
         // Login :: error
-        console.log(e);
+        this.setState({ error: e.reason });
       }
     });
   };
@@ -74,45 +69,54 @@ class AccountForm extends Component {
         if (response.ok) {
           return response.json();
         } else {
-          throw new Error("Something went wrong ...");
+          this.setState({ error: "Something went wrong ..." });
         }
       })
       .then(data => {
         if (data.length === 1) {
           return data[0];
         } else if (data.length === 0) {
-          throw new Error("Not valid code. Please check again");
+          this.setState({ error: "Not valid code. Please check again" });
         } else {
-          throw new Error("Specify the code.");
+          this.setState({
+            error: "There is more than 2 areas using same postal code"
+          });
         }
       })
       .catch(error => {
-        throw new Error(error);
+        console.log(error);
+        this.setState({
+          error: "API error : please contact website manager"
+        });
       });
-
-    await Accounts.createUser({
-      email,
-      password,
-      profile: {
-        fullname,
-        address: {
-          country,
-          zipCode,
-          ...validZipCode
+    await Accounts.createUser(
+      {
+        email,
+        password,
+        profile: {
+          fullname,
+          address: {
+            country,
+            zipCode,
+            ...validZipCode
+          }
         }
+      },
+      e => {
+        // Signup:: error
+        this.setState({ error: e.reason });
       }
-    });
+    );
   };
 
   render() {
-    // console.log(this.props);
     const { classes } = this.props;
     const activateForm = this.state.formToggle;
 
     return (
       <Form
         onSubmit={values => {
-          console.log("Submit");
+          this.setState({ error: null });
           activateForm ? this.logIn(values) : this.signUp(values);
         }}
         validate={values => {
@@ -123,7 +127,6 @@ class AccountForm extends Component {
             <form
               onSubmit={e => {
                 handleSubmit(e);
-                // form.reset();
               }}
               noValidate
             >
@@ -206,60 +209,47 @@ class AccountForm extends Component {
               {!activateForm ? (
                 <Fragment>
                   <FormControl fullWidth component="fieldset">
-                    <RadioGroup
-                      aria-label="country"
+                    <Field
                       name="country"
+                      type="radio"
+                      defaultValue={this.state.defaultCountry}
                       value={this.state.defaultCountry}
-                      onChange={this.handleChangeCountry}
-                      className={classes.input}
                     >
-                      <Grid
-                        container
-                        direction="row"
-                        justify="space-between"
-                        alignItems="center"
-                        className={classes.btnWrap}
-                      >
-                        <Field name="country" type="radio" value="us5">
-                          {({ input, meta }) => {
-                            return (
+                      {(input, meta) => {
+                        return (
+                          <RadioGroup
+                            aria-label="country"
+                            name="country"
+                            value={this.state.defaultCountry}
+                            onChange={this.handleChangeCountry}
+                            className={classes.input}
+                          >
+                            <Grid
+                              container
+                              direction="row"
+                              justify="space-between"
+                              alignItems="center"
+                              className={classes.btnWrap}
+                            >
                               <FormControlLabel
                                 className={classes.btnChild}
                                 {...input}
-                                control={
-                                  <Radio
-                                    color="primary"
-                                    checked={
-                                      this.state.defaultCountry === "us5"
-                                    }
-                                  />
-                                }
+                                control={<Radio color="primary" value="us5" />}
                                 value="us5"
                                 label="United States"
                               />
-                            );
-                          }}
-                        </Field>
-                        <Field name="country" type="radio" value="ca">
-                          {({ input, meta }) => {
-                            return (
                               <FormControlLabel
                                 className={classes.btnChild}
                                 {...input}
-                                control={
-                                  <Radio
-                                    color="primary"
-                                    checked={this.state.defaultCountry === "ca"}
-                                  />
-                                }
+                                control={<Radio color="primary" value="ca" />}
                                 value="ca"
                                 label="Canada"
                               />
-                            );
-                          }}
-                        </Field>
-                      </Grid>
-                    </RadioGroup>
+                            </Grid>
+                          </RadioGroup>
+                        );
+                      }}
+                    </Field>
                   </FormControl>
                   {/* // */}
                   <FormControl variant="filled" fullWidth>
@@ -321,6 +311,18 @@ class AccountForm extends Component {
                 </Fragment>
               ) : null}
               {/*  */}
+              {!this.state.error ? null : (
+                <Typography
+                  variant="h6"
+                  color="textPrimary"
+                  component="p"
+                  gutterBottom
+                  color="error"
+                >
+                  {this.state.error}
+                </Typography>
+              )}
+
               <FormControl fullWidth>
                 <Grid
                   container
@@ -339,6 +341,7 @@ class AccountForm extends Component {
                       >
                         Login
                       </Button>
+
                       <Button
                         type="button"
                         variant="outlined"
@@ -373,7 +376,6 @@ class AccountForm extends Component {
                   )}
                 </Grid>
               </FormControl>
-              <Typography></Typography>
             </form>
           );
         }}
