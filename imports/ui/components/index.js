@@ -3,6 +3,7 @@ export { default as CompletedJobs } from "./CompletedJobs";
 
 export { default as JobCard } from "./JobCard";
 export { default as JobsGrid } from "./JobsGrid";
+export { default as LazyLoading } from "./LazyLoading";
 export { default as MenuBar } from "./MenuBar";
 export { default as MenuDropDown } from "./MenuDropDown";
 export { default as PostedJobs } from "./PostedJobs";
