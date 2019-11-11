@@ -8,6 +8,7 @@ export { default as LazyLoading } from "./LazyLoading";
 export { default as MenuBar } from "./MenuBar";
 export { default as MenuDropDown } from "./MenuDropDown";
 export { default as PostedJobs } from "./PostedJobs";
+export { default as PostedJobsByOther } from "./PostedJobsByOther";
 export { default as PostJobForm } from "./PostJobForm";
 export { default as PostJobPreview } from "./PostJobPreview";
 export { default as PrivateRoute } from "./PrivateRoute";

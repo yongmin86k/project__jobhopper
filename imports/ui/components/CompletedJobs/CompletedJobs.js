@@ -1,124 +1,136 @@
 import React, { Component } from "react";
-import {
-  Card,
-  CardActionArea,
-  CardActions,
-  CardContent,
-  CardHeader,
-  Button,
-  Grid,
-  Typography,
-  IconButton,
-  FilledInput
-} from "@material-ui/core";
+import { Button, Grid, Typography, TextField } from "@material-ui/core";
 import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
 
 class CompletedJobs extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: 0,
-      setValue: 0
-    };
-  }
+  viewJob = jobInfo => {
+    // redirect to single job page
+    console.log(jobInfo);
+  };
 
   render() {
-    const { classes, direction, job } = this.props;
+    const { classes, jobInfo, currentUser } = this.props;
+
+    const latestBidData = jobInfo.hopLogs
+      ? jobInfo.hopLogs.sort((a, b) => {
+          return b.time - a.time;
+        })[0]
+      : null;
+
+    const latestUserBidDate =
+      currentUser && jobInfo.hopLogs
+        ? jobInfo.hopLogs
+            .filter(log => log.userID === currentUser._id)
+            .sort((a, b) => {
+              return b.time - a.time;
+            })[0]
+        : null;
 
     return (
-      <Grid
-        container
-        direction="row"
-        justify="center"
-        alignItems="center"
-        spacing={0}
-      >
-        <Grid item>
-          <Card className={classes.card}>
-            <CardActionArea>
-              <Grid container>
-                <img
-                  className={classes.profileMedia}
-                  src="https://c6.staticflickr.com/9/8890/28897154101_a8f55be225_b.jpg"
-                  title=""
-                />
-
-                <CardHeader
-                  className={classes.profileTitle}
-                  title="Build my app!"
-                  subheader="Create a web based app using React"
-                />
-              </Grid>
-            </CardActionArea>
-            <CardActionArea></CardActionArea>
-            <CardContent>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between"
-                }}
-              >
-                <Typography gutterBottom variant="roboto" fontSize="14px">
-                  Current Price <br />
-                  $123.00
-                </Typography>
-
-                <div>
-                  <Typography paragraph>Winning Bid:</Typography>
-
-                  <FilledInput
-                    className="hopPrice"
-                    id="bidPrice"
-                    inputProps={{
-                      autoComplete: "off"
-                    }}
-                    type="text"
-                    value={"$123"}
-                    required
-                    disabled
-                  />
-                </div>
-              </div>
-              <Typography variant="body1" color="textPrimary" component="p">
-                Time Remaining
-              </Typography>
-
-              <Typography gutterBottom variant="h4" component="h4">
-                COMPLETED
-              </Typography>
-
-              {/* <Typography variant="body1" color="textPrimary" component="p">
-                Time Remaining
-              </Typography>
-              <Typography variant="body1" color="textPrimary" component="p">
-                Input countdown clock here
-              </Typography> */}
-            </CardContent>
-
-            <Grid
-              container
-              direction="row"
-              justify="space-around"
-              alignItems="center"
+      <div className={classes.container}>
+        {/* section:: Title */}
+        <Grid container alignItems="center" wrap="nowrap">
+          <Grid
+            item
+            className={classes.imageBox}
+            container
+            justify="center"
+            alignItems="center"
+          >
+            <img className={classes.jobImage} src={jobInfo.jobImage} />
+          </Grid>
+          <Grid item className={classes.title}>
+            <Typography variant="h5" component="h3" noWrap={true}>
+              {jobInfo.title}
+            </Typography>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              component="p"
+              noWrap={true}
             >
-              <Button
-                className={classes.profileBtn}
-                variant="contained"
-                size="large"
-                color="primary"
-                fullWidth
-                disabled={false}
-                onClick={() => {
-                  console.log(111);
-                }}
-              >
-                View
-              </Button>
-            </Grid>
-          </Card>
+              {jobInfo.description}
+            </Typography>
+          </Grid>
         </Grid>
-      </Grid>
+        {/* end section:: Title */}
+        {/* section:: Price */}
+        <Grid
+          container
+          spacing={2}
+          justify="space-between"
+          className={classes.fieldPrice}
+        >
+          <Grid item xs={6}>
+            <Typography variant="body1" color="textPrimary" component="p">
+              Current Price
+            </Typography>
+          </Grid>
+
+          <Grid item xs={6}>
+            <Typography variant="body1" color="textPrimary" component="p">
+              Your Hop price
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} justify="space-between" alignItems="center">
+          <Grid item xs={6}>
+            <Typography variant="h4" component="p">
+              ${latestBidData ? latestBidData.price.toFixed(2) : "Loading"}
+            </Typography>
+          </Grid>
+
+          <Grid item xs={6}>
+            <TextField
+              fullWidth
+              label={`$${
+                latestUserBidDate
+                  ? latestUserBidDate.price.toFixed(2)
+                  : "Loading"
+              }`}
+              variant="filled"
+              disabled
+            />
+          </Grid>
+        </Grid>
+        {/* end section:: Price */}
+
+        {/* section:: Buttons */}
+
+        <Button
+          className={classes.buttons}
+          type="button"
+          variant="contained"
+          size="large"
+          color="primary"
+          fullWidth
+          disabled={true}
+          onClick={e => {
+            e.preventDefault();
+          }}
+        >
+          Completed
+        </Button>
+
+        <Button
+          className={classes.buttons}
+          type="button"
+          variant="outlined"
+          size="large"
+          color="primary"
+          fullWidth
+          disabled={false}
+          onClick={e => {
+            e.preventDefault();
+            this.viewJob(jobInfo);
+          }}
+        >
+          View
+        </Button>
+
+        {/* end section:: Buttons */}
+      </div>
     );
   }
 }

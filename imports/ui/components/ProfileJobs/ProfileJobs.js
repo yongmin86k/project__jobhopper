@@ -1,6 +1,8 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 import { Jobs } from "/imports/api/jobs";
+import { Users } from "/imports/api/users";
 import { withTracker } from "meteor/react-meteor-data";
 
 import { AppBar, Tabs, Tab, Card } from "@material-ui/core";
@@ -11,39 +13,21 @@ import {
   TabPanel,
   Hopping,
   CompletedJobs,
-  PostedJobs
+  PostedJobs,
+  PostedJobsByOther
 } from "/imports/ui/components";
 
-const mockData = [
-  {
-    jobID: 0,
-    title: "cleaning",
-    userPosted: 1,
-    userTaken: 2,
-    completed: false,
-    category: "Landscaping",
-    description: "cleaning leaves in yard"
-  },
-  {
-    jobID: 1,
-    title: "make a website",
-    userPosted: 3,
-    userTaken: 1,
-    completed: true,
-    category: "Electrical/Computers",
-    description: "make a new website"
-  },
-  {
-    jobID: 2,
-    title: "fix sink",
-    userPosted: 5,
-    userTaken: 6,
-    completed: null,
-    category: "Plumbing",
-    description: "sink is broken"
-  }
-];
-const ProfileJobs = ({ classes, userInfo, currentUser, jobsHopping }) => {
+const ProfileJobs = ({
+  classes,
+  userInfo,
+  currentUser,
+  currentUserID,
+  jobsHopping,
+  jobsCompleted,
+  jobsPosted,
+  allUsers,
+  otherUserJob
+}) => {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
@@ -71,6 +55,7 @@ const ProfileJobs = ({ classes, userInfo, currentUser, jobsHopping }) => {
               <Tab label="Posted" style={{ minWidth: "initial" }} />
             </Tabs>
           </AppBar>
+
           <TabPanel value={value} index={0}>
             {jobsHopping && jobsHopping.length > 0 ? (
               jobsHopping.map(jobInfo => (
@@ -84,11 +69,33 @@ const ProfileJobs = ({ classes, userInfo, currentUser, jobsHopping }) => {
               <div className={classes.null}>No jobs hopping yet</div>
             )}
           </TabPanel>
+
           <TabPanel value={value} index={1} dir={theme.direction}>
-            <CompletedJobs job={mockData[1]} />
+            {jobsCompleted && jobsCompleted.length > 0 ? (
+              jobsCompleted.map(jobInfo => (
+                <CompletedJobs
+                  key={jobInfo._id}
+                  jobInfo={jobInfo}
+                  currentUser={currentUser}
+                />
+              ))
+            ) : (
+              <div className={classes.null}>No jobs completed yet</div>
+            )}
           </TabPanel>
+
           <TabPanel value={value} index={2} dir={theme.direction}>
-            <PostedJobs job={mockData[2]} />
+            {jobsPosted && jobsPosted.length > 0 ? (
+              jobsPosted.map(jobInfo => (
+                <PostedJobs
+                  key={jobInfo._id}
+                  jobInfo={jobInfo}
+                  allUsers={allUsers}
+                />
+              ))
+            ) : (
+              <div className={classes.null}>No jobs posted yet</div>
+            )}
           </TabPanel>
         </Fragment>
       ) : (
@@ -105,7 +112,17 @@ const ProfileJobs = ({ classes, userInfo, currentUser, jobsHopping }) => {
             </Tabs>
           </AppBar>
           <TabPanel value={value} index={0} dir={theme.direction}>
-            <PostedJobs job={mockData[2]} />
+            {otherUserJob && otherUserJob.length > 0 ? (
+              otherUserJob.map(jobInfo => (
+                <PostedJobsByOther
+                  key={jobInfo._id}
+                  jobInfo={jobInfo}
+                  currentUserID={currentUserID}
+                />
+              ))
+            ) : (
+              <div className={classes.null}>No jobs posted yet</div>
+            )}
           </TabPanel>
         </Fragment>
       )}
@@ -113,13 +130,39 @@ const ProfileJobs = ({ classes, userInfo, currentUser, jobsHopping }) => {
   );
 };
 
-export default withTracker(() => {
-  const currentUserID = Meteor.userId();
+export default withRouter(
+  withTracker(({ match }) => {
+    const currentUserID = Meteor.userId();
 
-  Meteor.subscribe("jobsHopping", currentUserID);
+    Meteor.subscribe("jobsHopping", currentUserID);
+    Meteor.subscribe("jobsCompleted", currentUserID);
+    Meteor.subscribe("jobsPosted", currentUserID);
+    Meteor.subscribe("allJobs", currentUserID);
+    Meteor.subscribe("allUsers");
 
-  return {
-    jobsHopping: Jobs.find().fetch(),
-    currentUser: Meteor.user()
-  };
-})(withStyles(styles)(ProfileJobs));
+    const otherUser =
+      match.path !== "/profile/:fullname"
+        ? Meteor.user()
+        : Users.find({ "profile.fullname": match.params.fullname }).fetch()[0];
+
+    return {
+      jobsHopping: Jobs.find({
+        completed: false,
+        "hopLogs.userID": currentUserID
+      }).fetch(),
+      jobsCompleted: Jobs.find({
+        completed: true,
+        userTaken: currentUserID
+      }).fetch(),
+      jobsPosted: Jobs.find({
+        userPosted: currentUserID
+      }).fetch(),
+      currentUserID,
+      currentUser: Meteor.user(),
+      allUsers: Users.find().fetch(),
+      otherUserJob: Jobs.find({
+        userPosted: otherUser ? otherUser._id : null
+      }).fetch()
+    };
+  })(withStyles(styles)(ProfileJobs))
+);

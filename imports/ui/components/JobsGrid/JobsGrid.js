@@ -23,10 +23,8 @@ class JobsGrid extends Component {
 }
 
 export default withTracker(() => {
-  Meteor.subscribe("allJobs");
-  const jobLists = Jobs.find()
-    .fetch()
-    .filter(list => list.userPosted !== Meteor.userId());
+  Meteor.subscribe("allJobs", Meteor.userId());
+  const jobLists = Jobs.find().fetch();
 
   return {
     jobLists

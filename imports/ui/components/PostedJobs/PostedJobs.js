@@ -1,170 +1,161 @@
 import React, { Component } from "react";
-import {
-  Card,
-  CardActionArea,
-  CardActions,
-  CardContent,
-  CardHeader,
-  Button,
-  Grid,
-  Typography,
-  IconButton,
-  FilledInput
-} from "@material-ui/core";
+import { Button, Grid, Typography, TextField } from "@material-ui/core";
 import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
+import { RemainTime } from "/imports/ui/components";
 
 class PostedJobs extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      timeLeft: "",
-      defaultValue: {
-        category: "category",
-        title: "Title",
-        date: {
-          datePosted: moment(),
-          dateExpire: moment().days(7)
-        },
-        description: "Please enter a description",
-        priceMax: 0,
-        priceMin: 0,
-        jobImage: "https://via.placeholder.com/300"
-      }
+      timeLeft: "Loading"
     };
   }
-
   countdownTime = dateExpire => {
-    if (dateExpire) {
-      let currentTime = moment(),
-        day = dateExpire.diff(currentTime, "days"),
-        hour = dateExpire.diff(currentTime, "hours") % 24,
-        min =
-          dateExpire.diff(currentTime, "minutes") % 60 < 10
-            ? "0" + (dateExpire.diff(currentTime, "minutes") % 60)
-            : dateExpire.diff(currentTime, "minutes") % 60,
-        sec =
-          dateExpire.diff(currentTime, "seconds") % 60 < 10
-            ? "0" + (dateExpire.diff(currentTime, "seconds") % 60)
-            : dateExpire.diff(currentTime, "seconds") % 60,
-        remainTime =
-          day > 1
-            ? `${day} Days ${hour}:${min}:${sec}`
-            : day === 1
-            ? `${day} Day ${hour}:${min}:${sec}`
-            : `${hour}:${min}:${sec}`;
+    setTimeout(() => {
+      this.setState({ timeLeft: RemainTime(dateExpire) });
+    }, 1000);
+  };
 
-      setTimeout(() => {
-        this.setState({ timeLeft: remainTime });
-      }, 1000);
-    }
+  deleteJob = jobInfo => {
+    Meteor.call("jobs.delete", jobInfo._id);
+  };
+  completeJob = (jobInfo, latestBidder) => {
+    Meteor.call("jobs.complete", jobInfo._id, latestBidder._id);
   };
 
   render() {
-    const { classes, direction, job, jobInfo, previewValue } = this.props;
+    const { classes, jobInfo, allUsers } = this.props;
+    this.countdownTime(moment(jobInfo.date.dateExpire));
 
-    const isData = jobInfo && jobInfo._id ? true : false;
+    const latestBidData = jobInfo.hopLogs
+      ? jobInfo.hopLogs.sort((a, b) => {
+          return b.time - a.time;
+        })[0]
+      : null;
 
-    const dateExpire = isData
-      ? moment(jobInfo.date.dateExpire)
-      : previewValue && previewValue.dateExpire
-      ? moment(previewValue.dateExpire)
-      : this.state.defaultValue.date.dateExpire;
-
-    this.countdownTime(dateExpire);
+    const latestBidder =
+      allUsers && jobInfo && latestBidData
+        ? allUsers.filter(user => {
+            return user._id === latestBidData.userID;
+          })[0]
+        : null;
 
     return (
-      <Grid
-        container
-        direction="row"
-        justify="center"
-        alignItems="center"
-        spacing={0}
-      >
-        <Grid item>
-          <Card className={classes.card}>
-            <CardActionArea>
-              <Grid container>
-                <img
-                  className={classes.profileMedia}
-                  src="https://c6.staticflickr.com/9/8890/28897154101_a8f55be225_b.jpg"
-                  title=""
-                />
-
-                <CardHeader
-                  className={classes.profileTitle}
-                  title="Build my app!"
-                  subheader="Create a web based app using React"
-                />
-              </Grid>
-            </CardActionArea>
-            <CardActionArea></CardActionArea>
-            <CardContent>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between"
-                }}
-              >
-                <Typography gutterBottom variant="roboto" fontSize="14px">
-                  Your Posted Price: <br />
-                  $123.00
-                </Typography>
-                {/* Your Bid Price
-                <Typography gutterBottom>Current Price $123.00</Typography>
-                Your Bid Price
-                <FilledInput
-                  className="hopPrice"
-                  id="bidPrice"
-                  inputProps={{
-                    autoComplete: "off"
-                  }}
-                  type="text"
-                  value={"$213"}
-                  required
-                  disabled
-                /> */}
-              </div>
-              <br />
-              <Typography variant="body1" color="textPrimary" component="p">
-                Time Remaining
-              </Typography>
-
-              <Typography gutterBottom variant="h4" component="h4">
-                {` ${this.state.timeLeft}`}{" "}
-              </Typography>
-
-              {/* <Typography variant="body1" color="textPrimary" component="p">
-                Time Remaining
-              </Typography>
-              <Typography variant="body1" color="textPrimary" component="p">
-                Input countdown clock here
-              </Typography> */}
-            </CardContent>
-
-            <Grid
-              container
-              direction="row"
-              justify="space-around"
-              alignItems="center"
+      <div className={classes.container}>
+        {/* section:: Title */}
+        <Grid container alignItems="center" wrap="nowrap">
+          <Grid
+            item
+            className={classes.imageBox}
+            container
+            justify="center"
+            alignItems="center"
+          >
+            <img className={classes.jobImage} src={jobInfo.jobImage} />
+          </Grid>
+          <Grid item className={classes.title}>
+            <Typography variant="h5" component="h3" noWrap={true}>
+              {jobInfo.title}
+            </Typography>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              component="p"
+              noWrap={true}
             >
-              <Button
-                className={classes.profileBtn}
-                variant="contained"
-                size="large"
-                color="primary"
-                fullWidth
-                disabled={false}
-                onClick={() => {
-                  console.log(111);
-                }}
-              >
-                Drop
-              </Button>
-            </Grid>
-          </Card>
+              {jobInfo.description}
+            </Typography>
+          </Grid>
         </Grid>
-      </Grid>
+        {/* end section:: Title */}
+        {/* section:: Price */}
+        <Grid
+          container
+          spacing={2}
+          justify="space-between"
+          className={classes.fieldPrice}
+        >
+          <Grid item xs={6}>
+            <Typography variant="body1" color="textPrimary" component="p">
+              Current Price
+            </Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="body1" color="textPrimary" component="p">
+              Last Hopper
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} justify="space-between" alignItems="center">
+          <Grid item xs={6}>
+            <Typography variant="h4" component="p">
+              $
+              {latestBidData
+                ? latestBidData.price.toFixed(2)
+                : jobInfo.priceMax}
+            </Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="h4" component="p" noWrap={true}>
+              {latestBidder ? latestBidder.profile.fullname : "None"}
+            </Typography>
+          </Grid>
+        </Grid>
+        {/* end section:: Price */}
+        {/* section:: Remain */}
+        <Typography
+          variant="body1"
+          color="textPrimary"
+          className={classes.fieldPrice}
+          component="p"
+        >
+          Time remain
+        </Typography>
+        <Typography variant="h4" component="p" noWrap={true}>
+          {this.state.timeLeft}
+        </Typography>
+        {/* end section:: Remain */}
+        {/* section:: Buttons */}
+        <Grid container spacing={2} justify="space-between" alignItems="center">
+          <Grid item xs={6}>
+            <Button
+              className={classes.buttons}
+              type="button"
+              variant="outlined"
+              size="large"
+              color="primary"
+              fullWidth
+              disabled={false}
+              onClick={e => {
+                e.preventDefault();
+                this.deleteJob(jobInfo);
+              }}
+            >
+              Delete
+            </Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Button
+              className={classes.buttons}
+              type="button"
+              variant="contained"
+              size="large"
+              color="primary"
+              fullWidth
+              disabled={jobInfo.completed}
+              onClick={e => {
+                e.preventDefault();
+                this.completeJob(jobInfo, latestBidder);
+              }}
+            >
+              Complete
+            </Button>
+          </Grid>
+        </Grid>
+
+        {/* end section:: Buttons */}
+      </div>
     );
   }
 }

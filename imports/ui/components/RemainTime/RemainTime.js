@@ -18,7 +18,9 @@ export default function CountdownTime(dateExpire) {
           ? `${day} Days ${hour}:${min}:${sec}`
           : day === 1
           ? `${day} Day ${hour}:${min}:${sec}`
-          : `${hour}:${min}:${sec}`;
+          : dateExpire.diff(currentTime, "seconds") > 0
+          ? `${hour}:${min}:${sec}`
+          : "Date Expired";
 
     return remainTime;
   }
