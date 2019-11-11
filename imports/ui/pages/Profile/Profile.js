@@ -6,7 +6,7 @@ import { ProfileUser, ProfileJobs, Reviews } from "/imports/ui/components";
 
 class Profile extends Component {
   render() {
-    const { classes, userInfo } = this.props;
+    const { classes, userInfo, currentUser } = this.props;
 
     return (
       <Grid container spacing={3} className={classes.wrap}>
@@ -32,7 +32,7 @@ class Profile extends Component {
           >
             Jobs
           </Typography>
-          <ProfileJobs />
+          <ProfileJobs userInfo={userInfo} currentUser={currentUser} />
         </Grid>
 
         <Grid item xs={4}>

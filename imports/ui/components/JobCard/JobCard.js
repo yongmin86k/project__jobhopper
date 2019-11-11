@@ -21,12 +21,13 @@ import {
 } from "@material-ui/core";
 
 import Gravatar from "react-gravatar";
+import { RemainTime } from "/imports/ui/components";
 
 class JobCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      timeLeft: "",
+      timeLeft: "Loading",
       defaultValue: {
         category: "category",
         title: "Title",
@@ -43,29 +44,9 @@ class JobCard extends Component {
   }
 
   countdownTime = dateExpire => {
-    if (dateExpire) {
-      let currentTime = moment(),
-        day = dateExpire.diff(currentTime, "days"),
-        hour = dateExpire.diff(currentTime, "hours") % 24,
-        min =
-          dateExpire.diff(currentTime, "minutes") % 60 < 10
-            ? "0" + (dateExpire.diff(currentTime, "minutes") % 60)
-            : dateExpire.diff(currentTime, "minutes") % 60,
-        sec =
-          dateExpire.diff(currentTime, "seconds") % 60 < 10
-            ? "0" + (dateExpire.diff(currentTime, "seconds") % 60)
-            : dateExpire.diff(currentTime, "seconds") % 60,
-        remainTime =
-          day > 1
-            ? `${day} Days ${hour}:${min}:${sec}`
-            : day === 1
-            ? `${day} Day ${hour}:${min}:${sec}`
-            : `${hour}:${min}:${sec}`;
-
-      setTimeout(() => {
-        this.setState({ timeLeft: remainTime });
-      }, 1000);
-    }
+    setTimeout(() => {
+      this.setState({ timeLeft: RemainTime(dateExpire) });
+    }, 1000);
   };
 
   hopIn = (jobID, userID, currentPrice, isJobLogs) => {
@@ -117,6 +98,7 @@ class JobCard extends Component {
       ? moment(previewValue.dateExpire)
       : this.state.defaultValue.date.dateExpire;
 
+    // this.countdownTime(dateExpire);
     this.countdownTime(dateExpire);
 
     // CONDITIONS :: existence of the job logs

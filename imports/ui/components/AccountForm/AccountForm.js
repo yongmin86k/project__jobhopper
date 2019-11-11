@@ -55,7 +55,6 @@ class AccountForm extends Component {
     Meteor.loginWithPassword(email, password, e => {
       if (Meteor.user()) {
         // Login :: success
-        console.log(JSON.stringify(Meteor.user(), null, 2));
       } else if (e) {
         // Login :: error
         this.setState({ error: e.reason, animate: false });
@@ -90,7 +89,6 @@ class AccountForm extends Component {
         }
       })
       .catch(error => {
-        console.log(error);
         this.setState({
           error: "API error : please contact website manager",
           animate: false

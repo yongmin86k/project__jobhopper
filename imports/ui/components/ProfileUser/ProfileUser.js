@@ -37,7 +37,7 @@ class ProfileUser extends Component {
 
   render() {
     const { classes, userInfo, currentUserID } = this.props;
-    console.log(userInfo);
+
     return (
       <Card className={classes.card}>
         {!userInfo ? (
