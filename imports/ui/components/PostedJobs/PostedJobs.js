@@ -110,20 +110,6 @@ class PostedJobs extends Component {
                   Your Posted Price: <br />
                   $123.00
                 </Typography>
-                {/* Your Bid Price
-                <Typography gutterBottom>Current Price $123.00</Typography>
-                Your Bid Price
-                <FilledInput
-                  className="hopPrice"
-                  id="bidPrice"
-                  inputProps={{
-                    autoComplete: "off"
-                  }}
-                  type="text"
-                  value={"$213"}
-                  required
-                  disabled
-                /> */}
               </div>
               <br />
               <Typography variant="body1" color="textPrimary" component="p">
@@ -133,13 +119,6 @@ class PostedJobs extends Component {
               <Typography gutterBottom variant="h4" component="h4">
                 {` ${this.state.timeLeft}`}{" "}
               </Typography>
-
-              {/* <Typography variant="body1" color="textPrimary" component="p">
-                Time Remaining
-              </Typography>
-              <Typography variant="body1" color="textPrimary" component="p">
-                Input countdown clock here
-              </Typography> */}
             </CardContent>
 
             <Grid

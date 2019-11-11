@@ -136,13 +136,6 @@ class Hopping extends Component {
               <Typography gutterBottom variant="h4" component="h4">
                 {` ${this.state.timeLeft}`}{" "}
               </Typography>
-
-              {/* <Typography variant="body1" color="textPrimary" component="p">
-                Time Remaining
-              </Typography>
-              <Typography variant="body1" color="textPrimary" component="p">
-                Input countdown clock here
-              </Typography> */}
             </CardContent>
 
             <Grid
