@@ -110,7 +110,10 @@ class PostedJobs extends Component {
         <Grid container spacing={2} justify="space-between" alignItems="center">
           <Grid item xs={userBidDate ? 6 : 12}>
             <Typography gutterBottom variant="h4" component="p">
-              ${latestBidData.price.toFixed(2)}
+              $
+              {latestBidData
+                ? latestBidData.price.toFixed(2)
+                : jobInfo.priceMax}
             </Typography>
           </Grid>
           {userBidDate ? (
