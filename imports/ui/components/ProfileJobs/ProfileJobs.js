@@ -72,7 +72,7 @@ const ProfileJobs = ({ classes, userInfo, currentUser, jobsHopping }) => {
             </Tabs>
           </AppBar>
           <TabPanel value={value} index={0}>
-            {jobsHopping ? (
+            {jobsHopping && jobsHopping.length > 0 ? (
               jobsHopping.map(jobInfo => (
                 <Hopping
                   key={jobInfo._id}
