@@ -10,7 +10,7 @@ class Profile extends Component {
 
     return (
       <Grid container spacing={3} className={classes.wrap}>
-        <Grid item xs={4}>
+        <Grid item item xs={12} sm={6} md={4}>
           <Typography
             variant="body2"
             color="textSecondary"
@@ -22,7 +22,7 @@ class Profile extends Component {
           <ProfileUser userInfo={userInfo} />
         </Grid>
 
-        <Grid item xs={4}>
+        <Grid item item xs={12} sm={6} md={4}>
           <Typography
             className={classes.jobs}
             variant="body2"
@@ -35,7 +35,7 @@ class Profile extends Component {
           <ProfileJobs userInfo={userInfo} currentUser={currentUser} />
         </Grid>
 
-        <Grid item xs={4}>
+        <Grid item item xs={12} sm={6} md={4}>
           <Reviews />
         </Grid>
       </Grid>

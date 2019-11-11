@@ -71,7 +71,7 @@ class PostJobForm extends Component {
               }}
               noValidate
             >
-              {/*  */}
+              {/* start: Image for JOB */}
               <Grid container direction="row" className={classes.row}>
                 <Grid item xs={12}>
                   <Typography
@@ -105,17 +105,18 @@ class PostJobForm extends Component {
                       )}
                     />
                   </FormControl>
-                  {/*  */}
                 </Grid>
               </Grid>
-              {/*  */}
+              {/* end: Image for JOB */}
+
               <Grid
                 container
                 direction="row"
                 className={classes.row}
                 spacing={2}
               >
-                <Grid item xs={6}>
+                {/* start: Title for JOB */}
+                <Grid item xs={12} sm={6}>
                   <Typography
                     className={classes.label}
                     color="textPrimary"
@@ -145,8 +146,9 @@ class PostJobForm extends Component {
                     />
                   </FormControl>
                 </Grid>
-                {/* SELECT with final-form && material-ui */}
-                <Grid item xs={6}>
+                {/* end: Title for JOB */}
+                {/* start: SELECT with final-form && material-ui */}
+                <Grid item xs={12} sm={6}>
                   <Typography
                     className={classes.label}
                     color="textPrimary"
@@ -186,6 +188,7 @@ class PostJobForm extends Component {
                     </Field>
                   </FormControl>
                 </Grid>
+                {/* start: SELECT with final-form && material-ui */}
               </Grid>
               {/*  */}
               <Grid container direction="row" className={classes.row}>
@@ -226,7 +229,7 @@ class PostJobForm extends Component {
                 spacing={2}
                 className={classes.row}
               >
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6}>
                   <Typography
                     className={classes.label}
                     color="textPrimary"
@@ -268,7 +271,7 @@ class PostJobForm extends Component {
                   </FormControl>
                 </Grid>
                 {/*  */}
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6}>
                   <Typography
                     className={classes.label}
                     color="textPrimary"
@@ -348,7 +351,7 @@ class PostJobForm extends Component {
                 spacing={2}
                 className={classes.row}
               >
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6}>
                   <Typography
                     className={classes.label}
                     color="textPrimary"
