@@ -13,6 +13,12 @@ const styles = theme => ({
         boxShadow: "none",
         backgroundColor: "rgba(0, 0, 0, 0.08)"
       }
+    },
+    [theme.breakpoints.down("xs")]: {
+      display: "none"
+    },
+    [theme.breakpoints.up("sm")]: {
+      display: "flex"
     }
   },
   loc: {
