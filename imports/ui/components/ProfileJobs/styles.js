@@ -1,21 +1,22 @@
 const styles = theme => ({
+  container: {
+    backgroundColor: "#f5f5f5"
+  },
   appbar: {
-    marginTop: "1.2rem"
+    backgroundColor: "white"
   },
-  card: {
-    maxWidth: 450,
-    width: 400,
-    height: 650
+  reset: {
+    minWidth: "initial"
   },
-  media: {
-    height: 100,
-    paddingTop: "2%"
-  },
-  avatar: {
-    margin: 10
-  },
-  cardMediaItemsBtn: {
-    padding: theme.spacing(2)
+  null: {
+    backgroundColor: "white",
+    padding: theme.spacing(2),
+    marginTop: theme.spacing(1),
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    height: 180,
+    backgroundColor: "initial"
   }
 });
 

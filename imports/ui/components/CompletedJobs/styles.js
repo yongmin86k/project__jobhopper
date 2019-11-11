@@ -1,36 +1,39 @@
 const styles = theme => ({
-  card: {
-    marginTop: "16px",
-    marginRight: "16px",
-    marginLeft: "16px",
-    maxWidth: 450,
-    width: 400,
-    height: 400
+  container: {
+    backgroundColor: "white",
+    padding: theme.spacing(2),
+    marginTop: theme.spacing(1)
   },
-  profileMedia: {
-    height: 100,
-    paddingTop: "2%",
+  null: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    height: 180,
+    backgroundColor: "initial"
+  },
+
+  imageBox: {
+    position: "relative",
     width: 80,
-    borderRadius: "25px",
-    marginLeft: "16px"
+    height: 80,
+    marginRight: theme.spacing(1.5),
+    borderRadius: 4,
+    overflow: "hidden"
   },
-  profileTitle: {
-    flex: 1
+  jobImage: {
+    positoin: "absolute",
+    width: "auto",
+    height: "100%"
   },
-  hopPrice: {
-    height: "56px"
+  title: {
+    flex: 1,
+    overflow: "hidden"
   },
-  avatar: {
-    margin: 10
+  fieldPrice: {
+    marginTop: theme.spacing(2)
   },
-  cardMediaItemsBtn: {
-    padding: theme.spacing(2)
-  },
-  profileBtn: {
-    width: 150
-  },
-  margin: {
-    margin: theme.spacing(1)
+  buttons: {
+    marginTop: theme.spacing(2)
   }
 });
 

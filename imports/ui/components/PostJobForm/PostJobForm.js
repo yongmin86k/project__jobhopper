@@ -22,8 +22,8 @@ import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
 import { MuiPickersUtilsProvider, DateTimePicker } from "@material-ui/pickers";
 
-// import AddIcon from "@material-ui/icons/Add";
 import styles from "./styles";
+import validate from "./helpers/validation";
 
 class PostJobForm extends Component {
   constructor(props) {
@@ -42,8 +42,12 @@ class PostJobForm extends Component {
     this.setState({ selectedDate: newDate });
   };
 
-  postSingle = (values, user) => {
-    Meteor.call("jobs.postSingle", values, user);
+  postSingle = async (values, user) => {
+    try {
+      await Meteor.call("jobs.postSingle", values, user);
+    } catch (e) {
+      throw e;
+    }
   };
 
   render() {
@@ -56,6 +60,7 @@ class PostJobForm extends Component {
         }}
         validate={values => {
           updatePreview(values);
+          return validate(values);
         }}
         render={({ handleSubmit, form, valid, submitSucceeded }) => {
           return (

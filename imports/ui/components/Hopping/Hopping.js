@@ -1,190 +1,183 @@
 import React, { Component } from "react";
-import {
-  Card,
-  CardActionArea,
-  CardActions,
-  CardContent,
-  CardHeader,
-  Button,
-  Grid,
-  Typography,
-  IconButton,
-  FilledInput
-} from "@material-ui/core";
+import { Meteor } from "meteor/meteor";
+
+import { Button, Grid, Typography, TextField } from "@material-ui/core";
 import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
+import { RemainTime } from "/imports/ui/components";
 
 class Hopping extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      timeLeft: "",
-      defaultValue: {
-        category: "category",
-        title: "Title",
-        date: {
-          datePosted: moment(),
-          dateExpire: moment().days(7)
-        },
-        description: "Please enter a description",
-        priceMax: 0,
-        priceMin: 0,
-        jobImage: "https://via.placeholder.com/300"
-      }
+      timeLeft: "Loading"
     };
   }
-
   countdownTime = dateExpire => {
-    if (dateExpire) {
-      let currentTime = moment(),
-        day = dateExpire.diff(currentTime, "days"),
-        hour = dateExpire.diff(currentTime, "hours") % 24,
-        min =
-          dateExpire.diff(currentTime, "minutes") % 60 < 10
-            ? "0" + (dateExpire.diff(currentTime, "minutes") % 60)
-            : dateExpire.diff(currentTime, "minutes") % 60,
-        sec =
-          dateExpire.diff(currentTime, "seconds") % 60 < 10
-            ? "0" + (dateExpire.diff(currentTime, "seconds") % 60)
-            : dateExpire.diff(currentTime, "seconds") % 60,
-        remainTime =
-          day > 1
-            ? `${day} Days ${hour}:${min}:${sec}`
-            : day === 1
-            ? `${day} Day ${hour}:${min}:${sec}`
-            : `${hour}:${min}:${sec}`;
+    setTimeout(() => {
+      this.setState({ timeLeft: RemainTime(dateExpire) });
+    }, 1000);
+  };
 
-      setTimeout(() => {
-        this.setState({ timeLeft: remainTime });
-      }, 1000);
-    }
+  hopIn = (jobID, userID, currentPrice) => {
+    const hopLog = {
+      userID,
+      time: new Date(),
+      price: parseInt(currentPrice) - 2
+    };
+    Meteor.call("jobs.hopIn", jobID, hopLog);
+  };
+
+  drop = (jobID, userID) => {
+    Meteor.call("jobs.drop", jobID, userID);
   };
 
   render() {
-    const { classes, direction, jobInfo, previewValue, job } = this.props;
+    const { classes, jobInfo, currentUser } = this.props;
 
-    const isData = jobInfo && jobInfo._id ? true : false;
+    this.countdownTime(moment(jobInfo.date.dateExpire));
+    const latestBidData = jobInfo.hopLogs
+      ? jobInfo.hopLogs.sort((a, b) => {
+          return b.time - a.time;
+        })[0]
+      : null;
 
-    const dateExpire = isData
-      ? moment(jobInfo.date.dateExpire)
-      : previewValue && previewValue.dateExpire
-      ? moment(previewValue.dateExpire)
-      : this.state.defaultValue.date.dateExpire;
+    const latestUserBidDate =
+      currentUser && jobInfo.hopLogs
+        ? jobInfo.hopLogs
+            .filter(log => log.userID === currentUser._id)
+            .sort((a, b) => {
+              return b.time - a.time;
+            })[0]
+        : null;
 
-    this.countdownTime(dateExpire);
     return (
-      <Grid
-        container
-        direction="row"
-        justify="center"
-        alignItems="center"
-        spacing={0}
-      >
-        <Grid item>
-          <Card className={classes.card}>
-            <CardActionArea>
-              <Grid container>
-                <img
-                  className={classes.profileMedia}
-                  src="https://c6.staticflickr.com/9/8890/28897154101_a8f55be225_b.jpg"
-                  title=""
-                />
-
-                <CardHeader
-                  className={classes.profileTitle}
-                  action={
-                    <IconButton aria-label="settings">
-                      {/* <FavoriteIcon /> */}
-                    </IconButton>
-                  }
-                  title="Build my app!"
-                  subheader="Create a web based app using React"
-                />
-              </Grid>
-            </CardActionArea>
-            <CardActionArea></CardActionArea>
-            <CardContent>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between"
-                }}
-              >
-                <Typography gutterBottom variant="roboto" fontSize="14px">
-                  Current Price <br /> $123.00
-                </Typography>
-
-                <div>
-                  <Typography paragraph>Your Bid:</Typography>
-                  <FilledInput
-                    className="hopPrice"
-                    id="bidPrice"
-                    inputProps={{
-                      autoComplete: "off"
-                    }}
-                    type="text"
-                    value={"$321"}
-                    required
-                    disabled
-                  />
-                </div>
-              </div>
-              <Typography variant="body1" color="textPrimary" component="p">
-                Time Remaining
-              </Typography>
-
-              <Typography gutterBottom variant="h4" component="h4">
-                {` ${this.state.timeLeft}`}{" "}
-              </Typography>
-            </CardContent>
-
-            <Grid
-              container
-              direction="row"
-              justify="space-around"
-              alignItems="center"
+      <div className={classes.container}>
+        {/* section:: Title */}
+        <Grid container alignItems="center" wrap="nowrap">
+          <Grid
+            item
+            className={classes.imageBox}
+            container
+            justify="center"
+            alignItems="center"
+          >
+            <img className={classes.jobImage} src={jobInfo.jobImage} />
+          </Grid>
+          <Grid item className={classes.title}>
+            <Typography variant="h5" component="h3" noWrap={true}>
+              {jobInfo.title}
+            </Typography>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              component="p"
+              noWrap={true}
             >
-              <CardActions className={classes.cardMediaItemsBtn}>
-                <Button
-                  className={classes.profileBtn}
-                  type="button"
-                  variant="contained"
-                  size="large"
-                  color="secondary"
-                  fullWidth
-                  disabled={false}
-                  // onClick={() => {
-                  //   removeCompleted={hopLog} {
-                  //     hopLog.remove(profileJobs._id, {
-                  //     //   $delete: { complete: !todo.complete },
-                  //     });
-                  //     Meteor.call('todos.toggleComplete', todo);
-                  //   }
-                  //   }
-
-                  // }
-                >
-                  Drop
-                </Button>
-                <Button
-                  className={classes.profileBtn}
-                  type="button"
-                  variant="contained"
-                  size="large"
-                  color="primary"
-                  fullWidth
-                  disabled={false}
-                  onClick={() => {
-                    console.log(111);
-                  }}
-                >
-                  Hop In
-                </Button>
-              </CardActions>
-            </Grid>
-          </Card>
+              {jobInfo.description}
+            </Typography>
+          </Grid>
         </Grid>
-      </Grid>
+        {/* end section:: Title */}
+        {/* section:: Price */}
+        <Grid
+          container
+          spacing={2}
+          justify="space-between"
+          className={classes.fieldPrice}
+        >
+          <Grid item xs={6}>
+            <Typography variant="body1" color="textPrimary" component="p">
+              Current Price
+            </Typography>
+          </Grid>
+
+          <Grid item xs={6}>
+            <Typography variant="body1" color="textPrimary" component="p">
+              Your Hop price
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} justify="space-between" alignItems="center">
+          <Grid item xs={6}>
+            <Typography variant="h4" component="p">
+              ${latestBidData ? latestBidData.price.toFixed(2) : "Loading"}
+            </Typography>
+          </Grid>
+
+          <Grid item xs={6}>
+            <TextField
+              fullWidth
+              label={`$${
+                latestUserBidDate
+                  ? latestUserBidDate.price.toFixed(2)
+                  : "Loading"
+              }`}
+              variant="filled"
+              disabled
+            />
+          </Grid>
+        </Grid>
+        {/* end section:: Price */}
+        {/* section:: Remain */}
+        <Typography
+          variant="body1"
+          color="textPrimary"
+          className={classes.fieldPrice}
+          component="p"
+        >
+          Time remain
+        </Typography>
+        <Typography variant="h4" component="p" noWrap={true}>
+          {this.state.timeLeft}
+        </Typography>
+        {/* end section:: Remain */}
+        {/* section:: Buttons */}
+        <Grid
+          container
+          spacing={2}
+          justify="space-around"
+          className={classes.buttons}
+        >
+          <Grid item xs={6}>
+            <Button
+              type="button"
+              variant="outlined"
+              size="large"
+              color="primary"
+              fullWidth
+              disabled={false}
+              onClick={e => {
+                e.preventDefault();
+                this.drop(jobInfo._id, currentUser._id);
+              }}
+            >
+              Drop
+            </Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Button
+              type="button"
+              variant="contained"
+              size="large"
+              color="primary"
+              fullWidth
+              disabled={
+                latestUserBidDate && latestBidData
+                  ? latestUserBidDate.price === latestBidData.price
+                  : null
+              }
+              onClick={e => {
+                e.preventDefault();
+                this.hopIn(jobInfo._id, currentUser._id, latestBidData.price);
+              }}
+            >
+              Hop In
+            </Button>
+          </Grid>
+        </Grid>
+        {/* end section:: Buttons */}
+      </div>
     );
   }
 }
