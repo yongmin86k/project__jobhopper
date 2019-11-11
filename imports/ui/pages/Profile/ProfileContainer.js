@@ -8,10 +8,10 @@ import { Users } from "/imports/api/users";
 
 class ProfileContainer extends Component {
   render() {
-    const { userInfo } = this.props;
+    const { userInfo, currentUser } = this.props;
     return (
       <section className="sectionWithMenuBar">
-        <Profile userInfo={userInfo} />
+        <Profile userInfo={userInfo} currentUser={currentUser} />
       </section>
     );
   }
@@ -28,7 +28,8 @@ export default withRouter(
         : Users.find({ "profile.fullname": match.params.fullname }).fetch()[0];
 
     return {
-      userInfo
+      userInfo,
+      currentUser
     };
   })(ProfileContainer)
 );

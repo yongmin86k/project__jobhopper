@@ -5,9 +5,9 @@ meteor.methods({
     if (!this.jobId) {
       throw new Meteor.Error("Cannot drop job!");
     }
-    hopLog.delete(hopLog._id, {
-      $elemMatch: { delete: (userId = currentUserID) }
-    });
+    // hopLog.delete(hopLog._id, {
+    //   $find: { matched: (userId = currentUserID) }
+    // });
     {
       Jobs({
         userPosted: this.userId,

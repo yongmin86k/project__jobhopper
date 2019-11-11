@@ -3,12 +3,14 @@ import { Meteor } from "meteor/meteor";
 import { Users } from "/imports/api/users";
 import { Categories } from "/imports/api/categories";
 import { withTracker } from "meteor/react-meteor-data";
+import { Link } from "react-router-dom";
 
-import { Form, Field } from "react-final-form";
+import { Form } from "react-final-form";
 import { withStyles } from "@material-ui/core/styles";
 import styles from "./styles";
 import {
   Card,
+  CardActionArea,
   CardContent,
   CardHeader,
   CardMedia,
@@ -19,12 +21,13 @@ import {
 } from "@material-ui/core";
 
 import Gravatar from "react-gravatar";
+import { RemainTime } from "/imports/ui/components";
 
 class JobCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      timeLeft: "",
+      timeLeft: "Loading",
       defaultValue: {
         category: "category",
         title: "Title",
@@ -32,7 +35,7 @@ class JobCard extends Component {
           datePosted: moment(),
           dateExpire: moment().days(8)
         },
-        description: "Please fill a description",
+        description: "Please enter a description",
         priceMax: 0,
         priceMin: 0,
         jobImage: "https://via.placeholder.com/300"
@@ -41,29 +44,9 @@ class JobCard extends Component {
   }
 
   countdownTime = dateExpire => {
-    if (dateExpire) {
-      let currentTime = moment(),
-        day = dateExpire.diff(currentTime, "days"),
-        hour = dateExpire.diff(currentTime, "hours") % 24,
-        min =
-          dateExpire.diff(currentTime, "minutes") % 60 < 10
-            ? "0" + (dateExpire.diff(currentTime, "minutes") % 60)
-            : dateExpire.diff(currentTime, "minutes") % 60,
-        sec =
-          dateExpire.diff(currentTime, "seconds") % 60 < 10
-            ? "0" + (dateExpire.diff(currentTime, "seconds") % 60)
-            : dateExpire.diff(currentTime, "seconds") % 60,
-        remainTime =
-          day > 1
-            ? `${day} Days ${hour}:${min}:${sec}`
-            : day === 1
-            ? `${day} Day ${hour}:${min}:${sec}`
-            : `${hour}:${min}:${sec}`;
-
-      setTimeout(() => {
-        this.setState({ timeLeft: remainTime });
-      }, 1000);
-    }
+    setTimeout(() => {
+      this.setState({ timeLeft: RemainTime(dateExpire) });
+    }, 1000);
   };
 
   hopIn = (jobID, userID, currentPrice, isJobLogs) => {
@@ -115,6 +98,7 @@ class JobCard extends Component {
       ? moment(previewValue.dateExpire)
       : this.state.defaultValue.date.dateExpire;
 
+    // this.countdownTime(dateExpire);
     this.countdownTime(dateExpire);
 
     // CONDITIONS :: existence of the job logs
@@ -173,17 +157,37 @@ class JobCard extends Component {
               }}
             >
               <Card>
-                <CardHeader
-                  avatar={
-                    <Gravatar
-                      email={clientInfo.emails[0].address}
-                      size={40}
-                      className={classes.avatar}
+                {!previewValue ? (
+                  <CardActionArea
+                    component={Link}
+                    to={`/profile/${clientInfo.profile.fullname}`}
+                  >
+                    <CardHeader
+                      avatar={
+                        <Gravatar
+                          email={clientInfo.emails[0].address}
+                          size={40}
+                          className={classes.avatar}
+                        />
+                      }
+                      title={clientInfo.profile.fullname}
+                      subheader={`Remain : ${this.state.timeLeft}`}
                     />
-                  }
-                  title={clientInfo.profile.fullname}
-                  subheader={`Remain : ${this.state.timeLeft}`}
-                />
+                  </CardActionArea>
+                ) : (
+                  <CardHeader
+                    avatar={
+                      <Gravatar
+                        email={clientInfo.emails[0].address}
+                        size={40}
+                        className={classes.avatar}
+                      />
+                    }
+                    title={clientInfo.profile.fullname}
+                    subheader={`Remain : ${this.state.timeLeft}`}
+                  />
+                )}
+
                 <CardMedia
                   className={classes.media}
                   image={
@@ -305,9 +309,30 @@ class JobCard extends Component {
                     component="p"
                   >
                     {isData
-                      ? jobInfo.description
+                      ? jobInfo.description.split(`\n`).map((p, key) => {
+                          return (
+                            <Fragment key={key}>
+                              {p}
+                              {key !==
+                              jobInfo.description.split(`\n`).length - 1 ? (
+                                <br />
+                              ) : null}
+                            </Fragment>
+                          );
+                        })
                       : previewValue && previewValue.description
-                      ? previewValue.description
+                      ? previewValue.description.split(`\n`).map((p, key) => {
+                          return (
+                            <Fragment key={key}>
+                              {p}
+                              {key !==
+                              previewValue.description.split(`\n`).length -
+                                1 ? (
+                                <br />
+                              ) : null}
+                            </Fragment>
+                          );
+                        })
                       : this.state.defaultValue.description}
                   </Typography>
                 </CardContent>

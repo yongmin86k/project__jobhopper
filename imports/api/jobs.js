@@ -5,6 +5,12 @@ if (Meteor.isServer) {
   Meteor.publish("allJobs", () => {
     return Jobs.find();
   });
+  Meteor.publish("jobsHopping", userID => {
+    return Jobs.find({
+      "hopLogs.userID": userID,
+      completed: false
+    });
+  });
 }
 
 Meteor.methods({
