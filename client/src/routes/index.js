@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
+import PropTypes from "prop-types";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { Meteor } from "meteor/meteor";
 import { withTracker } from "meteor/react-meteor-data";
-
 import { PrivateRoute, MenuBar } from "/imports/ui/components";
 import { Home, Profile, Jobs, Search, Post } from "/imports/ui/pages";
 
@@ -23,11 +23,6 @@ const routes = ({ currentUserId }) => (
           currentUserId={currentUserId}
         />
         <PrivateRoute
-          path="/jobs:jobID"
-          component={Jobs}
-          currentUserId={currentUserId}
-        />
-        <PrivateRoute
           path="/jobs"
           component={Jobs}
           currentUserId={currentUserId}
@@ -43,12 +38,6 @@ const routes = ({ currentUserId }) => (
           component={Profile}
           currentUserId={currentUserId}
         />
-        <PrivateRoute
-          exact
-          path="/search"
-          component={Search}
-          currentUserId={currentUserId}
-        />
         <Redirect from="*" to="/jobs" />
       </Switch>
     )}
@@ -60,3 +49,7 @@ export default withTracker(() => {
     currentUserId: Meteor.userId()
   };
 })(routes);
+
+routes.propTypes = {
+  currentUserId: PropTypes.string
+};

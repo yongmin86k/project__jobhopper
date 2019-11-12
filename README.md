@@ -1,9 +1,9 @@
 # JobHopper
 
-- JobHopper is an auction app that offers all new jobs posted with an option to Hop In for the job the user is interested in, and gives the user a chance to Hop again if the user isn't winning the bid.
-- It gives the users the ability to Login or Signup and view the available jobs in various categories.
-- It also gives the privilidge to the client to post their job and its details on the app.
-- The user can view his/her profile and can also edit the details if required.
+- JobHopper is a hybrid app that offers the user the ability to pick up odd jobs in their local areas for quick and easy cash! JobHopper allows the user to navigate through the app in a systematic order to place, remove, and create bids for jobs that seem fit to their liking.
+- JobHopper grants users the ability to sign up and view available jobs of various categories.
+- JobHopper also allows clients to post their job and its details on the app in hopes of receiving the best possible price for their recently posted job(s).
+- JobHopper allows the user to view his/her profile, as well as others,and even edit their bio in order to attract future opportunities!
 
 ## Technologies Used
 
@@ -37,9 +37,13 @@ You will also see any lint errors in the console.
 
 ![Jobs Page](_snapshots/Jobs-Page.png)
 
-![Post A Job Page](_snapshots/post-job.png)
+![Post A Job Page](_snapshots/Post-A-Job.png)
 
 ![ProfilePage](_snapshots/profile.png)
+
+![PostedJobsProfilePage](_snapshots/posted.png)
+
+![Hop-and-Drop](_snapshots/hop-and-drop.png)
 
 ## Personal Learnings
 
@@ -120,5 +124,3 @@ meteor
   &nbsp;
 
 - Learning materials content is copyright (c) 2019 RED Academy.
-
-<3
