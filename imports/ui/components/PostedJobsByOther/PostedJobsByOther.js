@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import PropTypes from "prop-types";
 import { Button, Grid, Typography, TextField } from "@material-ui/core";
 import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
@@ -221,7 +222,7 @@ class PostedJobs extends Component {
                       this.hopIn(
                         jobInfo._id,
                         currentUserID,
-                        latestBidData.price
+                        latestBidData ? latestBidData.price : jobInfo.priceMax
                       );
                     }}
                   >
@@ -239,3 +240,8 @@ class PostedJobs extends Component {
 }
 
 export default withStyles(styles)(PostedJobs);
+
+PostedJobs.propTypes = {
+  jobInfo: PropTypes.object,
+  currentUserID: PropTypes.string
+};

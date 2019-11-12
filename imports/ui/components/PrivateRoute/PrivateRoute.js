@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Route, Redirect } from "react-router-dom";
 
 const PrivateRoute = ({
@@ -21,3 +22,8 @@ const PrivateRoute = ({
 };
 
 export default PrivateRoute;
+
+PrivateRoute.propTypes = {
+  location: PropTypes.object,
+  currentUserId: PropTypes.string
+};

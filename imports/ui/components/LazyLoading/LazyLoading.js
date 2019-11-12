@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styles from "./styles";
 import { CircularProgress, Typography, withStyles } from "@material-ui/core";
 
@@ -26,3 +27,7 @@ const LazyLoading = ({ classes, animate }) => {
 };
 
 export default withStyles(styles)(LazyLoading);
+
+LazyLoading.propTypes = {
+  animate: PropTypes.bool
+};

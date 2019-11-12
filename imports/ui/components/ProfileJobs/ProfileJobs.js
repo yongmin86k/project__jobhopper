@@ -166,3 +166,14 @@ export default withRouter(
     };
   })(withStyles(styles)(ProfileJobs))
 );
+
+ProfileJobs.propTypes = {
+  userInfo: PropTypes.object,
+  currentUser: PropTypes.object,
+  currentUserID: PropTypes.string,
+  jobsHopping: PropTypes.array,
+  jobsCompleted: PropTypes.array,
+  jobsPosted: PropTypes.array,
+  allUsers: PropTypes.array,
+  otherUser: PropTypes.array
+};

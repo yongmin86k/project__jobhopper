@@ -1,7 +1,7 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import styles from "./styles";
 import { Grid, Typography, withStyles } from "@material-ui/core";
-import PropTypes from "prop-types";
 import { ProfileUser, ProfileJobs, Reviews } from "/imports/ui/components";
 
 class Profile extends Component {
@@ -44,3 +44,8 @@ class Profile extends Component {
 }
 
 export default withStyles(styles)(Profile);
+
+Profile.propTypes = {
+  userInfo: PropTypes.object,
+  currentUser: PropTypes.object
+};

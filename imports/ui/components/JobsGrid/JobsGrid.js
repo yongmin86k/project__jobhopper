@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { Meteor } from "meteor/meteor";
 import { Jobs } from "/imports/api/jobs";
 import { withTracker } from "meteor/react-meteor-data";
@@ -30,3 +31,7 @@ export default withTracker(() => {
     jobLists
   };
 })(JobsGrid);
+
+JobsGrid.propTypes = {
+  jobLists: PropTypes.array
+};

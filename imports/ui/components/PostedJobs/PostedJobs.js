@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Button, Grid, Typography, TextField } from "@material-ui/core";
+import PropTypes from "prop-types";
+import { Button, Grid, Typography } from "@material-ui/core";
 import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
 import { RemainTime } from "/imports/ui/components";
@@ -21,7 +22,9 @@ class PostedJobs extends Component {
     Meteor.call("jobs.delete", jobInfo._id);
   };
   completeJob = (jobInfo, latestBidder) => {
-    Meteor.call("jobs.complete", jobInfo._id, latestBidder._id);
+    jobInfo && latestBidder
+      ? Meteor.call("jobs.complete", jobInfo._id, latestBidder._id)
+      : null;
   };
 
   render() {
@@ -161,3 +164,8 @@ class PostedJobs extends Component {
 }
 
 export default withStyles(styles)(PostedJobs);
+
+PostedJobs.propTypes = {
+  jobInfo: PropTypes.object,
+  allUsers: PropTypes.array
+};

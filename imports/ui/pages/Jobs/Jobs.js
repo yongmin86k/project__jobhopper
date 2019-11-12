@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Meteor } from "meteor/meteor";
 import { withTracker } from "meteor/react-meteor-data";
 import { Grid } from "@material-ui/core";
@@ -35,7 +36,8 @@ const Jobs = ({ classes, currentUser }) => {
             Current location:{" "}
             {!currentUser
               ? "Loading"
-              : currentUser.profile.address.country === "ca"
+              : currentUser.profile.address.country === "ca" &&
+                currentUser.profile.address.postal_code
               ? `${currentUser.profile.address.postal_code.slice(
                   0,
                   3
@@ -44,7 +46,6 @@ const Jobs = ({ classes, currentUser }) => {
           </Typography>
         </Grid>
       </Grid>
-
       <JobsGrid />
     </section>
   );
@@ -55,3 +56,17 @@ export default withTracker(() => {
     currentUser: Meteor.user()
   };
 })(withStyles(styles)(Jobs));
+
+Jobs.propTypes = {
+  currentUser: PropTypes.object,
+  currentUser: PropTypes.shape({
+    _id: PropTypes.string,
+    createdAt: PropTypes.object,
+    emails: PropTypes.array,
+    profile: PropTypes.object,
+    profile: PropTypes.shape({
+      fullname: PropTypes.string,
+      address: PropTypes.object
+    })
+  })
+};

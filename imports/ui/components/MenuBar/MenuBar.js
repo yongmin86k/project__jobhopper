@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import { NavLink, withRouter } from "react-router-dom";
 import {
   AppBar,
@@ -76,3 +77,7 @@ const MenuBar = ({ classes, currentUserId }) => {
 };
 
 export default withRouter(withStyles(styles)(MenuBar));
+
+MenuBar.propTypes = {
+  currentUserId: PropTypes.string
+};

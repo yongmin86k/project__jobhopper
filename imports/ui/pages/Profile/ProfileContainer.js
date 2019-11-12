@@ -1,6 +1,6 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import Profile from "./Profile";
-
 import { withRouter } from "react-router-dom";
 import { Meteor } from "meteor/meteor";
 import { withTracker } from "meteor/react-meteor-data";
@@ -33,3 +33,8 @@ export default withRouter(
     };
   })(ProfileContainer)
 );
+
+ProfileContainer.propTypes = {
+  userInfo: PropTypes.object,
+  currentUser: PropTypes.object
+};

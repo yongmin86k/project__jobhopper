@@ -1,4 +1,5 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { Meteor } from "meteor/meteor";
 import { withTracker } from "meteor/react-meteor-data";
 import { Categories } from "/imports/api/categories";
@@ -422,3 +423,9 @@ export default withTracker(() => {
     categories: Categories.find({}).fetch()
   };
 })(withStyles(styles)(PostJobForm));
+
+PostJobForm.propTypes = {
+  categories: PropTypes.array,
+  currentUser: PropTypes.object,
+  updatePreview: PropTypes.func
+};

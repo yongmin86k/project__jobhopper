@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import PropTypes from "prop-types";
 import { Meteor } from "meteor/meteor";
 import { Users } from "/imports/api/users";
 import { Categories } from "/imports/api/categories";
@@ -411,3 +412,11 @@ export default withTracker(() => {
     categoryLists
   };
 })(withStyles(styles)(JobCard));
+
+JobCard.propTypes = {
+  previewValue: PropTypes.object,
+  userLists: PropTypes.array,
+  categoryLists: PropTypes.array,
+  currentUser: PropTypes.object,
+  currentUserID: PropTypes.string
+};

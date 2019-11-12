@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { Button, Grid, Typography, TextField } from "@material-ui/core";
 import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
@@ -136,3 +137,8 @@ class CompletedJobs extends Component {
 }
 
 export default withStyles(styles)(CompletedJobs);
+
+CompletedJobs.propTypes = {
+  jobInfo: PropTypes.object,
+  currentUser: PropTypes.object
+};

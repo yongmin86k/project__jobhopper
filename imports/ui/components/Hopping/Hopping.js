@@ -1,6 +1,6 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { Meteor } from "meteor/meteor";
-
 import { Button, Grid, Typography, TextField } from "@material-ui/core";
 import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
@@ -183,3 +183,8 @@ class Hopping extends Component {
 }
 
 export default withStyles(styles)(Hopping);
+
+Hopping.propTypes = {
+  jobInfo: PropTypes.object,
+  currentUser: PropTypes.object
+};

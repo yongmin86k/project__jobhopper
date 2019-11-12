@@ -1,4 +1,5 @@
 import React, { Fragment, Component } from "react";
+import PropTypes from "prop-types";
 import { Meteor } from "meteor/meteor";
 import { withTracker } from "meteor/react-meteor-data";
 import {
@@ -175,16 +176,15 @@ class ProfileUser extends Component {
           </Fragment>
         ) : (
           <Fragment>
-            {/* profile EDITTING */}
+            {/* profile EDIT */}
             <Form
               onSubmit={values => {
-                console.log("SUBMIT");
                 this.updateChange(values, currentUserID);
               }}
               validate={values => {
-                console.log("VALIDATE: ", values);
+                // Validate the modification of the user profile
               }}
-              render={({ handleSubmit, valid }) => {
+              render={({ handleSubmit }) => {
                 return (
                   <form
                     onSubmit={async e => {
@@ -403,3 +403,8 @@ export default withTracker(() => {
     currentUserID: Meteor.userId()
   };
 })(withStyles(styles)(ProfileUser));
+
+ProfileUser.propTypes = {
+  userInfo: PropTypes.object,
+  currentUser: PropTypes.object
+};
