@@ -304,38 +304,20 @@ class JobCard extends Component {
                       ? categoryTitle.title
                       : this.state.defaultValue.category}
                   </Typography>
-                  <Typography
-                    variant="body1"
-                    color="textSecondary"
-                    component="p"
-                  >
-                    {isData
-                      ? jobInfo.description.split(`\n`).map((p, key) => {
-                          return (
-                            <Fragment key={key}>
-                              {p}
-                              {key !==
-                              jobInfo.description.split(`\n`).length - 1 ? (
-                                <br />
-                              ) : null}
-                            </Fragment>
-                          );
-                        })
-                      : previewValue && previewValue.description
-                      ? previewValue.description.split(`\n`).map((p, key) => {
-                          return (
-                            <Fragment key={key}>
-                              {p}
-                              {key !==
-                              previewValue.description.split(`\n`).length -
-                                1 ? (
-                                <br />
-                              ) : null}
-                            </Fragment>
-                          );
-                        })
-                      : this.state.defaultValue.description}
-                  </Typography>
+                  <TextField
+                    multiline={true}
+                    rows={6}
+                    rowsMax={6}
+                    disabled
+                    fullWidth
+                    value={
+                      isData
+                        ? jobInfo.description
+                        : previewValue && previewValue.description
+                        ? previewValue.description
+                        : this.state.defaultValue.description
+                    }
+                  />
                 </CardContent>
 
                 <Grid
